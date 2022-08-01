@@ -4,15 +4,18 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
 const config = {
-  entry: './src/index.js',
+  entry: './client/index.tsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js'
   },
   devServer: {
     static: {
-      directory: path.join(__dirname, dist),
-    }
+      directory: path.join(__dirname, 'build'),
+    },
+    proxy: {
+      '/api': 'http://localhost:3000',
+    },
   },
   module: {
     rules: [

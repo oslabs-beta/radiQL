@@ -17,7 +17,7 @@ if (process.env.NODE_ENV === 'production')
   app.use(express.static(path.resolve(__dirname, '../dist')));
 else app.use(express.static(path.resolve(__dirname, '../client')));
 
-app.get('/', router); 
+app.use('/', router); 
 
 app.use((err, req, res, next) => {
 const defaultErr = {

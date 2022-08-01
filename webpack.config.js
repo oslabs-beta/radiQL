@@ -14,7 +14,7 @@ const config = {
       directory: path.join(__dirname, 'build'),
     },
     proxy: {
-      '/submit': 'http://localhost:3000',
+      '/submitURI': 'http://localhost:3000',
     },
   },
   module: {

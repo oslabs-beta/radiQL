@@ -11,7 +11,7 @@ const config = {
   },
   devServer: {
     static: {
-      directory: path.join(__dirname, 'build'),
+      directory: path.join(__dirname, 'dist'),
     },
     proxy: {
       '/api': 'http://localhost:3000',
@@ -52,8 +52,8 @@ const config = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      templateContent: ({ htmlWebpackPlugin }) => '<!DOCTYPE html><html><head><meta charset=\"utf-8\"><title>' + htmlWebpackPlugin.options.title + '</title></head><body><div id=\"app\"></div></body></html>',
-      filename: 'index.html',
+      title: 'Development',
+      template: './client/index.html',
     }),
     new LodashModuleReplacementPlugin
   ],

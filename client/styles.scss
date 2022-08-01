@@ -1,5 +1,5 @@
 
-$base-color: #2445b0;
+$base-color: #295bff;
 
 $white: mix(white, $base-color, 80%);
 $black: mix(black, $base-color, 80%);
@@ -10,6 +10,10 @@ $base-dark-10: darken($base-color, 10%);
 $base-dark-20: darken($base-color, 20%);
 $green-gradient: linear-gradient(315deg, hsla(164, 38%, 18%, 1) 0%, hsla(158, 77%, 77%, 1) 100%);
 
+body {
+  margin:0;
+
+}
 
 h1 {
   color: $base-color;

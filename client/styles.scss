@@ -4,12 +4,14 @@ $base-color: #2445b0;
 $white: mix(white, $base-color, 80%);
 $black: mix(black, $base-color, 80%);
 $gray: mix(#636363, $base-color, 80%);
+$base-light-10: lighten($base-color, 10%);
 $base-light-20: lighten($base-color, 20%);
+$base-dark-10: darken($base-color, 10%);
 $base-dark-20: darken($base-color, 20%);
 $green-gradient: linear-gradient(315deg, hsla(164, 38%, 18%, 1) 0%, hsla(158, 77%, 77%, 1) 100%);
 
 
 h1 {
-  color: $primary-color;
-  background-color: $bg;
+  color: $base-color;
+  background-color: $gray;
 }

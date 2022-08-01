@@ -7,14 +7,14 @@ const config = {
   entry: './client/index.tsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
   },
   devServer: {
     static: {
       directory: path.join(__dirname, 'dist'),
     },
     proxy: {
-      '/api': 'http://localhost:3000',
+      '/submit': 'http://localhost:3000',
     },
   },
   module: {
@@ -22,48 +22,36 @@ const config = {
       {
         test: /\.(js|jsx)$/,
         use: 'babel-loader',
-        exclude: /node_modules/
+        exclude: /node_modules/,
       },
       {
         test: /\.css$/,
-        use: [
-          'style-loader',
-          'css-loader'
-        ]
+        use: ['style-loader', 'css-loader'],
       },
       {
         test: /\.scss$/,
-        use: [
-          'style-loader',
-          'css-loader',
-          'sass-loader'
-        ]
+        use: ['style-loader', 'css-loader', 'sass-loader'],
       },
       {
         test: /\.svg$/,
-        use: 'file-loader'
+        use: 'file-loader',
       },
       {
         test: /\.ts(x)?$/,
         loader: 'ts-loader',
-        exclude: /node_modules/
-      }
-    ]
+        exclude: /node_modules/,
+      },
+    ],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Development',
       template: './client/index.html',
+      filename: 'index.html',
     }),
-    new LodashModuleReplacementPlugin
   ],
   resolve: {
-    extensions: [
-      '.tsx',
-      '.ts',
-      '.js'
-    ]
-  }
+    extensions: ['.tsx', '.ts', '.js'],
+  },
 };
 
 module.exports = config;

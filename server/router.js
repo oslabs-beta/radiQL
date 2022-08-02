@@ -11,7 +11,7 @@ const path = require('path');
 const controller = require('./controller.js');
 
 // received: PG URI
-router.post('/submitURI', controller.getTableData, (req, res) => {
+router.post('/submitURI', controller.getTableData, controller.getAllColumns, (req, res) => {
   return res.status(200).json(res.locals.tableData); 
 })
 

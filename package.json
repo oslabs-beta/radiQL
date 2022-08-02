@@ -22,6 +22,7 @@
     "framer-motion": "^6.5.1",
     "lodash": "^4.17.21",
     "path": "^0.12.7",
+    "pg": "^8.7.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.4.0",

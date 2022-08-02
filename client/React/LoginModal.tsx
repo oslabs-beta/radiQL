@@ -64,10 +64,7 @@ const handleLogin = async () => {
 }
 
   return (
-    <motion.div drag initial={{ opacity: 0, scale: 0.75, top: 0, right: 0, }} animate={{ opacity: 1, scale: 1, top: 50, right: 475, }} exit={{ top:-150, right:-100, opacity: 0, scale: 0 }} transition={{type: "spring",
-                damping: 15,
-                mass: .65,
-                stiffness: 400}} className="login-modal-container">
+    <motion.div drag initial={{ opacity: 0, scale: 0.75, top: 0, right: 0, }} animate={{ opacity: 1, scale: 1, top: 50, right: 30, }} exit={{ top:-150, right:-100, opacity: 0, scale: 0 }} className="login-modal-container">
       <FaTimes id='close-icon' onClick={()=> setShowLogin()}/>
       <img id="login-logo" src={logo} />
       <div id="input-modal-container">

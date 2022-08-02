@@ -14,9 +14,15 @@ $base-light-10: lighten($base-color, 10%);
 $base-light-20: lighten($base-color, 20%);
 $base-dark-10: darken($base-color, 10%);
 $base-dark-20: darken($base-color, 20%);
-$green-gradient: linear-gradient(315deg, hsla(164, 38%, 18%, 1) 0%, hsla(158, 77%, 77%, 1) 100%);
+$green-gradient: linear-gradient(
+  315deg,
+  hsla(164, 38%, 18%, 1) 0%,
+  hsla(158, 77%, 77%, 1) 100%
+);
 
-html, #root, .body{
+html,
+#root,
+.body {
   height: 100%;
 }
 
@@ -27,7 +33,7 @@ body {
   padding: 0;
   font-family: 'Roboto', sans-serif;
   // overflow-x: hidden;
-  background-color: #1B2240;
+  background-color: #1b2240;
   color: $white;
   font-size: 20px;
   height: 100%;
@@ -53,7 +59,7 @@ body {
   height: 55px;
   margin-bottom: 10px;
   background-color: white;
-  
+
   #logo {
     height: 51px;
     background-color: RoyalBlue;
@@ -61,7 +67,6 @@ body {
     // border: 1px solid $black;
   }
   .links {
-    
     .nav-link {
       padding: 20px;
       display: inline-block;
@@ -69,10 +74,69 @@ body {
       text-align: center;
       text-decoration: none;
     }
-    
-    #login {
-
+  }
+}
+.login-modal-container {
+  position: absolute;
+  width: 300px;
+  height: 350px;
+  border: 3px solid $base-light-20;
+  background-color: #1b2240;
+  letter-spacing: 0.5px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+  #close-icon{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    color: black;
+    cursor: pointer;
+  }
+  #close-icon:hover{
+    color: $base-color;
+  }
+  #input-modal-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 5px;
+    color: red;
+    .login-input {
+      padding: 5px;
+      margin: 10px;
     }
+    button {
+      padding: 5px;
+      width: 150px;
+      cursor: pointer;
+      border-radius: 5px;
+      background-color: $base-light-20;
+      border-color: $base-light-20;
+      border-radius: 5px;
+      color: black;
+      margin: 10px;
+      font-size: medium;
+      font-weight: 600;
+    }
+    button:hover {
+      background-color: $base-color;
+      border-color: $base-color;
+      color: white;
+    }
+    a {
+      text-decoration: none;
+      color: white;
+      margin: 20px;
+      font-size: medium;
+    }
+
+    .login-error-message {
+      color: red;
+    }
+  }
+  #login-logo {
+    width: 300px;
   }
 }
 
@@ -81,18 +145,18 @@ body {
   padding: 3px 0px;
   width: 100vw;
   height: 85%;
-  display: grid; 
+  display: grid;
   // align-items: center;
   justify-items: center;
-  grid-template-columns: 1fr 1fr; 
-  grid-template-rows: 1fr 1fr; 
-  gap: 0px 0px; 
-  grid-template-areas: 
-    "left-1 code-output"
-    "left-2 code-output"; 
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 0px 0px;
+  grid-template-areas:
+    'left-1 code-output'
+    'left-2 code-output';
 
-  .left-1 { 
-    grid-area: left-1; 
+  .left-1 {
+    grid-area: left-1;
     background-color: $white;
     color: $gray;
     width: 80%;
@@ -102,8 +166,8 @@ body {
     padding: 5px;
   }
 
-  .left-2 { 
-    grid-area: left-2; 
+  .left-2 {
+    grid-area: left-2;
     background-color: $white;
     color: $gray;
     width: 80%;
@@ -113,17 +177,21 @@ body {
     padding: 5px;
   }
 
-  .codeOutput { 
+  .codeOutput {
     box-shadow: 6px 5px 2px 1px rgb(0, 0, 0);
     border-radius: 20px;
     background-color: $white;
     width: 45vw;
-    grid-area: code-output; 
+    grid-area: code-output;
     padding: 5px;
   }
 }
 
 @keyframes fadeEffect {
-  from {opacity: 0;}
-  to {opacity: 1;}
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

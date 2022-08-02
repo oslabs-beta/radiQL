@@ -1,8 +1,13 @@
 import * as React from 'react';
+
 // @ts-ignore
 import logo from '../../public/images/radiQL_Logo.png';
+import LoginModal from './LoginModal';
 
 const NavBar = props => {
+
+  const [showLogin, setShowLogin] = React.useState(false)
+
   return (
     <div className="navbar">
       {/* <button className="navbar-btn">Nav Button</button> */}
@@ -13,7 +18,10 @@ const NavBar = props => {
         <a className="nav-link" href="#">About Us</a>
         <a className="nav-link" href="#">Medium Article</a>
         <a className="nav-link" href="#">Github</a>
-        <a id="login" className="nav-link" href="#">Login</a>
+        <a id="login" onClick={()=> setShowLogin(!showLogin)} className="nav-link" href="#">Login</a>
+        {showLogin && (
+          <LoginModal setShowLogin={setShowLogin} />
+        )}
       </div>
     </div>
   )

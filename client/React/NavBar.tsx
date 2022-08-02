@@ -2,9 +2,13 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 // @ts-ignore
 import logo from '../../public/images/radiQL_Logo.png';
-import { motion } from 'framer-motion';
+import LoginModal from './LoginModal';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const NavBar = props => {
+
+  const [showLogin, setShowLogin] = React.useState(false)
+
   return (
     <div className="navbar">
       <motion.div
@@ -30,7 +34,14 @@ const NavBar = props => {
         <Link className="nav-link" to="/About">About Us</Link>
         <a className="nav-link" href="https://medium.com/">Medium Article</a>
         <a className="nav-link" href="https://github.com/oslabs-beta/radiQL">Github</a>
-        <a id="login" className="nav-link" href="#">Login</a>
+        <a id="login" onClick={()=> setShowLogin(!showLogin)} className="nav-link" href="#">Login</a>
+        <motion.div>
+          <AnimatePresence>
+            {showLogin && (
+              <LoginModal setShowLogin={setShowLogin} />
+            )}
+          </AnimatePresence>
+        </motion.div>
       </div>
     </div>
   )

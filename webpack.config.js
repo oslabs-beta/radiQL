@@ -7,10 +7,13 @@ const config = {
   entry: './client/index.tsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
+    publicPath: '/',
     filename: 'bundle.js',
   },
   devServer: {
+    hot: true,
     static: {
+      publicPath: '/',
       directory: path.join(__dirname, 'dist'),
     },
     proxy: {
@@ -33,8 +36,16 @@ const config = {
         use: ['style-loader', 'css-loader', 'sass-loader'],
       },
       {
-        test: /\.svg$/,
-        use: 'file-loader',
+        test: /\.(png|jpe?g|gif|mp4)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: "[name].[ext]",
+              outputPath: "assets/"
+          }
+          },
+        ],
       },
       {
         test: /\.ts(x)?$/,

@@ -2,8 +2,8 @@ import * as React from 'react';
 import NavBar from './NavBar';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-// @ts-ignore
-import erDiagram from '../../public/images/Diagram.png';
+import { Routes, Route } from 'react-router-dom';
+import About from './About'
 
 const Main = props => {
 
@@ -24,15 +24,22 @@ const Main = props => {
   return (
     <div className='body'>
       < NavBar /> 
-      <div id='main-content' className='mainContent'>
-        <div id='dynamic-about' className='dynamicAbout left-1' >
-          <p>radiQL is a GraphQL Schema Generator that meets all your needs</p>
-        </div>
-        <div className='stats left-2'>Stats here?</div>
-        <textarea id='code-output' className='codeOutput'>
-          {JSON.stringify(text)}
-        </textarea>
-      </div>
+      <Routes>
+        // About us Page
+        <Route path="/About" element={< About />}/>
+        // Main App Page
+        <Route path="/" element={
+          <div id='main-content' className='mainContent'>
+            <div id='dynamic-about' className='dynamicAbout left-1' >
+              <p>radiQL is a GraphQL Schema Generator that meets all your needs</p>
+            </div>
+            <div className='stats left-2'>Stats here?</div>
+            <textarea id='code-output' className='codeOutput'>
+              {JSON.stringify(text)}
+            </textarea>
+          </div>
+        }/>
+      </Routes>
     </div>
   )
 }

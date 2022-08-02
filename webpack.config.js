@@ -17,7 +17,7 @@ const config = {
       directory: path.join(__dirname, 'dist'),
     },
     proxy: {
-      '/submit': 'http://localhost:3000',
+      '/submitURI': 'http://localhost:3000',
     },
   },
   module: {

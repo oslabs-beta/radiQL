@@ -3,6 +3,7 @@ import * as React from 'react';
 // @ts-ignore
 import logo from '../../public/images/radiQL_Logo.png';
 import LoginModal from './LoginModal';
+import { motion, AnimatePresence } from "framer-motion";
 
 const NavBar = props => {
 
@@ -19,9 +20,13 @@ const NavBar = props => {
         <a className="nav-link" href="#">Medium Article</a>
         <a className="nav-link" href="#">Github</a>
         <a id="login" onClick={()=> setShowLogin(!showLogin)} className="nav-link" href="#">Login</a>
-        {showLogin && (
-          <LoginModal setShowLogin={setShowLogin} />
-        )}
+        <motion.div>
+          <AnimatePresence>
+            {showLogin && (
+              <LoginModal setShowLogin={setShowLogin} />
+            )}
+          </AnimatePresence>
+        </motion.div>
       </div>
     </div>
   )

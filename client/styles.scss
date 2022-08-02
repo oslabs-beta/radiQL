@@ -79,7 +79,7 @@ body {
 .login-modal-container {
   position: absolute;
   width: 300px;
-  height: 350px;
+  height: 375px;
   border: 3px solid $base-light-20;
   background-color: #1b2240;
   letter-spacing: 0.5px;
@@ -98,13 +98,13 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
-    padding: 5px;
+    margin-top: 20px;
     color: red;
     .login-input {
-      padding: 5px;
-      margin: 10px;
+      padding: 10px;
+      margin: 5px;
     }
     button {
       padding: 5px;
@@ -127,7 +127,7 @@ body {
     a {
       text-decoration: none;
       color: white;
-      margin: 20px;
+      margin: 10px;
       font-size: medium;
     }
 

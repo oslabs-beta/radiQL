@@ -2,7 +2,8 @@ import * as React from 'react'
 import axios, { Axios } from 'axios'
 // @ts-ignore
 import logo from '../../public/images/radiQL_Logo.png'
-import { FaBeer, FaTimes } from 'react-icons/fa';
+import { FaTimes } from 'react-icons/fa';
+import { motion, AnimatePresence } from "framer-motion";
 
 
 
@@ -21,6 +22,7 @@ const LoginModal = ({setShowLogin}) => {
 
   //if Passwords dont match, break && tell user
   if(password !== confirmPassword){
+    setTimeout(()=> setPasswordMatch(true), 3000)
     return setPasswordMatch(false)
   }
 
@@ -30,6 +32,7 @@ const LoginModal = ({setShowLogin}) => {
       username: username,
       password: password
     })
+    setIsRegistered(true)
     console.log(response)
 
   } catch (error) {
@@ -61,7 +64,10 @@ const handleLogin = async () => {
 }
 
   return (
-    <div className="login-modal-container">
+    <motion.div drag initial={{ opacity: 0, scale: 0.75, top: 0, right: 0, }} animate={{ opacity: 1, scale: 1, top: 50, right: 475, }} exit={{ top:-150, right:-100, opacity: 0, scale: 0 }} transition={{type: "spring",
+                damping: 15,
+                mass: .65,
+                stiffness: 400}} className="login-modal-container">
       <FaTimes id='close-icon' onClick={()=> setShowLogin()}/>
       <img id="login-logo" src={logo} />
       <div id="input-modal-container">
@@ -73,15 +79,17 @@ const handleLogin = async () => {
         {!isRegistered && <input type="password" id="register-confirm-password" className='login-input' placeholder="Confirm Password" required/>}
 
         {/* if user is registering btn says register and use register onclick functiion; if user is logging in, btn says log in use login onclick function  */}
-        <button id="login-btn" onClick={isRegistered ? () => handleLogin() : () => handleRegister()}>{isRegistered ? 'Login': 'Create Account'}</button>
+        <motion.button whileHover={{scale: 1.1}} whileTap={{scale: 0.9}} id="login-btn" onClick={isRegistered ? () => handleLogin() : () => handleRegister()}>
+        {isRegistered ? 'Login': 'Create Account'}</motion.button>
+
 
         
-        {isRegistered && <a id="register" onClick={() => setIsRegistered(false)} href='#'>Register?</a>}
+        {isRegistered ? <a id="register" onClick={() => setIsRegistered(false)} href='#'>Register?</a> : passwordMatch ? <a id="login?" onClick={() => setIsRegistered(true)} href='#'>Login?</a> : <p className="login-error-message">Passwords do not match!</p> }
 
         {/* if passwords dont match upon registration, show error displaying that passwords do not match  */}
-        {!passwordMatch && <p className="login-error-message">Passwords do not match!</p>}
+        {/* {!passwordMatch && <p className="login-error-message">Passwords do not match!</p>} */}
       </div>
-    </div>
+    </motion.div>
   )
 }
 

@@ -15,7 +15,7 @@ if (process.env.NODE_ENV === 'production')
   app.use(express.static(path.resolve(__dirname, '../dist')));
 else app.use(express.static(path.resolve(__dirname, '../client')));
 
-app.get('/submit', (req, res) => {
+app.get('/', (req, res) => {
   return res.json('hello');
 });
 

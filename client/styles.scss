@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
+@import url(https://cdn.jsdelivr.net/gh/tonsky/FiraCode@1.206/distr/fira_code.css);
+@import url(https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css);
 
 * {
   padding: 0px;
@@ -51,7 +53,7 @@ body {
   left: 0;
   font-size: 17px;
   height: 55px;
-  margin-bottom: 10px;
+  margin-bottom: 50px;
   background-color: white;
   
   #logo {
@@ -120,10 +122,21 @@ body {
     width: 45vw;
     grid-area: code-output; 
     padding: 5px;
+    color: black;
   }
+}
+
+#code1 {
+  background-color: black;
+  color: red;
 }
 
 @keyframes fadeEffect {
   from {opacity: 0;}
   to {opacity: 1;}
+}
+
+.demo {
+  font-family: "Fira Code", monospace;
+  grid-area: left-2; 
 }

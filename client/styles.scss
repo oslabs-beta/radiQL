@@ -195,16 +195,47 @@ body {
     grid-area: 1 / 1 / 2 / 2;
     padding: 8px;
     height: 80vh;
-    h2 {
-      color: white;
+    #steps-list {
       text-align: center;
     }
+    li {
+      margin: 20px 0px;
+    }
+    #circles-container {
+      display: flex;
+      align-items: center;
+    }
+    .circle {
+      text-align: center;
+      line-height: 80px;
+      margin: 0px 20px;
+      width: 80px;
+      height: 80px;
+      border: 1px solid white;
+      border-radius: 50%;
+    }
+    .current-step {
+      background-color: orange;
+    }
+
     #uri-input-container {
       display: flex;
       flex-direction: column;
+      border: 1px solid white;
+      justify-content: space-evenly;
+      padding: 20px;
       input {
         color: black;
         font-weight: 400;
+        padding: 5px;
+        margin-bottom: 10px;
+      }
+      button {
+        &:hover {
+          background-color: $base-light-20;
+          color: $base-color;
+        }
+        border: 1px solid white;
         padding: 5px;
       }
     }

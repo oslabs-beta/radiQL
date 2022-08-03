@@ -23,7 +23,7 @@ ReactDOM.render(
   mountNode 
 );`;
 
-const CodeBlock = () => {
+const CodeBlock = ({codeBody}) => {
   const [lineNumbers, toggleLineNumbers] = useState(true);
   
   const zoomOut = () => {
@@ -53,7 +53,7 @@ const CodeBlock = () => {
         
         <CopyBlock
           language={'javascript'}
-          text={dummyFetchedCode}
+          text={codeBody ? `${codeBody}` : dummyFetchedCode}
           showLineNumbers={lineNumbers}
           theme={hybrid}
           wrapLines={true}

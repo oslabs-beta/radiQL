@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Routes, Route } from 'react-router-dom';
 import About from './About'
+// import CodemirrorExample from './codemirror';
+import CodeBlock from './codeBlock';
 
 const Main = props => {
 
@@ -34,9 +36,7 @@ const Main = props => {
               <p>radiQL is a GraphQL Schema Generator that meets all your needs</p>
             </div>
             <div className='stats left-2'>Stats here?</div>
-            <textarea id='code-output' className='codeOutput'>
-              {JSON.stringify(text)}
-            </textarea>
+            <CodeBlock/>
           </div>
         }/>
       </Routes>

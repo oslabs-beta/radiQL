@@ -16,7 +16,7 @@ function schemaMaker(allColumns) {
     //console.log(typeDef);
     for(const colObj of arr) {
       if(colObj.constraint_type === 'PRIMARY KEY') {
-        typeDef += `\t${colObj.column_name}: ID!`;
+        typeDef += `\t${colObj.column_name}: ID`;
       } 
       else if (colObj.foreign_table) {
         typeDef += `\t${colObj.column_name}: [${toPascalCase(pluralize.singular(colObj.foreign_table))}]`
@@ -66,7 +66,7 @@ function attachQueryMutation(typeDefs, tableNames, allColumns) {
   }
   typeQuery += `}\n\n`;
   const typeMutation = attachMutation(tableNames, allColumns); 
-  return typeQuery + typeMutation + typeDefs;
+  return (typeQuery + typeMutation + typeDefs).slice(0, -1);
 }
 
 function attachMutation(tableNames, allColumns) {
@@ -76,71 +76,51 @@ function attachMutation(tableNames, allColumns) {
       const singularName = toPascalCase(pluralize.singular(table[0].table_name))
       typeMutation += `add${singularName}(\n`;
       for (const columns of table) {
-        // if(columns.constraint_type === 'PRIMARY KEY' || columns.constraint_type === 'FOREIGN KEY') {
-        //   typeDef += `\t${colObj.column_name}: ID!,\n`;
-        // }
         if(columns.constraint_type === 'PRIMARY KEY') continue; 
-        else if(columns.constraint_type === 'FOREIGN KEY') typeMutation += `\t${columns.column_name}: ID!,\n`;
+        else if(columns.constraint_type === 'FOREIGN KEY') {
+          typeMutation += `\t${columns.column_name}: ID`;
+          if (columns.is_nullable.toUpperCase() === 'NO') typeMutation += `!`;
+          typeMutation += `,\n`;
+        }
         else {
           if (intSet.has(columns.data_type)) typeMutation += `\t${columns.table_name}: Int`;
           else if (floatSet.has(columns.data_type)) typeMutation += `\t${columns.table_name}: Float`;
           else if(columns.data_type === 'boolean') typeMutation += `\t${columns.column_name}: Boolean`;
           else if(columns.data_type === 'ARRAY') typeMutation += `\t${columns.column_name}: [String]`;
+          else typeMutation += `\t${columns.column_name}: String`;
           if (columns.is_nullable.toUpperCase() === 'NO') typeMutation += `!`;
           typeMutation += `,\n`;
         }
-        
-        
-        
       }
       typeMutation += `): ${singularName}!\n\n`; 
+
+      // update mutation
+      typeMutation += `update${singularName}(\n`;
+      for (const columns of table) {
+        if(columns.constraint_type === 'PRIMARY KEY' || columns.constraint_type === 'FOREIGN KEY') {
+          typeMutation += `\t${columns.column_name}: ID`;
+          if (columns.is_nullable.toUpperCase() === 'NO') typeMutation += `!`;
+          typeMutation += `,\n`;
+        }
+        else {
+          if (intSet.has(columns.data_type)) typeMutation += `\t${columns.table_name}: Int`;
+          else if (floatSet.has(columns.data_type)) typeMutation += `\t${columns.table_name}: Float`;
+          else if(columns.data_type === 'boolean') typeMutation += `\t${columns.column_name}: Boolean`;
+          else if(columns.data_type === 'ARRAY') typeMutation += `\t${columns.column_name}: [String]`;
+          else typeMutation += `\t${columns.column_name}: String`;
+          if (columns.is_nullable.toUpperCase() === 'NO') typeMutation += `!`;
+          typeMutation += `,\n`;
+        }
+      }
+      typeMutation += `): ${singularName}!\n\n`; 
+
+      // delete mutation
+      typeMutation += `delete${singularName}(_id: ID!): ${singularName}!\n\n`
     }
     
-    console.log(typeMutation);
-
-    // // update mutation
-    // typeMutation += `update${singularName}(\n`;
-    // for (const table of allColumns) {
-    //   for (const columns of table) {
-        
-    //     if(columns.constraint_type === 'PRIMARY KEY' || columns.constraint_type === 'FOREIGN KEY') {
-    //       typeMutation += `\t${columns.column_name}: ID`;
-    //       if (columns.is_nullable.toUpperCase() === 'NO') typeMutation += `!`;
-    //       typeMutation += `,\n`;
-    //       continue;
-    //     }
-    //     else {
-    //       if (intSet.has(columns.data_type)) typeMutation += `\t${columns.table_name}: Int`;
-    //       else if (floatSet.has(columns.data_type)) typeMutation += `\t${columns.table_name}: Float`;
-    //       else if(columns.data_type === 'boolean') typeMutation += `\t${columns.column_name}: Boolean`;
-    //       else if(columns.data_type === 'ARRAY') typeMutation += `\t${columns.column_name}: [String]`;
-          
-    //       if (columns.is_nullable.toUpperCase() === 'NO') typeMutation += `!`;
-    //       typeMutation += `,\n`;
-    //     }
-    //     console.log(typeMutation); 
-    //   }
-    // }
-    // typeMutation += `):${singularName}!\n\n`; 
-
-    // // delete mutation
-    
-    // typeMutation += `delete${singularName}(_id: ID!): ${singularName}!\n\n`
+  //console.log(typeMutation);
   typeMutation += `}\n\n`
   return typeMutation; 
-  /*
-  for tablename in tablenames:
-    add[singularize pascalcase tablename] (
-      every column name
-    ): singularize pascalcase tablename!
-      
-    update[singularize pascalcase tablename] (
-      every column name
-    ): singularize pascalcase tablename!
-      
-    delete[singularize pascalcase tablename](_id: ID!): singularize pascalcase tablename!
-  */
 }
-
 
 module.exports = { schemaMaker }; 

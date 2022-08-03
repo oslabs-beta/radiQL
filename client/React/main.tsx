@@ -23,6 +23,17 @@ const Main = props => {
     }
   }
 
+  //send uri request
+  const handleConvertURI = async() => {
+    const dbURI = (document.getElementById('userURI') as HTMLInputElement).value;
+    try{
+      const response = await axios.post('/submitURI', {dbURI: dbURI})
+      console.log(response)
+    } catch(err){
+      console.log('dbURI', err)
+    }
+  }
+
   return (
     <div className='body'>
       < NavBar /> 
@@ -33,10 +44,14 @@ const Main = props => {
         <Route path="/" element={
           <div id='main-content' className='mainContent'>
             <div id='dynamic-about' className='dynamicAbout left-1' >
-              <p>radiQL is a GraphQL Schema Generator that meets all your needs</p>
+              <h2>radiQL is a GraphQL Schema Generator that meets all your needs</h2>
+              <div id="uri-input-container">
+                <input id='userURI' type="text" placeholder='Your Database URI' />
+                <button onClick={() => handleConvertURI()} >Convert!</button>
+              </div>
+              <div className='stats left-2'>Stats here?</div>
             </div>
-            <div className='stats left-2'>Stats here?</div>
-            <CodeBlock/>
+            <CodeBlock />
           </div>
         }/>
       </Routes>

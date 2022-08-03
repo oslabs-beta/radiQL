@@ -12,14 +12,14 @@ const controller = require('./controller.js');
 
 // received: PG URI
 router.post('/submitURI', controller.getTableData, controller.getAllColumns, controller.makeSchemas, (req, res) => {
-  return res.status(200).json(res.locals.tableData); 
+  return res.status(200).send(res.locals.schema); 
 })
 
-router.get('/register', controller.register, (req, res) => {
+router.post('/register', controller.register, controller.setUserCookie, (req, res) => {
   return res.sendStatus(201);
 })
 
-router.get('/login', controller.login, (req, res) => {
-  return res.sendStatus(201); 
+router.post('/login', controller.login, controller.setUserCookie, (req, res) => {
+  return res.sendStatus(200); 
 })
 module.exports = router; 

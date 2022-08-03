@@ -18,6 +18,8 @@ const config = {
     },
     proxy: {
       '/submitURI': 'http://localhost:3000',
+      '/register': 'http://localhost:3000',
+      '/login': 'http://localhost:3000',
     },
   },
   module: {

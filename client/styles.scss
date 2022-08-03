@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100,200&display=swap');
 @import url(https://cdn.jsdelivr.net/gh/tonsky/FiraCode@1.206/distr/fira_code.css);
 @import url(https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css);
 
@@ -221,67 +222,122 @@ body {
 }
 
 #about {
-  .app-description {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
+  .app-description {
     // box-shadow: 6px 5px 2px 1px rgb(0, 0, 0);
     border-radius: 20px;
     background-color: white;
     padding: 20px;
     width: fit-content;
     color: $gray;
+    font-size: 18px;
     margin: 30px;
     img {
       display: block;
       margin: auto;
     }
-    p {
-      margin: 5px;
+    section {
+      margin: 0px 0px 50px 0px;
+      display: flex;
+      header {
+        position : relative;
+        display : inline-block;
+        font-size: xx-large;
+        &:after {
+          content : "";
+          position : absolute;
+          width : 100%;
+          height : 2px;
+          background-color: rgb(0, 187, 255);
+          bottom: 0;
+          left: 0;
+          transition : transform 0.25s linear;
+          transform : scaleX(0);
+          transform-origin: bottom right;
+        }   
+        &:hover::after {
+          transform : scaleX(1);
+          transform-origin: bottom left;
+       }
+      }
+      hr {
+        width: 90%;
+        border-top-width: 2px;
+        margin: 3px 0px;
+      }
+      p {
+        margin: 15px 0px;
+      }
+      img {
+        width: 50vw;
+      }
     }
   }
-
+  header {
+    font-size: 4vw;
+  }
+  hr {
+    width: 95%;
+    border-top-width: 2px;
+    margin: 0px 0px 30px 0px;
+  }
   .bro-container {
-    display: grid; 
-    grid-template-columns: 1.4fr 1.4fr; 
-    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; 
-    gap: 0px 16px; 
-    grid-template-areas: 
-      "about1 ."
-      "about1 ."
-      "about1 about2"
-      ". about2"
-      "about3 about2"
-      "about3 ."
-      "about3 about4"
-      ". about4"
-      "about5 about4"
-      "about5 ."
-      "about5 ."; 
+    width: 100%;
+    display: flex; 
+    justify-content: space-around;
+    height: 160px;
     align-content: center; 
-
+    
     .about-box {
-      background-color: #fff;
-      height: 500px;
-      width: 500px;
+      background-color: $white;
+      height: 110px;
+      padding: 5px;
+      width: 18vw;
+      min-width: 208px;
+      max-width: 260px;
+      color: $gray;
+      border-radius: 60px;
+      box-shadow: 0px 0px 6px 4px gray;
+      display: flex;
+      align-items: center;
+
+      img {
+        max-width: 100px;
+        border-radius: 50%;
+        box-shadow: 0px 0px 4px 1px gray;
+        hr {
+          width: 50%;
+          border-top-width: 2px;
+          margin: 3px 0px;
+        }
+      }
+      section {
+        margin: 5px;
+        header {
+          font-size: smaller;
+        }
+        svg {
+          display: inline;
+          font-size: 40px;
+        }
+      }
     }
 
-    color:#fff;
-
-    .about-1 { grid-area: about1; }
-    .about-2 { grid-area: about2; }
-    .about-3 { grid-area: about3; }
-    .about-4 { grid-area: about4; }
-    .about-5 { grid-area: about5; }
+    .about-1, .about-3, .about-5{ 
+      margin: 0px 0px 0px 0px;
+      align-self: flex-end;
+    }
+    .about-2, .about-4 { 
+      margin: 0px 0px 0px 0px;
+    }
   }
 }
 
-@keyframes fadeEffect {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
 #code1 {
   background-color: black;
   color: red;

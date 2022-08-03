@@ -59,21 +59,32 @@ function populateFloatSet(set) {
 
 function attachQueryMutation(typeDefs, tableNames, allColumns) {
   let typeQuery = `type Query {\n`; 
+  let resolverQuery = `Query: {\n`;
   for(const tableName of tableNames) {
     const singularName = pluralize.singular(tableName)
     typeQuery += `\t${tableName}: [${toPascalCase(singularName)}!]!\n`
     typeQuery += `\t${singularName}(_id: ID!): ${toPascalCase(singularName)}!\n`
+    resolverQuery += `\t${tableName}: () => {\n
+      \t const queryString = 'SELECT * FROM ${tableName}';\n
+      \t return db.query(queryString).then(data => data.rows).catch(err => console.log(err));\n
+    },`
+    resolverQuery+= `\t${singularName}: (root, args) => {\n
+      \t const queryString = 'SELECT * FROM ${tableName} WHERE _id = $1';\n
+      \t const id = [args._id];\n
+      \t return db.query(queryString, id).then(data => data.rows[0]).catch(err => console.log(err));\n
+    }`
   }
+  resolverQuery += `},\n`
   typeQuery += `}\n\n`;
   const typeMutation = attachMutation(tableNames, allColumns); 
-  return (typeQuery + typeMutation + typeDefs).slice(0, -1);
+  return {schema: (typeQuery + typeMutation + typeDefs).slice(0, -1), resolver: resolverQuery};
 }
 
 function attachMutation(tableNames, allColumns) {
-  let typeMutation = `type Mutation {\n`
+  let typeMutation = `type Mutation {\n`;
     // add mutation
     for (const table of allColumns) {
-      const singularName = toPascalCase(pluralize.singular(table[0].table_name))
+      const singularName = toPascalCase(pluralize.singular(table[0].table_name));
       typeMutation += `add${singularName}(\n`;
       for (const columns of table) {
         if(columns.constraint_type === 'PRIMARY KEY') continue; 

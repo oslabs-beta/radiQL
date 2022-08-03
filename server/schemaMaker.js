@@ -1,10 +1,17 @@
 const pluralize = require('pluralize');
 const { toPascalCase } = require('js-convert-case');
 
+const intSet = new Set(); 
+if(intSet.size < 1) populateIntSet(intSet); 
+const floatSet = new Set();
+if(floatSet.size < 1) populateFloatSet(floatSet); 
+
 function schemaMaker(allColumns) {
   let typeDefs = ``; 
+  const tableNames = []; 
   for(const arr of allColumns) { 
     //console.log('watch this:', pluralize.singular(arr[0].table_name))
+    tableNames.push(arr[0].table_name); 
     let typeDef = `type ${toPascalCase(pluralize.singular(arr[0].table_name))} {\n`;
     //console.log(typeDef);
     for(const colObj of arr) {
@@ -15,11 +22,6 @@ function schemaMaker(allColumns) {
         typeDef += `\t${colObj.column_name}: [${toPascalCase(pluralize.singular(colObj.foreign_table))}]`
       }
       else {
-        const intSet = new Set(); 
-        populateIntSet(intSet); 
-        const floatSet = new Set();
-        populateFloatSet(floatSet); 
-
         // initial type sets
         if(intSet.has(colObj.data_type)) typeDef += `\t${colObj.column_name}: Int`;
         else if(floatSet.has(colObj.data_type)) typeDef += `\t${colObj.column_name}: Float`;
@@ -27,33 +29,13 @@ function schemaMaker(allColumns) {
         else if(colObj.data_type === 'ARRAY') typeDef += `\t${colObj.column_name}: [String]`;
         else typeDef += `\t${colObj.column_name}: String`;
       }
-      if (colObj.is_nullable.toUpperCase() === 'YES') typeDef += `!`;
+      if (colObj.is_nullable.toUpperCase() === 'NO') typeDef += `!`;
       typeDef += `\n`;
-       
-      /*
-      Object types 
-      if foreign key or primary key -> type = ID!
-      else {
-        switch:
-          int -> type = Int 
-          float -> type = Float
-          boolean -> type = Boolean
-          everything else -> String
-        if is_nullable: 'NO' -> add !
-        if foreign_table -> [foreign_table_name]
-      }
-
-      type Query
-
-      type Mutation
-
-
-      singularize/pluralize names/format 
-      */
     }
-    typeDefs += typeDef + '\n';
+    typeDefs += typeDef + '}\n\n';
   }
-  console.log(typeDefs); 
+  typeDefs = attachQueryMutation(typeDefs, tableNames, allColumns); 
+  // console.log(typeDefs); 
   return typeDefs; 
 }
 
@@ -73,6 +55,91 @@ function populateFloatSet(set) {
   set.add('numeric');
   set.add('real');
   set.add('double precision');
+}
+
+function attachQueryMutation(typeDefs, tableNames, allColumns) {
+  let typeQuery = `type Query {\n`; 
+  for(const tableName of tableNames) {
+    const singularName = pluralize.singular(tableName)
+    typeQuery += `\t${tableName}: [${toPascalCase(singularName)}!]!\n`
+    typeQuery += `\t${singularName}(_id: ID!): ${toPascalCase(singularName)}!\n`
+  }
+  typeQuery += `}\n\n`;
+  const typeMutation = attachMutation(tableNames, allColumns); 
+  return typeQuery + typeMutation + typeDefs;
+}
+
+function attachMutation(tableNames, allColumns) {
+  let typeMutation = `type Mutation {\n`
+    // add mutation
+    for (const table of allColumns) {
+      const singularName = toPascalCase(pluralize.singular(table[0].table_name))
+      typeMutation += `add${singularName}(\n`;
+      for (const columns of table) {
+        // if(columns.constraint_type === 'PRIMARY KEY' || columns.constraint_type === 'FOREIGN KEY') {
+        //   typeDef += `\t${colObj.column_name}: ID!,\n`;
+        // }
+        if(columns.constraint_type === 'PRIMARY KEY') continue; 
+        else if(columns.constraint_type === 'FOREIGN KEY') typeMutation += `\t${columns.column_name}: ID!,\n`;
+        else {
+          if (intSet.has(columns.data_type)) typeMutation += `\t${columns.table_name}: Int`;
+          else if (floatSet.has(columns.data_type)) typeMutation += `\t${columns.table_name}: Float`;
+          else if(columns.data_type === 'boolean') typeMutation += `\t${columns.column_name}: Boolean`;
+          else if(columns.data_type === 'ARRAY') typeMutation += `\t${columns.column_name}: [String]`;
+          if (columns.is_nullable.toUpperCase() === 'NO') typeMutation += `!`;
+          typeMutation += `,\n`;
+        }
+        
+        
+        
+      }
+      typeMutation += `): ${singularName}!\n\n`; 
+    }
+    
+    console.log(typeMutation);
+
+    // // update mutation
+    // typeMutation += `update${singularName}(\n`;
+    // for (const table of allColumns) {
+    //   for (const columns of table) {
+        
+    //     if(columns.constraint_type === 'PRIMARY KEY' || columns.constraint_type === 'FOREIGN KEY') {
+    //       typeMutation += `\t${columns.column_name}: ID`;
+    //       if (columns.is_nullable.toUpperCase() === 'NO') typeMutation += `!`;
+    //       typeMutation += `,\n`;
+    //       continue;
+    //     }
+    //     else {
+    //       if (intSet.has(columns.data_type)) typeMutation += `\t${columns.table_name}: Int`;
+    //       else if (floatSet.has(columns.data_type)) typeMutation += `\t${columns.table_name}: Float`;
+    //       else if(columns.data_type === 'boolean') typeMutation += `\t${columns.column_name}: Boolean`;
+    //       else if(columns.data_type === 'ARRAY') typeMutation += `\t${columns.column_name}: [String]`;
+          
+    //       if (columns.is_nullable.toUpperCase() === 'NO') typeMutation += `!`;
+    //       typeMutation += `,\n`;
+    //     }
+    //     console.log(typeMutation); 
+    //   }
+    // }
+    // typeMutation += `):${singularName}!\n\n`; 
+
+    // // delete mutation
+    
+    // typeMutation += `delete${singularName}(_id: ID!): ${singularName}!\n\n`
+  typeMutation += `}\n\n`
+  return typeMutation; 
+  /*
+  for tablename in tablenames:
+    add[singularize pascalcase tablename] (
+      every column name
+    ): singularize pascalcase tablename!
+      
+    update[singularize pascalcase tablename] (
+      every column name
+    ): singularize pascalcase tablename!
+      
+    delete[singularize pascalcase tablename](_id: ID!): singularize pascalcase tablename!
+  */
 }
 
 

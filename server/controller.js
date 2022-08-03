@@ -2,9 +2,10 @@ const { Pool } = require("pg")
 const controller = {};
 const { allTables, columnQueryString} = require('./queries'); 
 const { schemaMaker } = require('./schemaMaker'); 
-const bcrypt = require('bycrypt')
+const bcrypt = require('bcrypt')
 const { User } = require('./models.js');
 require('dotenv').config(); 
+const mongoose = require('mongoose');
 mongoose.connect(process.env.DB_URI, {useUnifiedTopology: true, useNewUrlParser: true}); 
 
 /**
@@ -60,7 +61,7 @@ controller.getAllColumns = async(req, res, next) => {
     for (const table of tableData) { // table is object {table_name: 'name'}; 
       result.push((await db.query(columnQueryString, [table.table_name])).rows);
     }
-    // console.log(result); 
+    //console.log(result); 
     res.locals.allColumns = result; // result is array of array (tables) of objects (columns) 
     next(); 
   }
@@ -88,9 +89,11 @@ controller.getAllColumns = async(req, res, next) => {
 controller.makeSchemas = async (req, res, next) => {
   try {
     const { allColumns } = res.locals; 
+    
     const result = schemaMaker(allColumns);
-    console.log(result);
-    return res.sendStatus(200);
+    const schemaOutput = `const typeDefs = \`\n\n${result}\``;
+    res.locals.schema = schemaOutput;
+    return next();
   }
   catch (err) {
     console.log(err);
@@ -108,7 +111,8 @@ controller.register = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     const hashedPw = await bcrypt.hash(password, 10);
-    await User.create({email: email, password: hashedPw});
+    const newUser = await User.create({email: email, password: hashedPw});
+    res.locals.user = newUser;
     // error handle for non-unique email
     return next();
   } catch (err) {
@@ -126,7 +130,7 @@ controller.login = async (req, res, next) => {
     if (email === undefined || password === undefined) {
       // display incorrect or smth like that
     }
-    const verifiedUser = await User.findOne({email: email, password: password});
+    const verifiedUser = await User.findOne({email: email});
     if (!verifiedUser) {
       console.log('Wrong email/password');  
       res.redirect(400, '/');
@@ -134,6 +138,7 @@ controller.login = async (req, res, next) => {
     else {
       const verifyPW = await bcrypt.compare(password, verifiedUser.password)
       if (verifyPW) {
+        res.locals.user = verifiedUser;
         next();
       }
       else {
@@ -153,9 +158,21 @@ controller.login = async (req, res, next) => {
   }
 }
 
-controller.setUserCookie = (req, res, next) => {
-  const { email } = req.body; 
-  res.cookie('')
+controller.setUserCookie = async (req, res, next) => {
+  try {
+    const { user } = res.locals; 
+    res.cookie('SSID', user._id, { expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000), httpOnly: true}); 
+    return next(); 
+  }
+  catch (err) {
+    next ({
+      log: 'Error at middleware controller.setUserCookie',
+      status: 501,
+      message: {
+        err: 'Error has occured while creating cookie',
+      },
+    });
+  }
 }
 
 module.exports = controller; 

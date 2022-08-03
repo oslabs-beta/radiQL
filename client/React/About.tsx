@@ -37,6 +37,18 @@ const About = props => {
           <div className='about-box about-1'>
             Alex Cusick
           </div>
+          <div className='about-box about-2'>
+            Thomas Ho
+          </div>
+          <div className='about-box about-3'>
+            Roy Jiang
+          </div>
+          <div className='about-box about-4'>
+            Zach Robertson
+          </div>
+          <div className='about-box about-5'>
+            Jordan Williams
+          </div>
         </motion.div>
       </div>
     </div>

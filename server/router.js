@@ -15,11 +15,11 @@ router.post('/submitURI', controller.getTableData, controller.getAllColumns, con
   return res.status(200).json(res.locals.tableData); 
 })
 
-router.get('/register', controller.register, (req, res) => {
+router.post('/register', controller.register, controller.setUserCookie, (req, res) => {
   return res.sendStatus(201);
 })
 
-router.get('/login', controller.login, (req, res) => {
-  return res.sendStatus(201); 
+router.post('/login', controller.login, controller.setUserCookie, (req, res) => {
+  return res.sendStatus(200); 
 })
 module.exports = router; 

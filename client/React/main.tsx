@@ -25,13 +25,13 @@ const Main = props => {
     <div className='body'>
       < NavBar /> 
       <Routes>
-        // About us Page
+        {/* // About us Page */}
         <Route path="/About" element={< About />}/>
-        // Main App Page
+        {/* // Main App Page */}
         <Route path="/" element={
           <div id='main-content' className='mainContent'>
             <div id='dynamic-about' className='dynamicAbout left-1' >
-              <p>radiQL is a GraphQL Schema Generator that meets all your needs</p>
+              <h1>radiQL is a GraphQL Schema Generator that meets all your needs</h1>
             </div>
             <div className='stats left-2'>Stats here?</div>
             <textarea id='code-output' className='codeOutput'>

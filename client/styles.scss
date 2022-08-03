@@ -186,14 +186,12 @@ body {
     'left-2 code-output';
 
   .left-1 {
+    display: flex;
+    flex-direction:column;
     grid-area: left-1;
-    background-color: $white;
-    color: $gray;
-    width: 80%;
-    height: 80%;
-    border-radius: 20px;
-    box-shadow: 6px 5px 2px 1px rgb(0, 0, 0);
-    padding: 5px;
+    color: White;
+    text-align: center;
+    
   }
 
   .left-2 {

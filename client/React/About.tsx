@@ -20,18 +20,9 @@ const About = props => {
   return (
     <div id="about">
       <motion.div className="box"
-        initial={{ opacity: 0, y: "100%" }}
+        initial={{ opacity: 0, y: 100 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.1,
-          default: {
-            duration: 0.3,
-          },
-          y: {
-            type: "spring",
-            damping: 40,
-            stiffness: 200,
-            restDelta: 0.001
-          }}}
+        transition={{ type: "tween", duration: 0.7 }}
       > 
       <div className='app-description'>
         <img id='about-logo' src={logo}/>

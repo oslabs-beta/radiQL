@@ -244,10 +244,18 @@ body {
     section {
       margin: 0px 0px 50px 0px;
       display: flex;
+      &:hover header::after {
+        transform : scaleX(1);
+        transform-origin: bottom left;
+     }
+     &:hover header {
+      transform: scale(1.05);
+     }
       header {
         position : relative;
         display : inline-block;
         font-size: xx-large;
+        transition : transform 0.25s linear;
         &:after {
           content : "";
           position : absolute;
@@ -260,10 +268,6 @@ body {
           transform : scaleX(0);
           transform-origin: bottom right;
         }   
-        &:hover::after {
-          transform : scaleX(1);
-          transform-origin: bottom left;
-       }
       }
       hr {
         width: 90%;
@@ -305,7 +309,12 @@ body {
       box-shadow: 0px 0px 6px 4px gray;
       display: flex;
       align-items: center;
-
+      transition: 0.4s;
+      &:hover {
+        background-color: rgb(202, 236, 255);
+        transform: scale(1.2);
+        transform-origin: bottom;
+      }
       img {
         max-width: 100px;
         border-radius: 50%;
@@ -324,6 +333,12 @@ body {
         svg {
           display: inline;
           font-size: 40px;
+          transition: 0.3s;
+          margin: 2px;
+          &:hover {
+            color: $base-color;
+            transform: scale(1.2);
+          }
         }
       }
     }

@@ -198,14 +198,21 @@ body {
     #steps-list {
       text-align: center;
     }
-    li {
-      margin: 20px 0px;
+    h1{
+      font-size: 2rem;
+      text-decoration: underline;
+    }
+    h2 {
+      text-align:center;
     }
     #circles-container {
       display: flex;
       align-items: center;
     }
     .circle {
+      display: flex;
+      align-items:center;
+      justify-content: center;
       text-align: center;
       line-height: 80px;
       margin: 0px 20px;
@@ -233,7 +240,7 @@ body {
       button {
         &:hover {
           background-color: $base-light-20;
-          color: $base-color;
+          color: lime;
         }
         border: 1px solid white;
         padding: 5px;

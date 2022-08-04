@@ -91,8 +91,10 @@ controller.makeSchemas = async (req, res, next) => {
     const { allColumns } = res.locals; 
     
     const result = schemaMaker(allColumns);
-    const schemaOutput = `const typeDefs = \`\n\n${result.resolver}\``;
-    res.locals.schema = schemaOutput;
+    const schemaOutput = `const typeDefs = \`\n\n${result.schema}\``;
+    const resolverOutput = `const resolvers ={\n\t${result.resolver}}`; 
+    const output = {schema: schemaOutput, resolver: resolverOutput};
+    res.locals.output = output.resolver;
     return next();
   }
   catch (err) {

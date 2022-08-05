@@ -5,8 +5,8 @@ const { schemaMaker } = require('./schemaMaker');
 const bcrypt = require('bcrypt')
 const { User } = require('./models.js');
 require('dotenv').config(); 
-const mongoose = require('mongoose');
-mongoose.connect(process.env.DB_URI, {useUnifiedTopology: true, useNewUrlParser: true}); 
+// const mongoose = require('mongoose');
+// mongoose.connect(process.env.DB_URI, {useUnifiedTopology: true, useNewUrlParser: true}); 
 
 /**
  * 
@@ -91,8 +91,10 @@ controller.makeSchemas = async (req, res, next) => {
     const { allColumns } = res.locals; 
     
     const result = schemaMaker(allColumns);
-    const schemaOutput = `const typeDefs = \`\n\n${result}\``;
-    res.locals.schema = schemaOutput;
+    const schemaOutput = `const typeDefs = \`\n\n${result.schema}\``;
+    const resolverOutput = `const resolvers ={\n\t${result.resolver}}`; 
+    const output = {schema: schemaOutput, resolver: resolverOutput};
+    res.locals.output = output.resolver;
     return next();
   }
   catch (err) {

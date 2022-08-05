@@ -51,7 +51,7 @@ const Main = props => {
     if(codeBody) {
       const stepOne= (document.getElementById('1') as HTMLInputElement)
       const stepTwo = (document.getElementById('2') as HTMLInputElement)
-      stepOne.classList.remove('current-step');
+      stepOne.classList.remove('.current-step');
       stepTwo.classList.add('current-step')
       setInstruction(2)
     }
@@ -68,7 +68,7 @@ const Main = props => {
         <Route path="/" element={
           <div id='main-content' className='mainContent'>
             <div id='dynamic-about' className='dynamicAbout left-1' >
-              <h1>Steps to use radiQL</h1>
+              <h1>How to use radiQL:</h1>
               <div id="circles-container">
                 <span id='1' className='circle current-step'>{instruction > 1 ? <FaCheck style={{'color': 'lime'}} /> : 1}</span>
                 <FaArrowRight />
@@ -79,7 +79,7 @@ const Main = props => {
               { instruction === 1 ? <h2>1. Paste your URI below and click "Convert!"</h2> : instruction === 2 ? <h2>2. Click "<FaClipboardList style={{'display': 'inline-block'}}/>" in the output code block.</h2> : instruction === 3 ? <h2>3. Paste code into your server to begin using GraphQL.</h2> : <h2>error with instructions</h2> }
               <div id="uri-input-container">
                 <input id='userURI' type="text" placeholder='        Your Database URI' />
-                <button id='convert-btn' onClick={() => handleConvertURI()} >Convert!</button>
+                <motion.button whileHover={{scale: 1.1}} whileTap={{scale: 0.9}} id='convert-btn' onClick={() => handleConvertURI()} >Convert!</motion.button>
               </div>
               <div className='stats left-2'>Stats here?</div>
             </div>

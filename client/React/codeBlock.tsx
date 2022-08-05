@@ -45,8 +45,9 @@ const CodeBlock = ({codeBody}) => {
   return (
     <div  className="container mx-auto codeOutput overflow-scroll">
       <div id='zoom-controls-container'>
-        <FaPlusSquare onClick={() => zoomIn()}/>
-        <FaMinusSquare onClick={() => zoomOut()}/>
+        {/* @ts-ignore */}
+        <FaPlusSquare style={{'color':'#1b2240'}} onClick={() => zoomIn()}/>
+        <FaMinusSquare style={{'color':'#1b2240'}} onClick={() => zoomOut()}/>
         
       </div>
       <div id='code-container' className="demo">

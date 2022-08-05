@@ -35,7 +35,7 @@ body {
   padding: 0;
   font-family: 'Roboto', sans-serif;
   // overflow-x: hidden;
-  background-color: $base-dark-30;
+  background-color: white;
   color: $white;
   font-size: 20px;
   height: 100%;
@@ -53,13 +53,12 @@ body {
 .navbar {
   width: 100%;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
-  top: 0;
-  left: 0;
-  font-size: 17px;
-  height: 45px;
-  margin-bottom: 10px;
+  font-size: 16px;
+  height: 50px;
+  padding: 0px 30px;
+  margin-bottom: 20px;
   background-color: white;
   z-index: 5;
   #logo {
@@ -69,8 +68,7 @@ body {
   }
   .links {
     .nav-link {
-      margin: 7px 20px;
-      padding: 6px;
+      padding: 15px;
       position: relative;
       display: inline-block;
       box-sizing: border-box;
@@ -99,7 +97,7 @@ body {
         transform: scale(0);
       }
       &:hover:after {
-        transform: scale(1);
+        transform: scale(.8);
       }
       transition: 0.5s;
       &:hover {
@@ -176,8 +174,8 @@ body {
 }
 
 #main-content {
-  margin: 5px 0px;
-  padding: 3px 0px;
+  margin: 0px 0px;
+  padding: 3px 30px;
   width: 100vw;
   height: 85%;
   display: grid;
@@ -187,39 +185,46 @@ body {
   grid-row-gap: 0px;
 
   .left-1 {
-    margin-left: 30px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
     grid-area: 1 / 1 / 2 / 2;
-    padding: 8px;
-    height: 80vh;
+    padding: 10px;
+    border: 1px solid #1b2240;
+    background-color:rgb(255, 255, 255);
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+
     #steps-list {
       text-align: center;
     }
     h1{
       font-size: 2rem;
       text-decoration: underline;
+      color: #1b2240;
     }
     h2 {
       text-align:center;
+      color: #1b2240;
     }
     #circles-container {
       display: flex;
       align-items: center;
+      color: #1b2240;
     }
     .circle {
       display: flex;
       align-items:center;
       justify-content: center;
       text-align: center;
-      line-height: 80px;
+      line-height: 50px;
       margin: 0px 20px;
-      width: 80px;
-      height: 80px;
-      border: 1px solid white;
+      width: 50px;
+      height: 50px;
+      border: 1px solid #1b2240;
       border-radius: 50%;
+      box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
     }
     .current-step {
       background-color: orange;
@@ -228,21 +233,27 @@ body {
     #uri-input-container {
       display: flex;
       flex-direction: column;
-      border: 1px solid white;
       justify-content: space-evenly;
-      padding: 20px;
+      
       input {
         color: black;
         font-weight: 400;
         padding: 5px;
         margin-bottom: 10px;
+        border: 2px solid #1b2240;
+        border-radius: 5px;
+
       }
       button {
         &:hover {
-          background-color: $base-light-20;
-          color: lime;
+          border-color:#36416f; 
+          background-color: #36416f;
+          color: orange;
         }
-        border: 1px solid white;
+        background-color: #1b2240;
+        color: white;
+        border: 3px solid #1b2240;
+        border-radius: 5px;
         padding: 5px;
       }
     }
@@ -251,21 +262,29 @@ body {
   .left-2 {
     background-color: $white;
     color: $gray;
-    border-radius: 20px;
-    box-shadow: 6px 5px 2px 1px rgb(0, 0, 0);
-    padding: 5px;
+    border: 1px solid #1b2240;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+    padding: 10px;
+    width: 300px;
+    height: 100px;
   }
 
   #zoom-controls-container {
     display: flex;
+    position:absolute;
     justify-content: flex-end;
+    align-items: flex-end;
+    width: 100%;
+    z-index: 150;
   }
 
   .codeOutput {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     font-size: 20px;
-    min-height: 80vh;
-    background-color: rgba(29, 29, 29, 0.898);
-    width: 55vw;
+    background-color:white;
     grid-area: 1 / 2 / 2 / 3;
   }
 }

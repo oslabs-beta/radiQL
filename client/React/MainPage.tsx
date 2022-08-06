@@ -9,7 +9,8 @@ import MountainLogo from './MountainLogo'
 
 const MainPage = props => {
 
-  const [codeBody, setCodeBody] = useState()
+  const [schemaBody, setschemaBody] = useState()
+  const [resolverBody, setresolverBody] = useState()
   
   //send uri request
   const handleConvertURI = async() => {
@@ -18,8 +19,9 @@ const MainPage = props => {
       const response = await axios.post('/submitURI', {dbURI: dbURI})
       
       console.log(response.data)
+
       //@ts-ignore
-      setCodeBody(response.data)
+      setschemaBody(response.data.schema);
     } catch(err){
       console.log('dbURI', err)
     }
@@ -44,14 +46,14 @@ const MainPage = props => {
   const [instruction, setInstruction] = useState(1)
 
   useEffect(() => {
-    if(codeBody) {
+    if(schemaBody) {
       const stepOne= (document.getElementById('1') as HTMLInputElement)
       const stepTwo = (document.getElementById('2') as HTMLInputElement)
-      stepOne.classList.remove('.current-step');
+      stepOne.classList.remove('current-step');
       stepTwo.classList.add('current-step')
       setInstruction(2)
     }
-  }, [codeBody])
+  }, [schemaBody])
 
 
   return (
@@ -73,7 +75,7 @@ const MainPage = props => {
         </div>
         <div className='stats left-2'>Stats here?</div>
       </div>
-      <CodeBlock codeBody={codeBody} />
+      <CodeBlock codeBody={schemaBody} />
     </div>
   )
 }

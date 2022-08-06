@@ -1,4 +1,4 @@
-const allTables = `SELECT table_name FROM INFORMATION_SCHEMA.tables WHERE table_type='BASE TABLE' AND table_schema='public'`; 
+const allTables = `SELECT table_name FROM INFORMATION_SCHEMA.tables WHERE table_schema='public' AND (table_type='FOREIGN TABLE' OR table_type='BASE TABLE')`; 
 
 const columnQueryString = `
   SELECT 

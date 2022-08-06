@@ -4,9 +4,9 @@ input: database
 schema generation based on table row types
 resolver generation based on schema?
 */
-const express = require('express'); 
-const router = express.Router(); 
-const path = require('path'); 
+const express = require('express');
+const router = express.Router();
+const path = require('path');
 
 const controller = require('./controller.js');
 
@@ -15,11 +15,21 @@ router.post('/submitURI', controller.getTableData, controller.getAllColumns, con
   return res.status(200).json(res.locals.output); 
 })
 
-router.post('/register', controller.register, controller.setUserCookie, (req, res) => {
-  return res.sendStatus(201);
-})
+router.post(
+  '/register',
+  controller.register,
+  controller.setUserCookie,
+  (req, res) => {
+    return res.sendStatus(201);
+  }
+);
 
-router.post('/login', controller.login, controller.setUserCookie, (req, res) => {
-  return res.sendStatus(200); 
-})
-module.exports = router; 
+router.post(
+  '/login',
+  controller.login,
+  controller.setUserCookie,
+  (req, res) => {
+    return res.sendStatus(200);
+  }
+);
+module.exports = router;

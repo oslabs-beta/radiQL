@@ -6,7 +6,6 @@ import { FaTimes } from 'react-icons/fa';
 import { motion, AnimatePresence } from "framer-motion";
 
 
-
 const LoginModal = ({setShowLogin}) => {
   const [isRegistered, setIsRegistered] = React.useState(true)
   const [passwordMatch, setPasswordMatch] = React.useState(true)
@@ -38,7 +37,6 @@ const LoginModal = ({setShowLogin}) => {
   } catch (error) {
     console.log('axios register post error', error)
   }
-
 }
 
 //handle Login click function
@@ -78,9 +76,6 @@ const handleLogin = async () => {
         {/* if user is registering btn says register and use register onclick functiion; if user is logging in, btn says log in use login onclick function  */}
         <motion.button whileHover={{scale: 1.1}} whileTap={{scale: 0.9}} id="login-btn" onClick={isRegistered ? () => handleLogin() : () => handleRegister()}>
         {isRegistered ? 'Login': 'Create Account'}</motion.button>
-
-
-        
         {isRegistered ? <a id="register" onClick={() => setIsRegistered(false)} href='#'>Register?</a> : passwordMatch ? <a id="login?" onClick={() => setIsRegistered(true)} href='#'>Login?</a> : <p className="login-error-message">Passwords do not match!</p> }
 
         {/* if passwords dont match upon registration, show error displaying that passwords do not match  */}

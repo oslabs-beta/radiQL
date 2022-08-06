@@ -14,17 +14,18 @@ const MainPage = props => {
   
   //send uri request
   const handleConvertURI = async() => {
+    const blurBox = (document.getElementById('blur-container'));
     const dbURI = (document.getElementById('userURI') as HTMLInputElement).value;
     try{
+      blurBox?.classList.remove('hidden');
       const response = await axios.post('/submitURI', {dbURI: dbURI})
-      
       console.log(response.data)
-
       //@ts-ignore
       setschemaBody(response.data.schema);
     } catch(err){
       console.log('dbURI', err)
     }
+    blurBox?.classList.add('hidden');
   }
 
   // instructions
@@ -59,7 +60,7 @@ const MainPage = props => {
   return (
     <div id='main-content' className='mainContent'>
       <div id='dynamic-about' className='dynamicAbout left-1' >
-        {/* < MountainLogo /> */}
+        
         <h1>How to use radiQL:</h1>
         <div id="circles-container">
           <span id='1' className='circle current-step'>{instruction > 1 ? <FaCheck style={{'color': 'lime'}} /> : 1}</span>
@@ -69,13 +70,16 @@ const MainPage = props => {
           <span id='3' className='circle'>3</span>
         </div>
         { instruction === 1 ? <h2>1. Paste your URI below and click "Convert!"</h2> : instruction === 2 ? <h2>2. Click "<FaClipboardList style={{'display': 'inline-block'}}/>" in the output code block.</h2> : instruction === 3 ? <h2>3. Paste code into your server to begin using GraphQL.</h2> : <h2>error with instructions</h2> }
-        <div id="uri-input-container">
+        <div id="uri-input-container" className='p-10'>
           <input id='userURI' type="text" placeholder='        Your Database URI' />
           <motion.button whileHover={{scale: 1.1}} whileTap={{scale: 0.9}} id='convert-btn' onClick={() => handleConvertURI()} >Convert!</motion.button>
         </div>
         <div className='stats left-2'>Stats here?</div>
       </div>
       <CodeBlock codeBody={schemaBody} />
+      <div id='blur-container' className='hidden'>
+          < MountainLogo />
+        </div>
     </div>
   )
 }

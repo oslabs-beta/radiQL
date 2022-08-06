@@ -175,18 +175,22 @@ body {
 }
 
 #main-content {
-  margin: 0px 0px;
-  padding: 3px 30px;
-  width: 100vw;
+  margin: 0px 30px;
+  padding: 3px 0px;
+  width: auto;
   height: 85%;
   display: grid;
   grid-template-columns: 0.5fr 1fr;
   grid-template-rows: 1fr;
   grid-column-gap: 10px;
   grid-row-gap: 0px;
-
+  position: relative;
+  
   .left-1 {
+    position: relative;
     display: flex;
+    height: 100%;
+    width: 100%;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
@@ -251,11 +255,13 @@ body {
           background-color: #36416f;
           color: orange;
         }
+        
         background-color: #1b2240;
         color: white;
         border: 3px solid #1b2240;
         border-radius: 5px;
         padding: 5px;
+        z-index: 0;
       }
     }
   }
@@ -291,18 +297,34 @@ body {
 }
 
 // Loading animation 
-#animate-container {position: relative;
+#animate-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
   svg {
+    z-index: 100;
     position: absolute;
   }
 }
 
-$params: 4s cubic-bezier(0.47, 0, 0.745, 0.715) both infinite;
+$params: 2s cubic-bezier(0.47, 0, 0.745, 0.715) both infinite;
 
+#mountain {
+  width: 90%;
+  height: 90%;
+}
 .svg-elem-1{
   animation:animate-svg-stroke-1 $params, animate-svg-fill-1 $params;
 }
 
+#snow{
+  width: 90%;
+  height: 90%;
+}
 .svg-elem-2 {
   animation: animate-svg-stroke-2 $params, animate-svg-fill-2 $params;
 }
@@ -316,8 +338,9 @@ $params: 4s cubic-bezier(0.47, 0, 0.745, 0.715) both infinite;
     stroke-dasharray:356.781px;
     stroke-opacity:1}
   35%{stroke-dashoffset:713.562px;
-    stroke-dasharray:356.781px}
-  100%{stroke-dashoffset:713.562px;
+    stroke-dasharray:356.781px;
+    stroke-opacity:1}
+  90%{stroke-dashoffset:713.562px;
     stroke-dasharray:356.781px;
     stroke-opacity:1}
   100%{stroke-dashoffset:713.562px;
@@ -354,6 +377,9 @@ $params: 4s cubic-bezier(0.47, 0, 0.745, 0.715) both infinite;
   90% {stroke-dashoffset: $end;
     stroke-dasharray: $start;
     stroke-opacity: 1}
+  98% {stroke-dashoffset: $end;
+    stroke-dasharray: $start; 
+    stroke-opacity: 0}
   100% {stroke-dashoffset: $end;
     stroke-dasharray: $start; 
     stroke-opacity: 0}
@@ -373,6 +399,9 @@ $params: 4s cubic-bezier(0.47, 0, 0.745, 0.715) both infinite;
   90% {stroke-dashoffset: $end;
     stroke-dasharray: $start;
     stroke-opacity:1}
+  98% {stroke-dashoffset: $end;
+    stroke-dasharray: $start; 
+    stroke-opacity: 0}
   100% {stroke-dashoffset: $end;
     stroke-dasharray: $start;
     stroke-opacity:0}
@@ -510,6 +539,18 @@ $params: 4s cubic-bezier(0.47, 0, 0.745, 0.715) both infinite;
       margin: 0px 0px 0px 0px;
     }
   }
+}
+
+.codeDiv {
+  background-color: #b8c5d6;
+}
+
+#blur-container {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  backdrop-filter: blur(3px);
+  background-color: #7d8fde6f;
 }
 
 #code1 {

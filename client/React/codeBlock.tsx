@@ -62,7 +62,7 @@ const CodeBlock = ({codeBody}) => {
 
   return (
     // drop-down for theme
-    <div className="codeDiv">
+    <div className="codeDiv overflow-scroll">
       <div className="flex flex-row flex-grow justify-around items-end">
         <h3>Generated GraphQL Schema:</h3>
         <form>
@@ -105,9 +105,9 @@ const CodeBlock = ({codeBody}) => {
         <FaMinusSquare style={{'color':'#1b2240'}} onClick={() => zoomOut()}/>
       </div>
        {/* codeBlock */}
-      <div className="container mx-auto codeOutput overflow-scroll" >
-        <div id="copyblockid" className="demo overflow-scroll">
-          <CopyBlock id="copyblockid" className="overflow-scroll"
+      <div className="container mx-auto codeOutput" >
+        <div id="copyblockid" className="demo">
+          <CopyBlock id="copyblockid"
             language={'javascript'}
             text={codeBody ? codeBody : finalCode}
             showLineNumbers={lineNumbers}

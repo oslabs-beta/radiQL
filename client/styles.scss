@@ -221,6 +221,95 @@ body {
   }
 }
 
+// Loading animation 
+#animate-container {position: relative;
+  svg {
+    position: absolute;
+  }
+}
+
+$params: 4s cubic-bezier(0.47, 0, 0.745, 0.715) both infinite;
+
+.svg-elem-1{
+  animation:animate-svg-stroke-1 $params, animate-svg-fill-1 $params;
+}
+
+.svg-elem-2 {
+  animation: animate-svg-stroke-2 $params, animate-svg-fill-2 $params;
+}
+
+.svg-elem-3 {
+  animation: animate-svg-stroke-3 $params, animate-svg-fill-2 $params;
+}
+
+@keyframes animate-svg-stroke-1{
+  0%{stroke-dashoffset:356.781px;
+    stroke-dasharray:356.781px;
+    stroke-opacity:1}
+  35%{stroke-dashoffset:713.562px;
+    stroke-dasharray:356.781px}
+  100%{stroke-dashoffset:713.562px;
+    stroke-dasharray:356.781px;
+    stroke-opacity:1}
+  100%{stroke-dashoffset:713.562px;
+    stroke-dasharray:356.781px;
+    stroke-opacity:0}};
+
+@keyframes animate-svg-fill-1{
+  0%{fill:transparent}
+  35%{fill:transparent}
+  50%{fill:rgb(20,93,160)}
+  90%{fill:rgb(20,93,160)}
+  100%{fill:transparent}
+}
+
+@keyframes animate-svg-fill-2 {
+  0% {fill: transparent}
+  60% {fill: transparent}
+  85% {fill: rgb(255, 255, 255)}
+  90% {fill: rgb(255, 255, 255)}
+  100% {fill: transparent}
+}
+
+@keyframes animate-svg-stroke-2 {
+  $start: 106.036px;
+  $end: 212.073px;
+
+  0% {stroke-dashoffset: $start;
+    stroke-dasharray: $start;
+    stroke-opacity: 1}
+  40% {stroke-dashoffset: $start;
+    stroke-dasharray: $start}
+  65% {stroke-dashoffset: $end;
+    stroke-dasharray: $start}
+  90% {stroke-dashoffset: $end;
+    stroke-dasharray: $start;
+    stroke-opacity: 1}
+  100% {stroke-dashoffset: $end;
+    stroke-dasharray: $start; 
+    stroke-opacity: 0}
+}
+
+@keyframes animate-svg-stroke-3 {
+  $start: 162.74px;
+  $end: 325.49px;
+
+  0% {stroke-dashoffset: $start;
+    stroke-dasharray: $start;
+    stroke-opacity:1}
+  40% {stroke-dashoffset: $start;
+    stroke-dasharray: $start}
+  65% {stroke-dashoffset: $end;
+    stroke-dasharray: $start}
+  90% {stroke-dashoffset: $end;
+    stroke-dasharray: $start;
+    stroke-opacity:1}
+  100% {stroke-dashoffset: $end;
+    stroke-dasharray: $start;
+    stroke-opacity:0}
+}
+
+
 #about {
   font-family: 'Raleway', sans-serif;
   font-weight: 100;
@@ -316,6 +405,7 @@ body {
         transform-origin: bottom;
       }
       img {
+        margin: 0px 0px 0px 2px;
         max-width: 100px;
         border-radius: 50%;
         box-shadow: 0px 0px 4px 1px gray;
@@ -367,3 +457,5 @@ body {
   font-family: "Fira Code", monospace;
   grid-area: left-2; 
 }
+
+

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { CopyBlock, hybrid, dracula } from "react-code-blocks";
 import "../styles.scss";
 
-const dummyFetchedCode = `class HelloMessage extends React.Component {
+const dummyFetchedCode: string = `class HelloMessage extends React.Component {
   handlePress = () => {
     alert('Hello')
   }

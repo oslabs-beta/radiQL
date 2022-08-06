@@ -57,7 +57,7 @@ const MainPage = props => {
   return (
     <div id='main-content' className='mainContent'>
       <div id='dynamic-about' className='dynamicAbout left-1' >
-        < MountainLogo />
+        {/* < MountainLogo /> */}
         <h1>How to use radiQL:</h1>
         <div id="circles-container">
           <span id='1' className='circle current-step'>{instruction > 1 ? <FaCheck style={{'color': 'lime'}} /> : 1}</span>

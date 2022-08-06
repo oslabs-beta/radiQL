@@ -30,7 +30,7 @@ ReactDOM.render(
 // const finalCode = genBoilerPLate(serverOption, dummyFetchedCode);
 const finalCode = dummyFetchedCode;
 
-const CodeBlock = () => {
+const CodeBlock = ({codeBody}) => {
   const [lineNumbers, toggleLineNumbers] = useState(true);
   const [theme, setTheme] = useState(hybrid);
   const [boilerPlateCode, setBoilerPlateCode] = useState('useBoilerPlateCode');
@@ -105,15 +105,14 @@ const CodeBlock = () => {
         <FaMinusSquare style={{'color':'#1b2240'}} onClick={() => zoomOut()}/>
       </div>
        {/* codeBlock */}
-      <div className="container mx-auto">
-        <div id="copyblockid" className="demo">
-          <CopyBlock id="copyblockid"
+      <div className="container mx-auto codeOutput overflow-scroll" >
+        <div id="copyblockid" className="demo overflow-scroll">
+          <CopyBlock id="copyblockid" className="overflow-scroll"
             language={'javascript'}
-            text={finalCode}
+            text={codeBody ? codeBody : finalCode}
             showLineNumbers={lineNumbers}
             theme={theme}
             wrapLines={true}
-            codeBlock
           />
         </div>
       </div>

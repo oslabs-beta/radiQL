@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from "framer-motion";
 import {FaClipboardList, FaArrowRight, FaCheck} from 'react-icons/fa';
 // Components: 
-import CodeBlock from './codeBlock';
+import CodeBlock from './CodeBlock';
 import MountainLogo from './MountainLogo'
 
 const MainPage = props => {

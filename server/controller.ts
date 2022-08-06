@@ -1,10 +1,12 @@
-const { Pool } = require("pg")
-const controller = {};
-const { allTables, columnQueryString} = require('./queries'); 
-const { schemaMaker } = require('./schemaMaker'); 
-const bcrypt = require('bcrypt')
-const { User } = require('./models.js');
+// const { Pool } = require("pg");
+import { Pool } from 'pg';
+const controller: any = {}; 
+import { allTables, columnQueryString} from './queries'; 
+import { schemaMaker } from './schemaMaker'; 
+import bcrypt from 'bcrypt';
+import User from './models';
 require('dotenv').config(); 
+import {Request, Response, NextFunction} from "express"; 
 // const mongoose = require('mongoose');
 // mongoose.connect(process.env.DB_URI, {useUnifiedTopology: true, useNewUrlParser: true}); 
 
@@ -18,15 +20,15 @@ require('dotenv').config();
  * stores all names in an array in res.locals.tableData
  * stores the database URI in res.locals.dbURI
  */
-controller.getTableData = async (req, res, next) => {
+controller.getTableData = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { dbURI } = req.body;
     res.locals.tableData = 'Hello';
     const db = new Pool ({
       connectionString: dbURI,
     })
-    const queryString = allTables;
-    const result = await db.query(queryString); // gets all table names
+    const queryString: string = allTables;
+    const result: any = await db.query(queryString); 
     res.locals.tableData = result.rows;
     res.locals.dbURI = dbURI; 
     next();
@@ -50,13 +52,13 @@ controller.getTableData = async (req, res, next) => {
  * 
  * stores in res.locals.allColumns an array of arrays (tables) of objects (columns)
  */
-controller.getAllColumns = async(req, res, next) => {
+controller.getAllColumns = async(req: Request, res: Response, next: NextFunction) => {
   try {
     const { tableData, dbURI } = res.locals;
     const db = new Pool ({
       connectionString: dbURI,
     })
-    const result = []; 
+    const result: Array<Array<object>> = []; 
     for (const table of tableData) { // table is object {table_name: 'name'}; 
       result.push((await db.query(columnQueryString, [table.table_name])).rows);
     }
@@ -85,14 +87,14 @@ controller.getAllColumns = async(req, res, next) => {
  * 
  * 
  */
-controller.makeSchemas = async (req, res, next) => {
+controller.makeSchemas = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { allColumns } = res.locals; 
     
-    const result = schemaMaker(allColumns);
-    const schemaOutput = `const typeDefs = \`\n\n${result.schema}\``;
-    const resolverOutput = `const resolvers ={\n\t${result.resolver}}`; 
-    const output = {schema: schemaOutput, resolver: resolverOutput};
+    const result: {schema: string, resolver: string} = schemaMaker(allColumns);
+    const schemaOutput: string = `const typeDefs = \`\n\n${result.schema}\``;
+    const resolverOutput: string = `const resolvers ={\n\t${result.resolver}}`; 
+    const output: {schema: string, resolver: string} = {schema: schemaOutput, resolver: resolverOutput};
     res.locals.output = output; 
     return next();
   }
@@ -108,7 +110,7 @@ controller.makeSchemas = async (req, res, next) => {
   }
 }
 
-controller.register = async (req, res, next) => {
+controller.register = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { email, password } = req.body;
     const hashedPw = await bcrypt.hash(password, 10);
@@ -125,7 +127,7 @@ controller.register = async (req, res, next) => {
   }
 }
 
-controller.login = async (req, res, next) => {
+controller.login = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { email, password } = req.body;
     if (email === undefined || password === undefined) {
@@ -159,7 +161,7 @@ controller.login = async (req, res, next) => {
   }
 }
 
-controller.setUserCookie = async (req, res, next) => {
+controller.setUserCookie = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { user } = res.locals; 
     res.cookie('SSID', user._id, { expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000), httpOnly: true}); 
@@ -176,4 +178,4 @@ controller.setUserCookie = async (req, res, next) => {
   }
 }
 
-module.exports = controller; 
+export default controller;

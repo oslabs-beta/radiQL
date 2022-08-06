@@ -1,14 +1,27 @@
-const pluralize = require('pluralize');
-const { toPascalCase, toCamelCase } = require('js-convert-case');
+import pluralize from 'pluralize';
+import { toPascalCase, toCamelCase } from 'js-convert-case';
 
-const intSet = new Set(); 
+const intSet: Set<string> = new Set(); 
 if(intSet.size < 1) populateIntSet(intSet); 
-const floatSet = new Set();
+const floatSet: Set<string> = new Set();
 if(floatSet.size < 1) populateFloatSet(floatSet); 
 
-function schemaMaker(allColumns) {
-  let baseTables = [];
-  let joinTables = [];
+type column = {
+  column_name: string,
+  table_name: string,
+  data_type: string,
+  character_maximum_length: number | null,
+  is_nullable: string,
+  constraint_name: string,
+  constraint_type: string,
+  foreign_table: string,
+  foreign_column: string,
+};
+
+export function schemaMaker(allColumns: Array<Array<column>>): {schema: string, resolver: string} {
+
+  let baseTables: Array<Array<column>> = [];
+  let joinTables: Array<Array<column>> = [];
   for (const table of allColumns){
     if (!checkJoinTable(table)){
       baseTables.push(table);
@@ -17,13 +30,13 @@ function schemaMaker(allColumns) {
     }
   }
 
-  let typeDefs = ``; 
-  const baseTableNames = []; 
+  let typeDefs: string | {schema: string, resolver: string} = ``; 
+  const baseTableNames: Array<string> = []; 
 
   for(const arr of baseTables) { 
 
     baseTableNames.push(arr[0].table_name); 
-    let typeDef = `type ${toPascalCase(pluralize.singular(arr[0].table_name))} {\n`;
+    let typeDef: string | {schema: string, resolver: string} = `type ${toPascalCase(pluralize.singular(arr[0].table_name))} {\n`;
 
     for(const colObj of arr) {
       if(colObj.constraint_type === 'PRIMARY KEY') {
@@ -45,20 +58,20 @@ function schemaMaker(allColumns) {
     }
     typeDefs += typeDef + '}\n\n';
   }
-
+  
   typeDefs = attachQueryMutation(typeDefs, baseTableNames, baseTables, joinTables);
   return typeDefs; 
 }
 
-function checkJoinTable(table){
-  let foreignKeyCount = 0;
-  for (const column of table){
+function checkJoinTable(table: Array<column>): boolean {
+  let foreignKeyCount: number = 0;
+  for (const column of table) {
     if (column.constraint_type === 'FOREIGN KEY') foreignKeyCount++
   }
   return foreignKeyCount === table.length - 1;
 }
 
-function populateIntSet(set) {
+function populateIntSet(set: Set<string>): void {
   set.add('smallint');
   set.add('integer');
   set.add('bigint');
@@ -67,7 +80,7 @@ function populateIntSet(set) {
   set.add('bigserial');
 }
 
-function populateFloatSet(set) {
+function populateFloatSet(set: Set<string>): void {
   set.add('money');
   set.add('float'); 
   set.add('decimal');
@@ -76,9 +89,9 @@ function populateFloatSet(set) {
   set.add('double precision');
 }
 
-function attachQueryMutation(typeDefs, baseTableNames, baseTables, joinTables) {
-  let typeQuery = `type Query {\n`; 
-  let resolverQuery = `\nQuery: {\n\n`;
+function attachQueryMutation(typeDefs: string, baseTableNames: Array<string>, baseTables: Array<Array<column>>, joinTables: Array<Array<column>>) {
+  let typeQuery: string = `type Query {\n`; 
+  let resolverQuery: string = `\nQuery: {\n\n`;
   for(const tableName of baseTableNames) {
     const singularName = pluralize.singular(tableName);
     typeQuery += `\t${tableName}: [${toPascalCase(singularName)}!]!\n`;
@@ -93,18 +106,18 @@ function attachQueryMutation(typeDefs, baseTableNames, baseTables, joinTables) {
   }
   resolverQuery += `},\n\n`
   typeQuery += `}\n\n`;
-  const typeMutation = attachMutation(baseTableNames, baseTables); 
-  const resolverMutation = attachResolverMutation(baseTableNames, baseTables); 
-  const resolverTypeDefs = attachResolverTypeDefs(baseTableNames, baseTables.flat(Infinity), joinTables); 
+  const typeMutation = attachMutation(baseTables); 
+  const resolverMutation = attachResolverMutation(baseTables); 
+  const resolverTypeDefs = attachResolverTypeDefs(baseTableNames, <Array<column>>baseTables.flat(Infinity), joinTables); 
   
   return {schema: (typeQuery + typeMutation + typeDefs).slice(0, -1), resolver: (resolverQuery + resolverMutation + resolverTypeDefs)}; // this is now typeDefs
 }
 
-function attachMutation(tableNames, baseTables) {
-  let typeMutation = `type Mutation {\n`;
+function attachMutation(baseTables: Array<Array<any>>): string {
+  let typeMutation: string = `type Mutation {\n`;
     // add mutation
     for (const table of baseTables) {
-      const singularName = toPascalCase(pluralize.singular(table[0].table_name));
+      const singularName: string = toPascalCase(pluralize.singular(table[0].table_name));
       typeMutation += `add${singularName}(\n`;
       for (const columns of table) {
         if(columns.constraint_type === 'PRIMARY KEY') continue; 
@@ -153,16 +166,16 @@ function attachMutation(tableNames, baseTables) {
   return typeMutation; 
 }
 
-function attachResolverMutation(tableNames, baseTables) {
-  let resolverMutation = `Mutation: {\n\n`;
+function attachResolverMutation(baseTables: Array<Array<column>>): string {
+  let resolverMutation: string = `Mutation: {\n\n`;
   for (const table of baseTables) {
     const singularName = toPascalCase(pluralize.singular(table[0].table_name));
 
     // add mutation resolver
     resolverMutation += `\tadd${singularName}: (root, args) => {\n`;
-    let queryString = ''
-    let valueHolder = ''; 
-    let valuesCount = 1; 
+    let queryString: string = ''
+    let valueHolder: string = ''; 
+    let valuesCount: number = 1; 
     for(const columns of table) {
       if(columns.column_name === '_id') continue; 
       queryString += `${columns.column_name}, `;
@@ -195,7 +208,7 @@ function attachResolverMutation(tableNames, baseTables) {
   return resolverMutation;
 }
 
-function attachResolverTypeDefs(baseTableNames, baseTables, joinTables) { 
+function attachResolverTypeDefs(baseTableNames: string[], baseTables: Array<column>, joinTables:Array<Array<column>>): string { 
   let mutationTypeDef = ``;
   for(const btName of baseTableNames) { 
     const singularName = toPascalCase(pluralize.singular(btName));
@@ -209,8 +222,10 @@ function attachResolverTypeDefs(baseTableNames, baseTables, joinTables) {
   return mutationTypeDef; 
 }
 
-function addColumnRelations(btName, baseTables) {
-  let tempString = ``;
+
+
+function addColumnRelations(btName: string, baseTables: Array<column>): string {
+  let tempString: string = ``;
   for(const col of baseTables) {
     if(col.foreign_table === btName) {
       tempString += `\t${toCamelCase(col.table_name)}: (root) => {\n`;
@@ -224,8 +239,8 @@ function addColumnRelations(btName, baseTables) {
   return tempString;
 }
 
-function addForeignTables(btName, baseTables){
-  let tempString = ``;
+function addForeignTables(btName: string, baseTables: Array<column>): string {
+  let tempString: string = ``;
   for(const col of baseTables) {
     if(col.table_name === btName && col.constraint_type === 'FOREIGN KEY') {
       tempString += `\t${toCamelCase(col.foreign_table)}: (root) => {\n`;
@@ -240,9 +255,9 @@ function addForeignTables(btName, baseTables){
   return tempString;
 }
 
-function addJoinTables(btName, joinTables) {
-  let tempString = '';
-  const foreignTableIndex = []
+function addJoinTables(btName: string, joinTables: Array<Array<column>>): string {
+  let tempString: string = '';
+  const foreignTableIndex: Array<number> = []
   for (let i = 0; i < joinTables.length; i++) {
     for (const col of joinTables[i]) {
         if (col.foreign_table === btName) foreignTableIndex.push(i)
@@ -250,7 +265,7 @@ function addJoinTables(btName, joinTables) {
   }
 
   for (const tableIndex of foreignTableIndex) {
-    const foreignKeysObj = {};
+    const foreignKeysObj: object = {};
     for (const column of joinTables[tableIndex]){
       if (column.constraint_type === 'FOREIGN KEY' && column.foreign_table !== null) {
         foreignKeysObj[column.foreign_table] = column.column_name;

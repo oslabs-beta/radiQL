@@ -296,3 +296,8 @@ body {
   font-family: "Fira Code", monospace;
   grid-area: left-2; 
 }
+
+.dropDownMenus {
+  display: flex;
+  flex-direction: row;
+}

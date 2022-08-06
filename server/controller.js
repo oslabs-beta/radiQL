@@ -27,7 +27,6 @@ controller.getTableData = async (req, res, next) => {
     })
     const queryString = allTables;
     const result = await db.query(queryString); // gets all table names
-    //console.log(result.rows); 
     res.locals.tableData = result.rows;
     res.locals.dbURI = dbURI; 
     next();
@@ -61,11 +60,11 @@ controller.getAllColumns = async(req, res, next) => {
     for (const table of tableData) { // table is object {table_name: 'name'}; 
       result.push((await db.query(columnQueryString, [table.table_name])).rows);
     }
-    //console.log(result); 
+
     res.locals.allColumns = result; // result is array of array (tables) of objects (columns) 
     next(); 
   }
-  // { people: [_id, species_id, homeworld_id, ] }
+
   catch (err) {
     console.log(err);
     next ({
@@ -91,8 +90,10 @@ controller.makeSchemas = async (req, res, next) => {
     const { allColumns } = res.locals; 
     
     const result = schemaMaker(allColumns);
-    const schemaOutput = `const typeDefs = \`\n\n${result}\``;
-    res.locals.schema = schemaOutput;
+    const schemaOutput = `const typeDefs = \`\n\n${result.schema}\``;
+    const resolverOutput = `const resolvers ={\n\t${result.resolver}}`; 
+    const output = {schema: schemaOutput, resolver: resolverOutput};
+    res.locals.output = output; 
     return next();
   }
   catch (err) {

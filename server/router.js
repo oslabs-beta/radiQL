@@ -11,15 +11,9 @@ const path = require('path');
 const controller = require('./controller.js');
 
 // received: PG URI
-router.post(
-  '/submitURI',
-  controller.getTableData,
-  controller.getAllColumns,
-  controller.makeSchemas,
-  (req, res) => {
-    return res.status(200).json(res.locals.schema);
-  }
-);
+router.post('/submitURI', controller.getTableData, controller.getAllColumns, controller.makeSchemas, (req, res) => {
+  return res.status(200).json(res.locals.output); 
+})
 
 router.post(
   '/register',

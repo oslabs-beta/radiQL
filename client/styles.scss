@@ -531,4 +531,7 @@ $params: 4s cubic-bezier(0.47, 0, 0.745, 0.715) both infinite;
   grid-area: left-2;
 }
 
-
+.dropDownMenus {
+  display: flex;
+  flex-direction: row;
+}

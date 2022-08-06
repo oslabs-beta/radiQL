@@ -25,6 +25,7 @@
     "js-convert-case": "^4.2.0",
     "lodash": "^4.17.21",
     "mongoose": "^6.5.0",
+    "multiselect-react-dropdown": "^2.0.25",
     "path": "^0.12.7",
     "pg": "^8.7.3",
     "pluralize": "^8.0.0",

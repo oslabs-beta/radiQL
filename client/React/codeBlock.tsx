@@ -22,6 +22,33 @@ const dummyFetchedCode: string = `class HelloMessage extends React.Component {
   }
 }
 
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
 ReactDOM.render(
   <HelloMessage name="Taylor" />, 
   mountNode 
@@ -34,13 +61,13 @@ const CodeBlock = ({codeBody}) => {
   const [lineNumbers, toggleLineNumbers] = useState(true);
   const [theme, setTheme] = useState(hybrid);
   const [boilerPlateCode, setBoilerPlateCode] = useState('useBoilerPlateCode');
-  console.log(dracula);
+  // console.log(dracula);
   const dracula2 = {titan: 'monster'}
-  console.log(eval('dracula2'))
+  // console.log(eval('dracula2'))
 
   useEffect(() => {
-    console.log('theme changed');
-    console.log(theme);
+    // console.log('theme changed');
+    // console.log(theme);
   }, [theme])
   
   const zoomOut = () => {
@@ -62,7 +89,7 @@ const CodeBlock = ({codeBody}) => {
 
   return (
     // drop-down for theme
-    <div className="codeDiv">
+    <div className="codeDiv overflow-scroll">
       <div className="flex flex-row flex-grow justify-around items-end">
         <h3>Generated GraphQL Schema:</h3>
         <form>
@@ -105,9 +132,9 @@ const CodeBlock = ({codeBody}) => {
         <FaMinusSquare style={{'color':'#1b2240'}} onClick={() => zoomOut()}/>
       </div>
        {/* codeBlock */}
-      <div className="container mx-auto codeOutput overflow-scroll" >
-        <div id="copyblockid" className="demo overflow-scroll">
-          <CopyBlock id="copyblockid" className="overflow-scroll"
+      <div className="container mx-auto codeOutput" >
+        <div id="copyblockid" className="demo">
+          <CopyBlock id="copyblockid" 
             language={'javascript'}
             text={codeBody ? codeBody : finalCode}
             showLineNumbers={lineNumbers}

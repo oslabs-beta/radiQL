@@ -7,7 +7,7 @@ import genBoilerPlate from './BoilerPlateCode.jsx';
 // const finalCode = genBoilerPLate(serverOption, dummyFetchedCode);
 
 const CodeBlock = ({schemaBody, resolverBody, setInstruction, currentTab, changeTab}) => {
-  const [lineNumbers, toggleLineNumbers] = useState(true);
+  const [lineNumbers, toggleLineNumbers] = useState(false);
   const [theme, setTheme] = useState(hybrid);
   const [boilerPlateCode, setBoilerPlateCode] = useState('useBoilerPlateCode');
 
@@ -50,7 +50,7 @@ const CodeBlock = ({schemaBody, resolverBody, setInstruction, currentTab, change
 
   return (
     // code menus and code generation
-    <div className="codeDiv overflow-scroll">
+    <div className="codeDiv">
       <div id="code-header">
         {/* <form>
           <label>Pick a theme: </label>

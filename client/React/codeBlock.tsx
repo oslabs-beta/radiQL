@@ -1,11 +1,7 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { FaPlusSquare, FaMinusSquare } from 'react-icons/fa';
-import { Multiselect } from "multiselect-react-dropdown";
-import '../styles.css';
-// import ".../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import { CopyBlock, hybrid, dracula, anOldHope, androidstudio, atomOneDark, atomOneLight, codepen, googlecode, monoBlue, nord, rainbow, shadesOfPurple, tomorrowNightBlue, zenburn } from "react-code-blocks";
-import "../styles.scss";
 import genBoilerPlate from './BoilerPlateCode.jsx';
 
 const dummyFetchedCode: string = `class HelloMessage extends React.Component {
@@ -21,7 +17,19 @@ const dummyFetchedCode: string = `class HelloMessage extends React.Component {
     );
   }
 }
-
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
 ReactDOM.render(
   <HelloMessage name="Taylor" />, 
   mountNode 
@@ -34,9 +42,6 @@ const CodeBlock = ({codeBody}) => {
   const [lineNumbers, toggleLineNumbers] = useState(true);
   const [theme, setTheme] = useState(hybrid);
   const [boilerPlateCode, setBoilerPlateCode] = useState('useBoilerPlateCode');
-  console.log(dracula);
-  const dracula2 = {titan: 'monster'}
-  console.log(eval('dracula2'))
 
   useEffect(() => {
     console.log('theme changed');
@@ -44,7 +49,7 @@ const CodeBlock = ({codeBody}) => {
   }, [theme])
   
   const zoomOut = () => {
-    const txt = document.getElementById('code-container');
+    const txt = document.getElementById('codeOutput');
     //@ts-ignore
     const style = window.getComputedStyle(txt, null).getPropertyValue('font-size');
     const currentSize = parseFloat(style);
@@ -52,7 +57,7 @@ const CodeBlock = ({codeBody}) => {
     txt.style.fontSize = (currentSize - 5) + 'px';
   }
   const zoomIn = () => {
-    const txt = document.getElementById('code-container');
+    const txt = document.getElementById('codeOutput');
     //@ts-ignore
     const style = window.getComputedStyle(txt, null).getPropertyValue('font-size');
     const currentSize = parseFloat(style);
@@ -61,12 +66,11 @@ const CodeBlock = ({codeBody}) => {
   }
 
   return (
-    // drop-down for theme
-    <div className="codeDiv overflow-scroll">
-      <div className="flex flex-row flex-grow justify-around items-end">
+    // code menus and code generation
+    <div className="codeDiv overflow-scroll rounded">
+      <div id="code-header" className="flex flex-row justify-around items-end rounded">
         <h3>Generated GraphQL Schema:</h3>
-        <form>
-          {/* select for theme */}
+        {/* <form>
           <label>Pick a theme: </label>
           <select onChange={(e) => {setTheme(eval(e.target.value))}} title="theThemes" name="themes" id="themes" className="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Default select example">
             <option value="anOldHope">anOldHope</option>
@@ -84,7 +88,7 @@ const CodeBlock = ({codeBody}) => {
             <option value="tomorrowNightBlue">tomorrowNightBlue</option>
             <option value="zenburn">zenburn</option>
           </select>
-        </form>
+        </form> */}
           {/* select for boilerplate code */}
         <form>
           <label>Include boilerplate code</label>
@@ -98,15 +102,14 @@ const CodeBlock = ({codeBody}) => {
             <option value="Mercurious">Mercurious</option>
           </select>
         </form>
-      </div>
-      <div id='zoom-controls-container'>
-        {/* @ts-ignore */}
-        <FaPlusSquare style={{'color':'#1b2240'}} onClick={() => zoomIn()}/>
-        <FaMinusSquare style={{'color':'#1b2240'}} onClick={() => zoomOut()}/>
+        <div id='zoom-controls-container'>
+          {/* @ts-ignore */}
+          <FaMinusSquare style={{'color':'white'}} onClick={() => zoomOut()}/>
+          <FaPlusSquare style={{'color':'white'}} onClick={() => zoomIn()}/>
+        </div>
       </div>
        {/* codeBlock */}
-      <div className="container mx-auto codeOutput" >
-        <div id="copyblockid" className="demo">
+        <div id="codeOutput">
           <CopyBlock id="copyblockid"
             language={'javascript'}
             text={codeBody ? codeBody : finalCode}
@@ -114,7 +117,6 @@ const CodeBlock = ({codeBody}) => {
             theme={theme}
             wrapLines={true}
           />
-        </div>
       </div>
     </div>
   );

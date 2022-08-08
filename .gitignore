@@ -5,3 +5,5 @@ dist/*
 !dist/index.html
 node_modules/
 .env
+coverage
+jest.config.js

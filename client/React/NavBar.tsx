@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 // @ts-ignore
-import logo from '../../public/images/radiQL_Logo.png';
+import logo from '../../public/images/radiQL_Logo2.png';
 import LoginModal from './LoginModal';
 import { motion, AnimatePresence } from 'framer-motion';
 

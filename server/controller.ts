@@ -4,11 +4,12 @@ const controller: any = {};
 import { allTables, columnQueryString} from './queries'; 
 import { schemaMaker } from './schemaMaker'; 
 import bcrypt from 'bcrypt';
-import User from './models';
+import { User, Uri } from './models';
 require('dotenv').config(); 
 import {Request, Response, NextFunction} from "express"; 
-// const mongoose = require('mongoose');
-// mongoose.connect(process.env.DB_URI, {useUnifiedTopology: true, useNewUrlParser: true}); 
+const mongoose = require('mongoose');
+
+mongoose.connect(process.env.DB_URI, {useUnifiedTopology: true, useNewUrlParser: true, dbName: 'radiql'}); 
 
 /**
  * 
@@ -112,13 +113,14 @@ controller.makeSchemas = async (req: Request, res: Response, next: NextFunction)
 
 controller.register = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { email, password } = req.body;
+    const { username, password } = req.body;
     const hashedPw = await bcrypt.hash(password, 10);
-    const newUser = await User.create({email: email, password: hashedPw});
+    const newUser = await User.create({username: username, password: hashedPw});
     res.locals.user = newUser;
-    // error handle for non-unique email
+    // error handle for non-unique username
     return next();
   } catch (err) {
+    console.log(err)
     next ({
       log: 'Error at middleware controller.register',
       status: 501,
@@ -129,13 +131,13 @@ controller.register = async (req: Request, res: Response, next: NextFunction) =>
 
 controller.login = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { email, password } = req.body;
-    if (email === undefined || password === undefined) {
+    const { username, password } = req.body;
+    if (username === undefined || password === undefined) {
       // display incorrect or smth like that
     }
-    const verifiedUser = await User.findOne({email: email});
+    const verifiedUser = await User.findOne({username});
     if (!verifiedUser) {
-      console.log('Wrong email/password');  
+      console.log('Wrong username/password');  
       res.redirect(400, '/');
     }
     else {
@@ -145,7 +147,7 @@ controller.login = async (req: Request, res: Response, next: NextFunction) => {
         next();
       }
       else {
-        console.log('Wrong email/password');
+        console.log('Wrong username/password');
         res.redirect(400, '/');
       } 
     };
@@ -164,7 +166,7 @@ controller.login = async (req: Request, res: Response, next: NextFunction) => {
 controller.setUserCookie = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { user } = res.locals; 
-    res.cookie('SSID', user._id, { expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000), httpOnly: true}); 
+    res.cookie('SSID', `${user._id}`, { expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000), httpOnly: true}); 
     return next(); 
   }
   catch (err) {
@@ -173,6 +175,27 @@ controller.setUserCookie = async (req: Request, res: Response, next: NextFunctio
       status: 501,
       message: {
         err: 'Error has occured while creating cookie',
+      },
+    });
+  }
+}
+
+controller.saveURI = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { dbURI } = req.body;
+    const userId = req.cookies.SSID; 
+    if(userId) {
+      const exists = await Uri.findOne({uri: dbURI, user_id: userId});
+      if (!exists) await Uri.create({uri: dbURI, user_id: userId}); 
+    }
+    return next(); 
+  }
+  catch (err) {
+    next ({
+      log: 'Error at middleware controller.saveURI',
+      status: 501,
+      message: {
+        err: 'Error has occured while saving URI',
       },
     });
   }

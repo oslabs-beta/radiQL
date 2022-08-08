@@ -1,9 +1,3 @@
-/*
-functionality required:
-input: database
-schema generation based on table row types
-resolver generation based on schema?
-*/
 import express, {Request, Response} from "express"; 
 import controller from './controller';
 // import path from 'path';
@@ -12,7 +6,7 @@ const router = express.Router();
 
 
 // received: PG URI
-router.post('/submitURI', controller.getTableData, controller.getAllColumns, controller.makeSchemas, (req: Request, res: Response) => {
+router.post('/submitURI', controller.saveURI, controller.getTableData, controller.getAllColumns, controller.makeSchemas, (req: Request, res: Response) => {
   return res.status(200).json(res.locals.output); 
 })
 

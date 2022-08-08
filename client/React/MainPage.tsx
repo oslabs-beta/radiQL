@@ -25,7 +25,8 @@ const MainPage = props => {
     } catch(err){
       console.log('dbURI', err)
     }
-    blurBox?.classList.add('hidden');
+    setTimeout(() => {blurBox?.classList.add('hidden')}, 2000);
+    // blurBox?.classList.add('hidden');
   }
 
   // instructions

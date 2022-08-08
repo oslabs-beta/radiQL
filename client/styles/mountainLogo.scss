@@ -1,0 +1,153 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100,200&display=swap');
+@import url(https://cdn.jsdelivr.net/gh/tonsky/FiraCode@1.206/distr/fira_code.css);
+@import url(https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css);
+
+* {
+  padding: 0px;
+  margin: 0px;
+}
+
+$base-color: #295bff;
+
+$white: mix(white, $base-color, 95%);
+$black: mix(black, $base-color, 90%);
+$gray: mix(#636363, $base-color, 80%);
+$base-light-10: lighten($base-color, 10%);
+$base-light-20: lighten($base-color, 20%);
+$base-dark-30: darken($base-color, 30%);
+$base-dark-20: darken($base-color, 20%);
+$green-gradient: linear-gradient(
+  315deg,
+  hsla(164, 38%, 18%, 1) 0%,
+  hsla(158, 77%, 77%, 1) 100%
+);
+
+#blur-container {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  backdrop-filter: blur(3px);
+  background-color: #7d8fde6f;
+}
+
+// Loading animation 
+#animate-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  svg {
+    z-index: 100;
+    position: absolute;
+  }
+}
+
+$params: 2.5s cubic-bezier(0.47, 0, 0.745, 0.715) both infinite;
+$size: 60%;
+
+@keyframes fadeEffect {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+#mountain {
+  width: $size;
+  height: $size;
+}
+.svg-elem-1{
+  animation:animate-svg-stroke-1 $params, animate-svg-fill-1 $params;
+}
+
+#snow{
+  width: $size;
+  height: $size;
+}
+.svg-elem-2 {
+  animation: animate-svg-stroke-2 $params, animate-svg-fill-2 $params;
+}
+
+.svg-elem-3 {
+  animation: animate-svg-stroke-3 $params, animate-svg-fill-2 $params;
+}
+
+@keyframes animate-svg-stroke-1{
+  0%{stroke-dashoffset:356.781px;
+    stroke-dasharray:356.781px;
+    stroke-opacity:1}
+  35%{stroke-dashoffset:713.562px;
+    stroke-dasharray:356.781px;
+    stroke-opacity:1}
+  90%{stroke-dashoffset:713.562px;
+    stroke-dasharray:356.781px;
+    stroke-opacity:1}
+  100%{stroke-dashoffset:713.562px;
+    stroke-dasharray:356.781px;
+    stroke-opacity:0}};
+
+@keyframes animate-svg-fill-1{
+  0%{fill:transparent}
+  35%{fill:transparent}
+  50%{fill:rgb(20,93,160)}
+  90%{fill:rgb(20,93,160)}
+  100%{fill:transparent}
+}
+
+@keyframes animate-svg-fill-2 {
+  0% {fill: transparent}
+  60% {fill: transparent}
+  85% {fill: rgb(255, 255, 255)}
+  90% {fill: rgb(255, 255, 255)}
+  100% {fill: transparent}
+}
+
+@keyframes animate-svg-stroke-2 {
+  $start: 106.036px;
+  $end: 212.073px;
+
+  0% {stroke-dashoffset: $start;
+    stroke-dasharray: $start;
+    stroke-opacity: 1}
+  40% {stroke-dashoffset: $start;
+    stroke-dasharray: $start}
+  65% {stroke-dashoffset: $end;
+    stroke-dasharray: $start}
+  90% {stroke-dashoffset: $end;
+    stroke-dasharray: $start;
+    stroke-opacity: 1}
+  98% {stroke-dashoffset: $end;
+    stroke-dasharray: $start; 
+    stroke-opacity: 0}
+  100% {stroke-dashoffset: $end;
+    stroke-dasharray: $start; 
+    stroke-opacity: 0}
+}
+
+@keyframes animate-svg-stroke-3 {
+  $start: 162.74px;
+  $end: 325.49px;
+
+  0% {stroke-dashoffset: $start;
+    stroke-dasharray: $start;
+    stroke-opacity:1}
+  40% {stroke-dashoffset: $start;
+    stroke-dasharray: $start}
+  65% {stroke-dashoffset: $end;
+    stroke-dasharray: $start}
+  90% {stroke-dashoffset: $end;
+    stroke-dasharray: $start;
+    stroke-opacity:1}
+  98% {stroke-dashoffset: $end;
+    stroke-dasharray: $start; 
+    stroke-opacity: 0}
+  100% {stroke-dashoffset: $end;
+    stroke-dasharray: $start;
+    stroke-opacity:0}
+}

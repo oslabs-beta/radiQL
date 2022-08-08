@@ -4,49 +4,32 @@ import { FaPlusSquare, FaMinusSquare } from 'react-icons/fa';
 import { CopyBlock, hybrid, dracula, anOldHope, androidstudio, atomOneDark, atomOneLight, codepen, googlecode, monoBlue, nord, rainbow, shadesOfPurple, tomorrowNightBlue, zenburn } from "react-code-blocks";
 import genBoilerPlate from './BoilerPlateCode.jsx';
 
-const dummyFetchedCode: string = `class HelloMessage extends React.Component {
-  handlePress = () => {
-    alert('Hello')
-  }
-  render() {
-    return (
-      <div>
-        <p>Hello {this.props.name}</p>
-        <button onClick={this.handlePress}>Say Hello</button>
-      </div>
-    );
-  }
-}
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-,
-ReactDOM.render(
-  <HelloMessage name="Taylor" />, 
-  mountNode 
-);`;
-        
 // const finalCode = genBoilerPLate(serverOption, dummyFetchedCode);
-const finalCode = dummyFetchedCode;
 
-const CodeBlock = ({codeBody}) => {
+const CodeBlock = ({schemaBody, resolverBody, setInstruction, currentTab, changeTab}) => {
   const [lineNumbers, toggleLineNumbers] = useState(true);
   const [theme, setTheme] = useState(hybrid);
   const [boilerPlateCode, setBoilerPlateCode] = useState('useBoilerPlateCode');
 
   useEffect(() => {
-    console.log('theme changed');
-    console.log(theme);
-  }, [theme])
+    const clipboardIcon = (document.querySelector('.icon') as HTMLInputElement);
+    console.log(clipboardIcon);
+    clipboardIcon.addEventListener('click', () => {
+      const stepThree = (document.getElementById('3') as HTMLInputElement);
+      const stepTwo= (document.getElementById('2') as HTMLInputElement);
+      const stepOne= (document.getElementById('1') as HTMLInputElement);
+      stepThree.classList.add('current-step');
+      stepTwo.classList.remove('current-step');
+      stepOne.classList.remove('current-step');
+      console.log('clipboard clicked');
+      setInstruction(3);
+    })
+  }, [])
+
+  // useEffect(() => {
+  //   console.log('theme changed');
+  //   console.log(theme);
+  // }, [theme])
   
   const zoomOut = () => {
     const txt = document.getElementById('codeOutput');
@@ -67,9 +50,8 @@ const CodeBlock = ({codeBody}) => {
 
   return (
     // code menus and code generation
-    <div className="codeDiv overflow-scroll rounded">
-      <div id="code-header" className="flex flex-row justify-around items-end rounded">
-        <h3>Generated GraphQL Schema:</h3>
+    <div className="codeDiv overflow-scroll">
+      <div id="code-header">
         {/* <form>
           <label>Pick a theme: </label>
           <select onChange={(e) => {setTheme(eval(e.target.value))}} title="theThemes" name="themes" id="themes" className="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Default select example">
@@ -90,7 +72,12 @@ const CodeBlock = ({codeBody}) => {
           </select>
         </form> */}
           {/* select for boilerplate code */}
-        <form>
+        <section id="tabs">
+          <button className={ currentTab === 1 ? '' : 'not-active' } onClick={() => changeTab(1)}>Schema</button>
+          <button className={ currentTab === 2 ? '' : 'not-active' } onClick={() => changeTab(2)}>Resolver</button>
+          <button className={ currentTab === 3 ? '' : 'not-active' } onClick={() => changeTab(3)}>Diagram</button>
+        </section>
+        <form className="mx-10">
           <label>Include boilerplate code</label>
           <select title='boilerplatecode' className="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Default select example">
             <option value="No boilerplate code">No boilerplate code</option>
@@ -112,7 +99,7 @@ const CodeBlock = ({codeBody}) => {
         <div id="codeOutput">
           <CopyBlock id="copyblockid"
             language={'javascript'}
-            text={codeBody ? codeBody : finalCode}
+            text={ currentTab === 1 ? schemaBody : resolverBody }
             showLineNumbers={lineNumbers}
             theme={theme}
             wrapLines={true}

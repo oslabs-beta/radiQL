@@ -12,10 +12,12 @@ import router from './router'
 import dotenv from 'dotenv';
 dotenv.config();
 const port = process.env.PORT || 3000;
-const app = express();
+export const app = express();
 
-app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 if (process.env.NODE_ENV === 'production')

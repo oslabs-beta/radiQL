@@ -166,7 +166,8 @@ controller.login = async (req: Request, res: Response, next: NextFunction) => {
 controller.setUserCookie = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { user } = res.locals; 
-    res.cookie('SSID', `${user._id}`, { expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000), httpOnly: true}); 
+    res.cookie('SSID', `${user._id}`, { expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000), httpOnly: true});
+    res.cookie('username', `${user.username}`, { expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000), httpOnly: true}); 
     return next(); 
   }
   catch (err) {

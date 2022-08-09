@@ -40,7 +40,7 @@ $green-gradient: linear-gradient(
     justify-content: center;
     align-items: center;
     margin-top: 20px;
-    color: red;
+    color: white;
     .login-input {
       padding: 10px;
       margin: 5px;
@@ -77,4 +77,16 @@ $green-gradient: linear-gradient(
   #login-logo {
     width: 300px;
   }
+}
+
+#username {
+  color: $white;
+  font-size: x-large;
+  font-weight: 200;
+}
+
+.logout {
+  width: 400px;
+  height: 140px;
+  font-size: xx-large !important;
 }

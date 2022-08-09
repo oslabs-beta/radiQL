@@ -4,12 +4,26 @@ import { Routes, Route } from 'react-router-dom';
 import About from './About';
 import NavBar from './NavBar';
 import MainPage from './MainPage';
+import axios from 'axios';
 
 const App = () => {
 
+  const [username, setUsername] = React.useState<string>('');
+
+  React.useEffect(() => {
+    // '/getUsername'
+    setUsername('Alex');
+    axios.get('/getUsername')
+    .then((data) => {
+      console.log(data);
+      // data.json()
+    })
+    
+  }, [])
+
   return (
     <div className='body'>
-      < NavBar /> 
+      < NavBar username={username} setUsername={setUsername} /> 
       <Routes>
         {/* // About us Page */}
         <Route path="/About" element={< About />}/>

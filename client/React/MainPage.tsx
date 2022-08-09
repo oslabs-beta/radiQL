@@ -10,10 +10,10 @@ import MountainLogo from './MountainLogo'
 
 const MainPage = props => {
 
-  const [currentTab, changeTab] = useState(1);
-  const [schemaBody, setschemaBody] = useState(dummydata.dummySchema);
-  const [resolverBody, setresolverBody] = useState(dummydata.dummyResolver);
-  const [instruction, setInstruction] = useState(1);
+  const [currentTab, changeTab] = useState<number>(1);
+  const [schemaBody, setschemaBody] = useState<string>(dummydata.dummySchema);
+  const [resolverBody, setresolverBody] = useState<string>(dummydata.dummyResolver);
+  const [instruction, setInstruction] = useState<number>(1);
 
   //send uri request
   const handleConvertURI = async() => {

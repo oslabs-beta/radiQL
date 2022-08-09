@@ -6,4 +6,3 @@ dist/*
 node_modules/
 .env
 coverage
-jest.config.js

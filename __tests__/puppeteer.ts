@@ -33,10 +33,13 @@ describe('Cookies tests', () => {
     browser.close();
   });
 
-  describe("Login works", () => {
-    it("logs in successfully", async () => {
-      
-      expect(1 + 1).toBe(2);
+  describe("loads successfully", () => {
+    it("displays the page", async () => {
+      await page.goto(APP); 
+      await page.waitForSelector('.navbar');
+      await page.waitForSelector('#login');
+      const navtext = await page.$eval('#login', el => el.innerHTML); 
+      expect(navtext).toBe('Login');
     })
   })
 

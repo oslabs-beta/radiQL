@@ -95,7 +95,7 @@ $gray: mix(#636363, $base-color, 80%);
       align-items: center;
       transition: 0.4s;
       &:hover {
-        background-color: rgb(202, 236, 255);
+        // background-color: rgb(202, 236, 255);
         transform: scale(1.2);
         transform-origin: bottom;
       }

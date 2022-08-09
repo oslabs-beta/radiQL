@@ -28,6 +28,10 @@ router.post(
   }
 );
 
+router.get('/getUsername', controller.isLoggedIn, (req: Request, res: Response) => {
+  return res.status(200).json(res.locals.username)
+})
+
 router.get('/uris', controller.getUris, (req: Request, res: Response) => {
   return res.status(200).json(res.locals.uris);
 })

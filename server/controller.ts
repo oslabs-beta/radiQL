@@ -36,7 +36,7 @@ controller.getTableData = async (req: Request, res: Response, next: NextFunction
   }
   catch (err) {
     next ({
-      log: 'Error at middleware controller.getTableData',
+      log: err,
       status: 501,
       message: {
           err: `Error has occured while getting table data.`,
@@ -206,7 +206,7 @@ controller.getUris = async (req: Request, res: Response, next: NextFunction) => 
   try {
     const userId = req.cookies.SSID;
     if(userId) {
-      const result = Uri.find({user_id: userId});
+      const result: any = await Uri.find({user_id: userId});
       res.locals.uris = result;
     }
     return next(); 
@@ -219,6 +219,25 @@ controller.getUris = async (req: Request, res: Response, next: NextFunction) => 
         err: 'Error has occured while getting URIs',
       },
     });
+  }
+}
+
+controller.isLoggedIn = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const userId = req.cookies.SSID;
+    if (userId) {
+      const result: any = await User.findOne({ _id: userId });
+      res.locals.username = result.username;
+    }
+    return next();
+  } catch (err) {
+    next ({
+      log: 'Error at middleware controller.getUris',
+      status: 501,
+      message: {
+        err: err,
+      },
+    });    
   }
 }
 

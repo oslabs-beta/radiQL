@@ -20,6 +20,8 @@ const config = {
       '/submitURI': 'http://localhost:3000',
       '/register': 'http://localhost:3000',
       '/login': 'http://localhost:3000',
+      '/uris': 'http://localhost:3000',
+      '/getUsername': 'http://localhost:3000',
     },
   },
   module: {
@@ -43,9 +45,9 @@ const config = {
           {
             loader: 'file-loader',
             options: {
-              name: "[name].[ext]",
-              outputPath: "assets/"
-          }
+              name: '[name].[ext]',
+              outputPath: 'assets/',
+            },
           },
         ],
       },

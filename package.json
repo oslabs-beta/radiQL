@@ -22,6 +22,7 @@
     "express": "^4.18.1",
     "fontawesome-free": "^1.0.4",
     "framer-motion": "^6.5.1",
+    "fs": "^0.0.1-security",
     "js-convert-case": "^4.2.0",
     "lodash": "^4.17.21",
     "mongoose": "^6.5.0",

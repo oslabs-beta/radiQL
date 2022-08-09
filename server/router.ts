@@ -1,15 +1,19 @@
 import express, {Request, Response} from "express"; 
 import controller from './controller';
-// import path from 'path';
 
 const router = express.Router();
 
-
-// received: PG URI
+/**
+ * Receives a database URI and, provided that it is valid, responds with an object in the form:
+ * { schema: string, resolver: string}
+ */
 router.post('/submitURI', controller.saveURI, controller.getTableData, controller.getAllColumns, controller.makeSchemas, (req: Request, res: Response) => {
   return res.status(200).json(res.locals.output); 
 })
 
+/**
+ * Receives username and password strings in request body and establishes user in database.
+ */
 router.post(
   '/register',
   controller.register,
@@ -19,6 +23,9 @@ router.post(
   }
 );
 
+/**
+ * Receives username and password strings in request body and attempts login using info. 
+ */
 router.post(
   '/login',
   controller.login,
@@ -28,6 +35,23 @@ router.post(
   }
 );
 
+/**
+ * Returns the username for a logged in user
+ */
+router.get('/getUsername', controller.isLoggedIn, (req: Request, res: Response) => {
+  return res.status(200).json(res.locals.username)
+});
+
+/**
+ * Logs out a user - clears their SSID and username cookies
+ */
+router.get('/logout', (req: Request, res: Response) => {
+  return res.clearCookie('SSID').clearCookie('username').status(204).json(true);
+});
+
+/**
+ * Returns stored URIs for a user. 
+ */
 router.get('/uris', controller.getUris, (req: Request, res: Response) => {
   return res.status(200).json(res.locals.uris);
 })

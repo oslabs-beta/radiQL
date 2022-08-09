@@ -1,4 +1,3 @@
-// const { Pool } = require("pg");
 import { Pool } from 'pg';
 const controller: any = {}; 
 import { allTables, columnQueryString} from './queries'; 
@@ -36,7 +35,7 @@ controller.getTableData = async (req: Request, res: Response, next: NextFunction
   }
   catch (err) {
     next ({
-      log: 'Error at middleware controller.getTableData',
+      log: err,
       status: 501,
       message: {
           err: `Error has occured while getting table data.`,
@@ -111,6 +110,15 @@ controller.makeSchemas = async (req: Request, res: Response, next: NextFunction)
   }
 }
 
+/**
+ * 
+ * @param req 
+ * @param res 
+ * @param next 
+ * 
+ * receives username and password strings in req.body and creates a new User object
+ * in MongoDB database. Stores the created user in res.locals.user. 
+ */
 controller.register = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { username, password } = req.body;
@@ -129,6 +137,15 @@ controller.register = async (req: Request, res: Response, next: NextFunction) =>
   }
 }
 
+/**
+ * 
+ * @param req 
+ * @param res 
+ * @param next 
+ * 
+ * Receives username and password strings and verifies whehter the correct information
+ * was provided. Does not grant access unless verified. 
+ */
 controller.login = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { username, password } = req.body;
@@ -163,6 +180,14 @@ controller.login = async (req: Request, res: Response, next: NextFunction) => {
   }
 }
 
+/**
+ * 
+ * @param req 
+ * @param res 
+ * @param next 
+ * 
+ * Sets username and SSID cookies after successful registration or login. 
+ */
 controller.setUserCookie = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { user } = res.locals; 
@@ -181,6 +206,14 @@ controller.setUserCookie = async (req: Request, res: Response, next: NextFunctio
   }
 }
 
+/**
+ * 
+ * @param req 
+ * @param res 
+ * @param next 
+ * 
+ * Stores URIs in database if user is logged in. UserID is attached to each URI. 
+ */
 controller.saveURI = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { dbURI } = req.body;
@@ -202,11 +235,19 @@ controller.saveURI = async (req: Request, res: Response, next: NextFunction) => 
   }
 }
 
+/**
+ * 
+ * @param req 
+ * @param res 
+ * @param next 
+ * 
+ * Returns a user's stored URIs. 
+ */
 controller.getUris = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const userId = req.cookies.SSID;
     if(userId) {
-      const result = Uri.find({user_id: userId});
+      const result: any = await Uri.find({user_id: userId});
       res.locals.uris = result;
     }
     return next(); 
@@ -219,6 +260,25 @@ controller.getUris = async (req: Request, res: Response, next: NextFunction) => 
         err: 'Error has occured while getting URIs',
       },
     });
+  }
+}
+
+controller.isLoggedIn = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const userId = req.cookies.SSID;
+    if (userId) {
+      const result: any = await User.findOne({ _id: userId });
+      res.locals.username = result.username;
+    }
+    return next();
+  } catch (err) {
+    next ({
+      log: 'Error at middleware controller.getUris',
+      status: 501,
+      message: {
+        err: err,
+      },
+    });    
   }
 }
 

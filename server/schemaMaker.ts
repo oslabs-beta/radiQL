@@ -1,11 +1,13 @@
 import pluralize from 'pluralize';
 import { toPascalCase, toCamelCase } from 'js-convert-case';
 
+// Sets containing all types that would be classified as ints and floats
 const intSet: Set<string> = new Set(); 
 if(intSet.size < 1) populateIntSet(intSet); 
 const floatSet: Set<string> = new Set();
 if(floatSet.size < 1) populateFloatSet(floatSet); 
 
+// column type is a representation of each field in any table
 type column = {
   column_name: string,
   table_name: string,
@@ -18,6 +20,11 @@ type column = {
   foreign_column: string,
 };
 
+/**
+ * 
+ * @param allColumns array of array of columns representing every field in the relational database
+ * @returns object containing the schema and resolver in string form
+ */
 export function schemaMaker(allColumns: Array<Array<column>>): {schema: string, resolver: string} {
 
   let baseTables: Array<Array<column>> = [];
@@ -63,6 +70,11 @@ export function schemaMaker(allColumns: Array<Array<column>>): {schema: string, 
   return typeDefs; 
 }
 
+/**
+ * 
+ * @param table array of columns representing the relational database
+ * @returns boolean representing whether join tables exist in relational database
+ */
 function checkJoinTable(table: Array<column>): boolean {
   let foreignKeyCount: number = 0;
   for (const column of table) {
@@ -71,6 +83,7 @@ function checkJoinTable(table: Array<column>): boolean {
   return foreignKeyCount === table.length - 1;
 }
 
+// populates the set of types that may be classified as ints
 function populateIntSet(set: Set<string>): void {
   set.add('smallint');
   set.add('integer');
@@ -80,6 +93,7 @@ function populateIntSet(set: Set<string>): void {
   set.add('bigserial');
 }
 
+// populates the set of types that may be classified as floats
 function populateFloatSet(set: Set<string>): void {
   set.add('money');
   set.add('float'); 
@@ -89,6 +103,14 @@ function populateFloatSet(set: Set<string>): void {
   set.add('double precision');
 }
 
+/**
+ * 
+ * @param typeDefs type definitions as string.  
+ * @param baseTableNames array of all base table names
+ * @param baseTables array of columns representing all base table fields
+ * @param joinTables array of array of columns representing all join table fields
+ * @returns object of form {schema: string, resolver: string} that is eventually returned to the front end. 
+ */
 function attachQueryMutation(typeDefs: string, baseTableNames: Array<string>, baseTables: Array<Array<column>>, joinTables: Array<Array<column>>) {
   let typeQuery: string = `type Query {\n`; 
   let resolverQuery: string = `\nQuery: {\n\n`;
@@ -113,7 +135,12 @@ function attachQueryMutation(typeDefs: string, baseTableNames: Array<string>, ba
   return {schema: (typeQuery + typeMutation + typeDefs).slice(0, -1), resolver: (resolverQuery + resolverMutation + resolverTypeDefs)}; // this is now typeDefs
 }
 
-function attachMutation(baseTables: Array<Array<any>>): string {
+/**
+ * 
+ * @param baseTables array of array of columns representing all base table fields
+ * @returns schema mutation in string form 
+ */
+function attachMutation(baseTables: Array<Array<column>>): string {
   let typeMutation: string = `type Mutation {\n`;
     // add mutation
     for (const table of baseTables) {
@@ -166,6 +193,11 @@ function attachMutation(baseTables: Array<Array<any>>): string {
   return typeMutation; 
 }
 
+/**
+ * 
+ * @param baseTables array of array of columns representing base table fields
+ * @returns mutation resolvers in string form
+ */
 function attachResolverMutation(baseTables: Array<Array<column>>): string {
   let resolverMutation: string = `Mutation: {\n\n`;
   for (const table of baseTables) {
@@ -208,6 +240,13 @@ function attachResolverMutation(baseTables: Array<Array<column>>): string {
   return resolverMutation;
 }
 
+/**
+ * 
+ * @param baseTableNames array of all base table names
+ * @param baseTables array of columns representing all base table fields
+ * @param joinTables array of array of columns representing all join table fields
+ * @returns type resolvers in string form
+ */
 function attachResolverTypeDefs(baseTableNames: string[], baseTables: Array<column>, joinTables:Array<Array<column>>): string { 
   let mutationTypeDef = ``;
   for(const btName of baseTableNames) { 
@@ -223,7 +262,7 @@ function attachResolverTypeDefs(baseTableNames: string[], baseTables: Array<colu
 }
 
 
-
+// helper method for attachResolverTypeDefs
 function addColumnRelations(btName: string, baseTables: Array<column>): string {
   let tempString: string = ``;
   for(const col of baseTables) {
@@ -239,6 +278,7 @@ function addColumnRelations(btName: string, baseTables: Array<column>): string {
   return tempString;
 }
 
+// helper method for attachResolverTypeDefs
 function addForeignTables(btName: string, baseTables: Array<column>): string {
   let tempString: string = ``;
   for(const col of baseTables) {
@@ -255,6 +295,7 @@ function addForeignTables(btName: string, baseTables: Array<column>): string {
   return tempString;
 }
 
+// helper method for attachResolverTypeDefs
 function addJoinTables(btName: string, joinTables: Array<Array<column>>): string {
   let tempString: string = '';
   const foreignTableIndex: Array<number> = []

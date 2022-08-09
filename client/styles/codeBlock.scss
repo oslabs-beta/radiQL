@@ -1,0 +1,103 @@
+$base-color: #295bff;
+
+$white: mix(white, $base-color, 95%);
+$black: mix(black, $base-color, 90%);
+$gray: mix(#636363, $base-color, 80%);
+$base-light-10: lighten($base-color, 10%);
+$base-light-20: lighten($base-color, 20%);
+$base-dark-30: darken($base-color, 30%);
+$base-dark-20: darken($base-color, 20%);
+$green-gradient: linear-gradient(
+  315deg,
+  hsla(164, 38%, 18%, 1) 0%,
+  hsla(158, 77%, 77%, 1) 100%
+);
+
+$codeGray: rgb(29,31,33);
+
+.codeDiv {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow-x: hidden;
+  border-radius: 6px;
+
+  #code-header {
+    background-color: rgb(0, 71, 134); //#1D1F21
+    border-radius: 6px 6px 0px 0px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    
+
+    // Button tabs container
+    #tabs {
+      display: flex;
+      height: 53%;
+      margin: 0px 20px;
+
+      // Default for when button is active:
+      button {
+        width: 130px;
+        border-radius: 8px 8px 0 0;
+        padding: 7px 10px 10px 10px;
+        margin: 0px 2px;
+        background-color: $codeGray;
+      }
+      // When button is not active:
+      .not-active {
+        background-color: lighten($codeGray, 30%);
+        transition: .5s;
+        &:hover {
+          background-color: lighten($codeGray, 15%);
+        }
+      }
+    }
+
+    form {
+      padding: 5px;
+    }
+
+    div {
+      padding: 5px;
+    }
+  }
+  
+  #codeOutput {
+    display: flex;
+    flex-direction: column;
+    font-size: 15px;
+    background-color:white;
+    flex-grow: 1;
+    border-radius: 0px 0px 6px 6px ;
+    
+    div {
+      height: 100%;
+      padding: 6px;
+      border-radius: 0px;
+    }
+  }
+  // Zoom in and zoom out buttons
+  #zoom-controls-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    z-index: 100;
+    
+    svg {
+  
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+  
+  .demo {
+    font-family: 'Fira Code', monospace;
+    grid-area: left-2;
+  }
+}

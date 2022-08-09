@@ -35,10 +35,19 @@ router.post(
   }
 );
 
+/**
+ * Returns the username for a logged in user
+ */
 router.get('/getUsername', controller.isLoggedIn, (req: Request, res: Response) => {
   return res.status(200).json(res.locals.username)
-})
+});
 
+/**
+ * Logs out a user - clears their SSID and username cookies
+ */
+router.get('/logout', (req: Request, res: Response) => {
+  return res.clearCookie('SSID').clearCookie('username').status(204).json(true);
+});
 
 /**
  * Returns stored URIs for a user. 

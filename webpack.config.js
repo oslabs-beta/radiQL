@@ -22,6 +22,7 @@ const config = {
       '/login': 'http://localhost:3000',
       '/uris': 'http://localhost:3000',
       '/getUsername': 'http://localhost:3000',
+      '/logout': 'http://localhost:3000',
     },
   },
   module: {

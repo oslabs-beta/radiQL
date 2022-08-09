@@ -1,3 +1,4 @@
+import cookieParser from 'cookie-parser';
 import request from 'supertest'; 
 import { app } from '../server/server'; 
 
@@ -29,5 +30,23 @@ describe("Test server.ts", (): void => {
     .set('Content-type', 'application/json')
     .send({ username: "test666", password: "test"});
     expect(res.status).toEqual(200);
+  });
+  test("Prevents nonexistent user from logging in", async () => {
+    const res: request.Response = await request(app).post("/login")
+    .set('Content-type', 'application/json')
+    .send({ username: "nonexistentuser138746978126341", password: ""});
+    expect(res.status).toEqual(400);
+  });
+  test("Prevents logins with incorrect password", async () => {
+    const res: request.Response = await request(app).post("/login")
+    .set('Content-type', 'application/json')
+    .send({ username: "test666", password: "wrongpassword"});
+    expect(res.status).toEqual(400);
+  });
+  test("Invokes error handler on improper req body", async () => {
+    const res: request.Response = await request(app).post("/register")
+    .set('Content-type', 'application/json')
+    .send({ username: "test666", wrongfield: "wrong field"});
+    expect(res.status).toEqual(501);
   });
 });

@@ -64,6 +64,7 @@ $green-gradient: linear-gradient(
       }
       transition: 0.5s;
       &:hover {
+        cursor: pointer;
         color: #fff;
       }
     }

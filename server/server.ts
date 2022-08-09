@@ -18,8 +18,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 
-// console.log(process.env.NODE_ENV);
-
 if (process.env.NODE_ENV === 'production')
   app.use(express.static(path.resolve(__dirname, '../dist')));
 else app.use(express.static(path.resolve(__dirname, '../client')));

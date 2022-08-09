@@ -55,11 +55,6 @@ const About = props => {
             </p>
           </span>
         </section>
-        {/* A web application for users to generate schemas/resolvers for their databases
-        Our app generate GraphQL a schema and resolver for the user based on their PostgreSQL database URI  
-        The user will be able to copy and paste the code into their project
-        Users will be able to login and save generated schemas/resolvers for their projects 
-        as the ability to make one call to fetch data from multiple data sources is a powerful application-enhancing feature improving scalability.*/}
       </div>
       </motion.div>
       

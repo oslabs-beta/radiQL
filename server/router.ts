@@ -35,6 +35,11 @@ router.post(
   }
 );
 
+router.get('/getUsername', controller.isLoggedIn, (req: Request, res: Response) => {
+  return res.status(200).json(res.locals.username)
+})
+
+
 /**
  * Returns stored URIs for a user. 
  */

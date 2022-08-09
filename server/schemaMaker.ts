@@ -1,6 +1,7 @@
 import pluralize from 'pluralize';
 import { toPascalCase, toCamelCase } from 'js-convert-case';
 
+// Sets containing all types that would be classified as ints and floats
 const intSet: Set<string> = new Set(); 
 if(intSet.size < 1) populateIntSet(intSet); 
 const floatSet: Set<string> = new Set();

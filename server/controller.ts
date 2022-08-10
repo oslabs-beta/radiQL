@@ -302,7 +302,8 @@ controller.isLoggedIn = async (req: Request, res: Response, next: NextFunction) 
 controller.defaultBoilerplate = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { schema, resolver } = res.locals.output; 
-    const boilerplate: string = await defaultBoilerplate(schema, resolver); 
+    const { dbURI } = res.locals; 
+    const boilerplate: string = await defaultBoilerplate(schema, resolver, dbURI); 
     res.locals.boilerplate = boilerplate; 
     return next(); 
   }
@@ -327,8 +328,10 @@ controller.defaultBoilerplate = async (req: Request, res: Response, next: NextFu
  */
 controller.apolloBoilerplate = async (req: Request, res: Response, next: NextFunction) => {
   try {
+    console.log(res.locals.dbURI);
     const { schema, resolver } = res.locals.output; 
-    const boilerplate: string = await apolloBoilerplate(schema, resolver); 
+    const { dbURI } = res.locals; 
+    const boilerplate: string = await apolloBoilerplate(schema, resolver, dbURI); 
     res.locals.apollobp = boilerplate; 
     return next(); 
   }

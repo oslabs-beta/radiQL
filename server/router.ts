@@ -1,4 +1,4 @@
-import express, {Request, Response} from "express"; 
+import express, {NextFunction, Request, Response} from "express"; 
 import controller from './controller';
 
 const router = express.Router();
@@ -7,8 +7,16 @@ const router = express.Router();
  * Receives a database URI and, provided that it is valid, responds with an object in the form:
  * { schema: string, resolver: string}
  */
-router.post('/submitURI', controller.saveURI, controller.getTableData, controller.getAllColumns, controller.makeSchemas, (req: Request, res: Response) => {
+router.post('/submitURI', controller.getTableData, controller.getAllColumns, controller.makeSchemas, (req: Request, res: Response) => {
   return res.status(200).json(res.locals.output); 
+});
+
+/**
+ * Receives a URI in request body and, provided user is logged in, saves the URI. 
+ * Nothing happens if the user is not logged in. 
+ */
+router.post('/saveURI', controller.saveURI, (req: Request, res: Response, next: NextFunction) => {
+  return res.status(200); 
 })
 
 /**

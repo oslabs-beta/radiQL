@@ -1,4 +1,3 @@
-// const { Pool } = require("pg");
 import { Pool } from 'pg';
 const controller: any = {}; 
 import { allTables, columnQueryString} from './queries'; 
@@ -8,8 +7,9 @@ import { User, Uri } from './models';
 require('dotenv').config(); 
 import {Request, Response, NextFunction} from "express"; 
 const mongoose = require('mongoose');
+import { defaultBoilerplate, apolloBoilerplate } from './boilerplates';
 
-mongoose.connect(process.env.DB_URI, {useUnifiedTopology: true, useNewUrlParser: true, dbName: 'radiql'}); 
+mongoose.connect(process.env.DB_URI || 'mongodb+srv://thomasho:codesmith@cluster0.xnki76n.mongodb.net/?retryWrites=true&w=majority', {useUnifiedTopology: true, useNewUrlParser: true, dbName: 'radiql'}); 
 
 /**
  * 
@@ -36,7 +36,7 @@ controller.getTableData = async (req: Request, res: Response, next: NextFunction
   }
   catch (err) {
     next ({
-      log: 'Error at middleware controller.getTableData',
+      log: err,
       status: 501,
       message: {
           err: `Error has occured while getting table data.`,
@@ -111,6 +111,15 @@ controller.makeSchemas = async (req: Request, res: Response, next: NextFunction)
   }
 }
 
+/**
+ * 
+ * @param req 
+ * @param res 
+ * @param next 
+ * 
+ * receives username and password strings in req.body and creates a new User object
+ * in MongoDB database. Stores the created user in res.locals.user. 
+ */
 controller.register = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { username, password } = req.body;
@@ -129,6 +138,15 @@ controller.register = async (req: Request, res: Response, next: NextFunction) =>
   }
 }
 
+/**
+ * 
+ * @param req 
+ * @param res 
+ * @param next 
+ * 
+ * Receives username and password strings and verifies whehter the correct information
+ * was provided. Does not grant access unless verified. 
+ */
 controller.login = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { username, password } = req.body;
@@ -163,10 +181,19 @@ controller.login = async (req: Request, res: Response, next: NextFunction) => {
   }
 }
 
+/**
+ * 
+ * @param req 
+ * @param res 
+ * @param next 
+ * 
+ * Sets username and SSID cookies after successful registration or login. 
+ */
 controller.setUserCookie = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { user } = res.locals; 
-    res.cookie('SSID', `${user._id}`, { expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000), httpOnly: true}); 
+    res.cookie('SSID', `${user._id}`, { expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000), httpOnly: true});
+    res.cookie('username', `${user.username}`, { expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000), httpOnly: true}); 
     return next(); 
   }
   catch (err) {
@@ -180,6 +207,14 @@ controller.setUserCookie = async (req: Request, res: Response, next: NextFunctio
   }
 }
 
+/**
+ * 
+ * @param req 
+ * @param res 
+ * @param next 
+ * 
+ * Stores URIs in database if user is logged in. UserID is attached to each URI. 
+ */
 controller.saveURI = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { dbURI } = req.body;
@@ -201,11 +236,19 @@ controller.saveURI = async (req: Request, res: Response, next: NextFunction) => 
   }
 }
 
+/**
+ * 
+ * @param req 
+ * @param res 
+ * @param next 
+ * 
+ * Returns a user's stored URIs. 
+ */
 controller.getUris = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const userId = req.cookies.SSID;
     if(userId) {
-      const result = Uri.find({user_id: userId});
+      const result: any = await Uri.find({user_id: userId});
       res.locals.uris = result;
     }
     return next(); 
@@ -218,6 +261,85 @@ controller.getUris = async (req: Request, res: Response, next: NextFunction) => 
         err: 'Error has occured while getting URIs',
       },
     });
+  }
+}
+
+/**
+ * 
+ * @param req 
+ * @param res 
+ * @param next 
+ * 
+ * Determines whether or not a user is logged in. 
+ */
+controller.isLoggedIn = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const userId = req.cookies.SSID;
+    if (userId) {
+      const result: any = await User.findOne({ _id: userId });
+      res.locals.username = result.username;
+    }
+    return next();
+  } catch (err) {
+    next ({
+      log: 'Error at middleware controller.isLoggedIn',
+      status: 501,
+      message: {
+        err: err,
+      },
+    });    
+  }
+}
+
+/**
+ * 
+ * @param req 
+ * @param res 
+ * @param next 
+ * 
+ * Returns default express/graphql boilerplate code. 
+ */
+controller.defaultBoilerplate = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { schema, resolver } = res.locals.output; 
+    const boilerplate: string = await defaultBoilerplate(schema, resolver); 
+    res.locals.boilerplate = boilerplate; 
+    return next(); 
+  }
+  catch (err) {
+    next ({
+      log: 'Error at middleware controller.defaultBoilerplate',
+      status: 501,
+      message: {
+        err: err,
+      },
+    });   
+  }
+}
+
+/**
+ * 
+ * @param req 
+ * @param res 
+ * @param next 
+ * 
+ * Returns apollo-express graphql boilerplate code. 
+ */
+controller.apolloBoilerplate = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { schema, resolver } = res.locals.output; 
+    const boilerplate: string = await apolloBoilerplate(schema, resolver); 
+    res.locals.apollobp = boilerplate; 
+    return next(); 
+  }
+  catch (err) {
+    next ({
+      log: 'Error at middleware controller.apolloBoilerplate',
+      status: 501,
+      message: {
+        err: err,
+      },
+    });   
   }
 }
 

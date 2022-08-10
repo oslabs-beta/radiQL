@@ -19,3 +19,12 @@ export function defaultBoilerplate(schema: string, resolver: string): string {
   return requires + app + schemaMats + makeEx + endpoint + footer; 
 }
 
+export function apolloBoilerplate(schema: string, resolver: string): string {
+  const requires = `const express = require('express');\nconst { ApolloServer, gql } = requires('apollo-server-express);\n\n`;
+  const typeDefs = `const typeDefs = gql${schema.slice(17)};\n\n`;
+  const resolvers = `${resolver};\n\n`;
+  const server = `const server = new ApolloServer({ typeDefs, resolvers });\n\n`;
+  const footer = `const port = 3000;\nconst app = express();\nserver.applyMiddleware({ app });\n\napp.listen(port, () => {\n\tconsole.log('listening on port', port);\n});`; 
+  return requires + typeDefs + resolvers + server + footer;  
+}
+

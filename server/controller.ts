@@ -7,7 +7,7 @@ import { User, Uri } from './models';
 require('dotenv').config(); 
 import {Request, Response, NextFunction} from "express"; 
 const mongoose = require('mongoose');
-import { defaultBoilerplate } from './boilerplates';
+import { defaultBoilerplate, apolloBoilerplate } from './boilerplates';
 
 mongoose.connect(process.env.DB_URI, {useUnifiedTopology: true, useNewUrlParser: true, dbName: 'radiql'}); 
 
@@ -293,6 +293,24 @@ controller.defaultBoilerplate = async (req: Request, res: Response, next: NextFu
   catch (err) {
     next ({
       log: 'Error at middleware controller.defaultBoilerplate',
+      status: 501,
+      message: {
+        err: err,
+      },
+    });   
+  }
+}
+
+controller.apolloBoilerplate = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { schema, resolver } = res.locals.output; 
+    const boilerplate: string = await apolloBoilerplate(schema, resolver); 
+    res.locals.apollobp = boilerplate; 
+    return next(); 
+  }
+  catch (err) {
+    next ({
+      log: 'Error at middleware controller.apolloBoilerplate',
       status: 501,
       message: {
         err: err,

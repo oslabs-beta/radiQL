@@ -17,8 +17,7 @@
     "build-prod": "webpack --mode production",
     "kill": "npx kill-port 3000 8080",
     "test": "jest",
-    "install-client": "npm install",
-    "heroku-prebuild": "npm install -D",
+    "install-client": "npm install && npm install -D",
     "heroku-postbuild": "npm run install-client && npm run build-prod"
   },
   "dependencies": {

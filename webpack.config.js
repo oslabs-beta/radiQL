@@ -23,6 +23,8 @@ const config = {
       '/uris': 'http://localhost:3000',
       '/getUsername': 'http://localhost:3000',
       '/logout': 'http://localhost:3000',
+      '/defaultbp': 'http://localhost:3000',
+      '/apollobp': 'http://localhost:3000',
     },
   },
   module: {

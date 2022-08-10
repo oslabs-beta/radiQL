@@ -56,4 +56,25 @@ router.get('/uris', controller.getUris, (req: Request, res: Response) => {
   return res.status(200).json(res.locals.uris);
 })
 
+/**
+ * Returns default express/node server with graphql implemented. 
+ */
+router.get('/defaultbp', 
+  controller.getTableData, controller.getAllColumns, controller.makeSchemas, 
+  controller.defaultBoilerplate, 
+  (req: Request, res: Response) => {
+    return res.status(200).json(res.locals.boilerplate); 
+});
+
+/**
+ * Returns apollo-express server with graphql implemented
+ */
+router.get('/apollobp', 
+  controller.getTableData, controller.getAllColumns, controller.makeSchemas,
+  controller.apolloBoilerplate, 
+  (req: Request, res: Response) => {
+    return res.status(200).json(res.locals.apollobp); 
+  }
+)
+
 export default router;

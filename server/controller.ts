@@ -7,6 +7,7 @@ import { User, Uri } from './models';
 require('dotenv').config(); 
 import {Request, Response, NextFunction} from "express"; 
 const mongoose = require('mongoose');
+import { defaultBoilerplate, apolloBoilerplate } from './boilerplates';
 
 mongoose.connect(process.env.DB_URI, {useUnifiedTopology: true, useNewUrlParser: true, dbName: 'radiql'}); 
 
@@ -263,6 +264,14 @@ controller.getUris = async (req: Request, res: Response, next: NextFunction) => 
   }
 }
 
+/**
+ * 
+ * @param req 
+ * @param res 
+ * @param next 
+ * 
+ * Determines whether or not a user is logged in. 
+ */
 controller.isLoggedIn = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const userId = req.cookies.SSID;
@@ -273,12 +282,64 @@ controller.isLoggedIn = async (req: Request, res: Response, next: NextFunction) 
     return next();
   } catch (err) {
     next ({
-      log: 'Error at middleware controller.getUris',
+      log: 'Error at middleware controller.isLoggedIn',
       status: 501,
       message: {
         err: err,
       },
     });    
+  }
+}
+
+/**
+ * 
+ * @param req 
+ * @param res 
+ * @param next 
+ * 
+ * Returns default express/graphql boilerplate code. 
+ */
+controller.defaultBoilerplate = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { schema, resolver } = res.locals.output; 
+    const boilerplate: string = await defaultBoilerplate(schema, resolver); 
+    res.locals.boilerplate = boilerplate; 
+    return next(); 
+  }
+  catch (err) {
+    next ({
+      log: 'Error at middleware controller.defaultBoilerplate',
+      status: 501,
+      message: {
+        err: err,
+      },
+    });   
+  }
+}
+
+/**
+ * 
+ * @param req 
+ * @param res 
+ * @param next 
+ * 
+ * Returns apollo-express graphql boilerplate code. 
+ */
+controller.apolloBoilerplate = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { schema, resolver } = res.locals.output; 
+    const boilerplate: string = await apolloBoilerplate(schema, resolver); 
+    res.locals.apollobp = boilerplate; 
+    return next(); 
+  }
+  catch (err) {
+    next ({
+      log: 'Error at middleware controller.apolloBoilerplate',
+      status: 501,
+      message: {
+        err: err,
+      },
+    });   
   }
 }
 

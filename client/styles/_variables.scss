@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100,200&display=swap');
+@import url(https://cdn.jsdelivr.net/gh/tonsky/FiraCode@1.206/distr/fira_code.css);
+@import url(https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css);
+
+$base-color: #295bff;
+
+$base-light-10: lighten($base-color, 10%);
+$base-light-20: lighten($base-color, 20%);
+$base-dark-30: darken($base-color, 30%);
+$base-dark-20: darken($base-color, 20%);
+
+$black: mix(black, $base-color, 90%);
+$white: #F4F7FF;
+$gray: mix(#636363, $base-color, 80%);
+$beige: #F0F7EE;
+$codeGray: rgb(29,31,33);
+
+$lightBlue: rgb(0, 187, 255);
+$purple: rgb(0, 71, 134);
+$orange: orange;
+
+$anim-blue: rgb(20,93,160);

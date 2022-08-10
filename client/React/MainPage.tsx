@@ -18,6 +18,7 @@ const MainPage = props => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [savedDatabase, setSavedDatabase] = useState('');
 
+
   //send uri request
   const handleConvertURI = async() => {
     const blurBox = (document.getElementById('blur-container'));

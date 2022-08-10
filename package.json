@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "scripts": {
-    "start": "NODE_ENV=production node dist/index.js",
+    "start": "NODE_ENV=production node dist/src/index.js",
     "dev": "concurrently \"cross-env NODE_ENV=development webpack serve --open\" \"cross-env NODE_ENV=development nodemon server/server.ts\"",
     "clean": "rm dist/bundle.js",
     "build-prod": "webpack && tsc",

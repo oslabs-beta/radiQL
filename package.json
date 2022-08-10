@@ -17,7 +17,7 @@
     "kill": "npx kill-port 3000 8080",
     "test": "jest",
     "install-client": "npm install",
-    "heroku-postbuild": "npm run install-client && npm run build"
+    "heroku-postbuild": "npm run install-client && npm run build-prod"
   },
   "dependencies": {
     "axios": "^0.27.2",

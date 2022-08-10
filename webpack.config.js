@@ -23,6 +23,7 @@ const config = {
       '/uris': 'http://localhost:3000',
       '/getUsername': 'http://localhost:3000',
       '/logout': 'http://localhost:3000',
+      '/boilerplate': 'http://localhost:3000',
     },
   },
   module: {

@@ -7,6 +7,7 @@ import { User, Uri } from './models';
 require('dotenv').config(); 
 import {Request, Response, NextFunction} from "express"; 
 const mongoose = require('mongoose');
+import { defaultBoilerplate } from './boilerplates';
 
 mongoose.connect(process.env.DB_URI, {useUnifiedTopology: true, useNewUrlParser: true, dbName: 'radiql'}); 
 
@@ -273,12 +274,30 @@ controller.isLoggedIn = async (req: Request, res: Response, next: NextFunction) 
     return next();
   } catch (err) {
     next ({
-      log: 'Error at middleware controller.getUris',
+      log: 'Error at middleware controller.isLoggedIn',
       status: 501,
       message: {
         err: err,
       },
     });    
+  }
+}
+
+controller.defaultBoilerplate = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { schema, resolver } = res.locals.output; 
+    const boilerplate: string = await defaultBoilerplate(schema, resolver); 
+    res.locals.boilerplate = boilerplate; 
+    return next(); 
+  }
+  catch (err) {
+    next ({
+      log: 'Error at middleware controller.defaultBoilerplate',
+      status: 501,
+      message: {
+        err: err,
+      },
+    });   
   }
 }
 

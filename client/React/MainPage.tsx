@@ -3,17 +3,20 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from "framer-motion";
 import {FaClipboardList, FaArrowRight, FaCheck} from 'react-icons/fa';
+import SavedDatabases from './SavedDatabases';
 import dummydata from '../dummyCode';
 // Components: 
-import CodeBlock from './CodeBlock';
+import CodeBlock from './codeBlock';
 import MountainLogo from './MountainLogo'
 
 const MainPage = props => {
 
-  const [currentTab, changeTab] = useState(1);
+  const [currentTab, changeTab] = useState<number>(1);
   const [schemaBody, setschemaBody] = useState(dummydata.dummySchema);
   const [resolverBody, setresolverBody] = useState(dummydata.dummyResolver);
-  const [instruction, setInstruction] = useState(1);
+  const [instruction, setInstruction] = useState<number>(1);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [savedDatabase, setSavedDatabase] = useState('');
 
   //send uri request
   const handleConvertURI = async() => {
@@ -66,7 +69,9 @@ const MainPage = props => {
         </section>
         <div id="uri-input-container" className='p-2'>
           <input id='userURI' type="text" placeholder=' Your Database URI' />
+          {document.cookie['SSID'] && <SavedDatabases />}
           <motion.button whileHover={{scale: 1.1}} whileTap={{scale: 0.9}} id='convert-btn' onClick={() => handleConvertURI()} >Convert!</motion.button>
+          {isLoggedIn ? <motion.button whileHover={{scale: 1.1}} whileTap={{scale: 0.9}} id='convert-btn' onClick={() => handleConvertURI()} disabled >Save Database</motion.button> : <button style={{'backgroundColor': 'darkgrey', 'color': 'lightgrey', 'borderColor': 'darkgrey', 'cursor': 'default'}} disabled >Log In To Save Database</button> }
         </div>
         <div className='stats left-2'>Stats here?</div>
       </div>

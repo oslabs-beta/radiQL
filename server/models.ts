@@ -11,7 +11,8 @@ export const User = mongoose.model("User", userSchema);
 // Schema for Uris that stores the inputted uris for each user 
 const uriSchema = new mongoose.Schema({
   uri: { type: String, required: true},
-  user_id: { type: mongoose.Schema.Types.ObjectId, required: true}
+  user_id: { type: mongoose.Schema.Types.ObjectId, required: true}, 
+  uri_name: { type: String, require: true }
 })
 
 export const Uri = mongoose.model("Uri", uriSchema); 

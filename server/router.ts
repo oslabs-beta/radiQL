@@ -16,7 +16,7 @@ router.post('/submitURI', controller.getTableData, controller.getAllColumns, con
  * Nothing happens if the user is not logged in. 
  */
 router.post('/saveURI', controller.saveURI, (req: Request, res: Response, next: NextFunction) => {
-  return res.status(200); 
+  return res.sendStatus(200); 
 })
 
 /**

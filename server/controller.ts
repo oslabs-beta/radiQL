@@ -217,6 +217,7 @@ controller.setUserCookie = async (req: Request, res: Response, next: NextFunctio
  */
 controller.saveURI = async (req: Request, res: Response, next: NextFunction) => {
   try {
+    console.log(req.body.name); 
     const { dbURI, name } = req.body;
     const userId = req.cookies.SSID; 
     if(userId) {

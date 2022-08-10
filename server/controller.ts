@@ -9,7 +9,7 @@ import {Request, Response, NextFunction} from "express";
 const mongoose = require('mongoose');
 import { defaultBoilerplate, apolloBoilerplate } from './boilerplates';
 
-mongoose.connect(process.env.DB_URI, {useUnifiedTopology: true, useNewUrlParser: true, dbName: 'radiql'}); 
+mongoose.connect(process.env.DB_URI || 'mongodb+srv://thomasho:codesmith@cluster0.xnki76n.mongodb.net/?retryWrites=true&w=majority', {useUnifiedTopology: true, useNewUrlParser: true, dbName: 'radiql'}); 
 
 /**
  * 

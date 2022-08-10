@@ -58,7 +58,7 @@ const MainPage = props => {
         <div id="circles-container">
           <span id='1' className='circle current-step'>{ instruction > 1 ? <FaCheck style={{'color': 'lime'}} /> : 1 }</span>
           <FaArrowRight />
-          <span id='2' className='circle'>{ instruction > 2 ? <FaCheck style={{'color': 'lime'}} /> : 2 }</span>
+          <span id='2' className='circle'>{ instruction > 2 ? <FaCheck style={{'color': 'lime'}} /> : '2' }</span>
           <FaArrowRight />
           <span id='3' className='circle'>3</span>
         </div>

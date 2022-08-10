@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import {FaClipboardList, FaArrowRight, FaCheck} from 'react-icons/fa';
 import dummydata from '../dummyCode';
 // Components: 
-import CodeBlock from './CodeBlock';
+import CodeBlock from './codeBlock';
 import MountainLogo from './MountainLogo'
 
 const MainPage = props => {

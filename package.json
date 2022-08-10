@@ -10,10 +10,10 @@
   "author": "",
   "license": "ISC",
   "scripts": {
-    "start": "cross-env NODE_ENV=production ts-node server/server.ts",
+    "start": "NODE_ENV=production ts-node server/server.ts",
     "dev": "concurrently \"cross-env NODE_ENV=development webpack serve --open\" \"cross-env NODE_ENV=development nodemon server/server.ts\"",
     "clean": "rm dist/bundle.js",
-    "build-prod": "node node_modules/webpack/bin/webpack.js",
+    "build-prod": "webpack",
     "kill": "npx kill-port 3000 8080",
     "test": "jest",
     "install-client": "npm install --dev",

@@ -213,15 +213,16 @@ controller.setUserCookie = async (req: Request, res: Response, next: NextFunctio
  * @param res 
  * @param next 
  * 
- * Stores URIs in database if user is logged in. UserID is attached to each URI. 
+ * Stores URIs under a name in database if user is logged in. UserID is attached to each URI. 
  */
 controller.saveURI = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { dbURI } = req.body;
+    const { dbURI, name } = req.body;
     const userId = req.cookies.SSID; 
     if(userId) {
-      const exists = await Uri.findOne({uri: dbURI, user_id: userId});
-      if (!exists) await Uri.create({uri: dbURI, user_id: userId}); 
+      const exists = await Uri.findOne({uri: dbURI, user_id: userId, uri_name: name});
+      if (!exists) await Uri.create({uri: dbURI, user_id: userId, uri_name: name}); 
+      else Uri.findOneAndUpdate({user_id: userId, uri_name: name}, {uri: dbURI}, {upsert: true}); 
     }
     return next(); 
   }

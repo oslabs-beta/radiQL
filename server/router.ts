@@ -66,6 +66,9 @@ router.get('/defaultbp',
     return res.status(200).json(res.locals.boilerplate); 
 });
 
+/**
+ * Returns apollo-express server with graphql implemented
+ */
 router.get('/apollobp', 
   controller.getTableData, controller.getAllColumns, controller.makeSchemas,
   controller.apolloBoilerplate, 

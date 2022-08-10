@@ -264,6 +264,14 @@ controller.getUris = async (req: Request, res: Response, next: NextFunction) => 
   }
 }
 
+/**
+ * 
+ * @param req 
+ * @param res 
+ * @param next 
+ * 
+ * Determines whether or not a user is logged in. 
+ */
 controller.isLoggedIn = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const userId = req.cookies.SSID;
@@ -283,6 +291,14 @@ controller.isLoggedIn = async (req: Request, res: Response, next: NextFunction) 
   }
 }
 
+/**
+ * 
+ * @param req 
+ * @param res 
+ * @param next 
+ * 
+ * Returns default express/graphql boilerplate code. 
+ */
 controller.defaultBoilerplate = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { schema, resolver } = res.locals.output; 
@@ -301,6 +317,14 @@ controller.defaultBoilerplate = async (req: Request, res: Response, next: NextFu
   }
 }
 
+/**
+ * 
+ * @param req 
+ * @param res 
+ * @param next 
+ * 
+ * Returns apollo-express graphql boilerplate code. 
+ */
 controller.apolloBoilerplate = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { schema, resolver } = res.locals.output; 

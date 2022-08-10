@@ -19,6 +19,12 @@ export function defaultBoilerplate(schema: string, resolver: string): string {
   return requires + app + schemaMats + makeEx + endpoint + footer; 
 }
 
+/**
+ * 
+ * @param schema schema string
+ * @param resolver resolver string
+ * @returns apollo-express boilerplate code as string
+ */
 export function apolloBoilerplate(schema: string, resolver: string): string {
   const requires = `const express = require('express');\nconst { ApolloServer, gql } = requires('apollo-server-express);\n\n`;
   const typeDefs = `const typeDefs = gql${schema.slice(17)};\n\n`;

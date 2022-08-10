@@ -1,17 +1,4 @@
-$base-color: #295bff;
-
-$white: mix(white, $base-color, 95%);
-$black: mix(black, $base-color, 90%);
-$gray: mix(#636363, $base-color, 80%);
-$base-light-10: lighten($base-color, 10%);
-$base-light-20: lighten($base-color, 20%);
-$base-dark-30: darken($base-color, 30%);
-$base-dark-20: darken($base-color, 20%);
-$green-gradient: linear-gradient(
-  315deg,
-  hsla(164, 38%, 18%, 1) 0%,
-  hsla(158, 77%, 77%, 1) 100%
-);
+@import 'variables';
 
 .login-modal-container {
   position: absolute;

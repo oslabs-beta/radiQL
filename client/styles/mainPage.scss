@@ -1,25 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100,200&display=swap');
-@import url(https://cdn.jsdelivr.net/gh/tonsky/FiraCode@1.206/distr/fira_code.css);
-@import url(https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css);
+@import 'variables';
 
 * {
   padding: 0px;
   margin: 0px;
 }
 
-$base-color: #295bff;
-
-$white: mix(white, $base-color, 95%);
-$black: mix(black, $base-color, 90%);
-$gray: mix(#636363, $base-color, 80%);
-
-
-
 html,
 #root,
 .body {
-  background-color: #F0F7EE;
+  background-color: $beige;
   height: 100%;
 }
 
@@ -68,8 +57,8 @@ body {
     align-items: center;
     grid-area: 1 / 1 / 2 / 2;
     padding: 10px;
-    border: 3px solid #32343f;
-    background-color:rgb(255, 255, 255);
+    border: 3px solid lighten($codeGray, 10%);
+    background-color: white;
     border-radius: 5px;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
 
@@ -112,7 +101,7 @@ body {
       box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
     }
     .current-step {
-      background-color: orange;
+      background-color: $orange;
     }
 
     #uri-input-container {
@@ -144,7 +133,7 @@ body {
         &:hover {
           border-color:#36416f; 
           background-color: #36416f;
-          color: orange;
+          color: $orange;
         }
       }
     }

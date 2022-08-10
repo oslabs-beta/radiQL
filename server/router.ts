@@ -19,6 +19,7 @@ router.post(
   controller.register,
   controller.setUserCookie,
   (req: Request, res: Response) => {
+    console.log('Responding to /register');
     return res.sendStatus(201);
   }
 );
@@ -31,7 +32,8 @@ router.post(
   controller.login,
   controller.setUserCookie,
   (req: Request, res: Response) => {
-    return res.sendStatus(200);
+    console.log('Responding to /login');
+    return res.status(200).json(res.locals.user.username);
   }
 );
 
@@ -39,20 +41,23 @@ router.post(
  * Returns the username for a logged in user
  */
 router.get('/getUsername', controller.isLoggedIn, (req: Request, res: Response) => {
-  return res.status(200).json(res.locals.username)
+  console.log('Responding to /getUsername');
+  return res.status(200).json(res.locals.username);
 });
 
 /**
  * Logs out a user - clears their SSID and username cookies
  */
 router.get('/logout', (req: Request, res: Response) => {
-  return res.clearCookie('SSID').clearCookie('username').status(204).json(true);
+  console.log('Responding to /logout');
+  return res.clearCookie('SSID').clearCookie('username').sendStatus(204);
 });
 
 /**
  * Returns stored URIs for a user. 
  */
 router.get('/uris', controller.getUris, (req: Request, res: Response) => {
+  console.log('Responding to /uris');
   return res.status(200).json(res.locals.uris);
 })
 

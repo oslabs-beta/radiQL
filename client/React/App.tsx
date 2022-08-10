@@ -11,14 +11,12 @@ const App = () => {
   const [username, setUsername] = React.useState<string>('');
 
   React.useEffect(() => {
-    // '/getUsername'
-    setUsername('Alex');
+    // setUsername('Alex');
     axios.get('/getUsername')
-    .then((data) => {
-      console.log(data);
-      // data.json()
+    .then((res) => {
+      console.log(res.data);
+      setUsername(res.data);
     })
-    
   }, [])
 
   return (

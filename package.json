@@ -13,7 +13,7 @@
     "start": "cross-env NODE_ENV=production node server/server.js",
     "dev": "concurrently \"cross-env NODE_ENV=development webpack serve --open\" \"cross-env NODE_ENV=development nodemon server/server.ts\"",
     "clean": "rm dist/bundle.js",
-    "build": "webpack",
+    "build": "npx webpack",
     "kill": "npx kill-port 3000 8080",
     "test": "jest",
     "install-client": "npm install",

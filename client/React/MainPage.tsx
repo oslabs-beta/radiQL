@@ -8,15 +8,17 @@ import dummydata from '../dummyCode';
 // Components: 
 import CodeBlock from './codeBlock';
 import MountainLogo from './MountainLogo'
+import SaveDatabaseModal from './SaveDatabaseModal';
 
-const MainPage = props => {
+const MainPage = ({username}) => {
 
   const [currentTab, changeTab] = useState<number>(1);
   const [schemaBody, setschemaBody] = useState(dummydata.dummySchema);
   const [resolverBody, setresolverBody] = useState(dummydata.dummyResolver);
   const [instruction, setInstruction] = useState<number>(1);
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-  const [savedDatabase, setSavedDatabase] = useState('');
+  const [selectedDatabase, setSelectedDatabase] = useState<string>('');
+  //state that shows or hides the save new database name modal
+  const [showSaveModal, setShowSaveModal] =  React.useState<boolean>(false)
 
 
   //send uri request
@@ -45,16 +47,24 @@ const MainPage = props => {
     // blurBox?.classList.add('hidden');
   }
 
+
   useEffect(() => {
     if(schemaBody) {
 
     }
   }, [schemaBody])
 
+  useEffect(() => {
+    if(showSaveModal) {
+
+    }
+  }, [showSaveModal])
+
 
   return (
     <div id='main-content' className='mainContent'>
       <div id='dynamic-about' className='dynamicAbout left-1' >
+        {showSaveModal && <SaveDatabaseModal setShowSaveModal={setShowSaveModal} />}
         <h1>How to use radiQL:</h1>
         <div id="circles-container">
           <span id='1' className='circle current-step'>{ instruction > 1 ? <FaCheck style={{'color': 'lime'}} /> : 1 }</span>
@@ -70,9 +80,9 @@ const MainPage = props => {
         </section>
         <div id="uri-input-container" className='p-2'>
           <input id='userURI' type="text" placeholder=' Your Database URI' />
-          {document.cookie['SSID'] && <SavedDatabases />}
+          {username && <SavedDatabases username={username} setSelectedDatabase={setSelectedDatabase}/>}
           <motion.button whileHover={{scale: 1.1}} whileTap={{scale: 0.9}} id='convert-btn' onClick={() => handleConvertURI()} >Convert!</motion.button>
-          {isLoggedIn ? <motion.button whileHover={{scale: 1.1}} whileTap={{scale: 0.9}} id='convert-btn' onClick={() => handleConvertURI()} disabled >Save Database</motion.button> : <button style={{'backgroundColor': 'darkgrey', 'color': 'lightgrey', 'borderColor': 'darkgrey', 'cursor': 'default'}} disabled >Log In To Save Database</button> }
+          {username ? <motion.button whileHover={{scale: 1.1}} whileTap={{scale: 0.9}} id='save-database-btn' onClick={() => setShowSaveModal(true)} disabled >Save Database</motion.button> : <button style={{'backgroundColor': 'darkgrey', 'color': 'lightgrey', 'borderColor': 'darkgrey', 'cursor': 'default'}} disabled >Log In To Save Database</button> }
         </div>
         <div className='stats left-2'>Stats here?</div>
       </div>

@@ -1,0 +1,41 @@
+@import 'variables';
+
+.save-database-modal-container {
+  position: absolute;
+  width: 300px;
+  height: 375px;
+  border: 3px solid $base-light-20;
+  background-color: #1b2240;
+  letter-spacing: 0.5px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
+    rgba(0, 0, 0, 0.22) 0px 15px 12px;
+  z-index: 1000;
+    input {
+      padding: 10px;
+      margin: 5px;
+    }
+    button {
+      padding: 5px;
+      width: 150px;
+      cursor: pointer;
+      border-radius: 5px;
+      background-color: $base-light-20;
+      border-color: $base-light-20;
+      border-radius: 5px;
+      color: black;
+      margin: 10px;
+      font-size: medium;
+      font-weight: 600;
+    }
+    button:hover {
+      background-color: $base-color;
+      border-color: $base-color;
+      color: white;
+    }
+    a {
+      text-decoration: none;
+      color: white;
+      margin: 10px;
+      font-size: medium;
+    }
+  }

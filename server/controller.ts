@@ -213,15 +213,17 @@ controller.setUserCookie = async (req: Request, res: Response, next: NextFunctio
  * @param res 
  * @param next 
  * 
- * Stores URIs in database if user is logged in. UserID is attached to each URI. 
+ * Stores URIs under a name in database if user is logged in. UserID is attached to each URI. 
  */
 controller.saveURI = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { dbURI } = req.body;
+    console.log(req.body.name); 
+    const { dbURI, name } = req.body;
     const userId = req.cookies.SSID; 
     if(userId) {
-      const exists = await Uri.findOne({uri: dbURI, user_id: userId});
-      if (!exists) await Uri.create({uri: dbURI, user_id: userId}); 
+      const exists = await Uri.findOne({uri: dbURI, user_id: userId, uri_name: name});
+      if (!exists) await Uri.create({uri: dbURI, user_id: userId, uri_name: name}); 
+      else Uri.findOneAndUpdate({user_id: userId, uri_name: name}, {uri: dbURI}, {upsert: true}); 
     }
     return next(); 
   }
@@ -302,7 +304,8 @@ controller.isLoggedIn = async (req: Request, res: Response, next: NextFunction) 
 controller.defaultBoilerplate = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { schema, resolver } = res.locals.output; 
-    const boilerplate: string = await defaultBoilerplate(schema, resolver); 
+    const { dbURI } = res.locals; 
+    const boilerplate: string = await defaultBoilerplate(schema, resolver, dbURI); 
     res.locals.boilerplate = boilerplate; 
     return next(); 
   }
@@ -327,8 +330,10 @@ controller.defaultBoilerplate = async (req: Request, res: Response, next: NextFu
  */
 controller.apolloBoilerplate = async (req: Request, res: Response, next: NextFunction) => {
   try {
+    console.log(res.locals.dbURI);
     const { schema, resolver } = res.locals.output; 
-    const boilerplate: string = await apolloBoilerplate(schema, resolver); 
+    const { dbURI } = res.locals; 
+    const boilerplate: string = await apolloBoilerplate(schema, resolver, dbURI); 
     res.locals.apollobp = boilerplate; 
     return next(); 
   }

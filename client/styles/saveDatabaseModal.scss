@@ -10,11 +10,15 @@
   box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
     rgba(0, 0, 0, 0.22) 0px 15px 12px;
   z-index: 1000;
+  color: black;
+    label {
+      color: black;
+    }
     input {
       padding: 10px;
       margin: 5px;
     }
-    button {
+    #save-btn {
       padding: 5px;
       width: 150px;
       cursor: pointer;
@@ -27,15 +31,10 @@
       font-size: medium;
       font-weight: 600;
     }
-    button:hover {
+    #save-btn:hover {
       background-color: $base-color;
       border-color: $base-color;
       color: white;
     }
-    a {
-      text-decoration: none;
-      color: white;
-      margin: 10px;
-      font-size: medium;
-    }
+    
   }

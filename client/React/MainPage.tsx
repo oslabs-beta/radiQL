@@ -54,11 +54,11 @@ const MainPage = ({username}) => {
     }
   }, [schemaBody])
 
-  useEffect(() => {
-    if(showSaveModal) {
+  // useEffect(() => {
+  //   if(showSaveModal) {
 
-    }
-  }, [showSaveModal])
+  //   }
+  // }, [showSaveModal])
 
 
   return (
@@ -82,7 +82,7 @@ const MainPage = ({username}) => {
           <input id='userURI' type="text" placeholder=' Your Database URI' />
           {username && <SavedDatabases username={username} setSelectedDatabase={setSelectedDatabase}/>}
           <motion.button whileHover={{scale: 1.1}} whileTap={{scale: 0.9}} id='convert-btn' onClick={() => handleConvertURI()} >Convert!</motion.button>
-          {username ? <motion.button whileHover={{scale: 1.1}} whileTap={{scale: 0.9}} id='save-database-btn' onClick={() => setShowSaveModal(true)} disabled >Save Database</motion.button> : <button style={{'backgroundColor': 'darkgrey', 'color': 'lightgrey', 'borderColor': 'darkgrey', 'cursor': 'default'}} disabled >Log In To Save Database</button> }
+          {username ? <motion.button whileHover={{scale: 1.1}} whileTap={{scale: 0.9}} id='save-database-btn' onClick={() => setShowSaveModal(true)}>Save Database</motion.button> : <button style={{'backgroundColor': 'darkgrey', 'color': 'lightgrey', 'borderColor': 'darkgrey', 'cursor': 'default'}} disabled >Log In To Save Database</button> }
         </div>
         <div className='stats left-2'>Stats here?</div>
       </div>

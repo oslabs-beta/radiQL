@@ -13,7 +13,9 @@ const SaveDatabaseModal = ({setShowSaveModal}) => {
     const name: string = (document.getElementById('newName') as HTMLInputElement).value;
 
     //post request with the 2 user inputs as the body to the '/saveURI' route
-    const response = await axios.post('/saveURI', {dbURI: dbURI, name: name}, {headers: {'Credentials': true}})
+    console.log('dbURI', dbURI)
+    console.log('name', name)
+    const response = await axios.post('/saveURI', {dbURI: dbURI, name: name})
 
     //if post reqquest successful close modal by settting the show modal to false
     if(response.status == 200) {
@@ -25,7 +27,7 @@ const SaveDatabaseModal = ({setShowSaveModal}) => {
     }
   }
   return (
-    <motion.div drag initial={{ opacity: 0, scale: 0.75, top: 0, right: 0, }} animate={{ opacity: 1, scale: 1, top: 50, right: 30, }} exit={{ top:-150, right:-100, opacity: 0, scale: 0 }} className='save-database-modal-container'>
+    <motion.div key='saveURI' initial={{ opacity: 0, scale: 0.75, top: 0, right: 0, }} animate={{ opacity: 1, scale: 1, top: 50, right: 30, }} exit={{ top:-150, right:-100, opacity: 0, scale: 0 }} className='save-database-modal-container'>
       <AnimatePresence>
         <label htmlFor="newName">Save Database As:</label>
         <input type="text" id="newName" />

@@ -73,9 +73,13 @@
     justify-content: flex-end;
     align-items: flex-end;
     z-index: 100;
+    position: absolute;
+    right: 5px;
+    top: 90px;
     
     svg {
-  
+      width: 15px;
+      margin: 2px;
       &:hover {
         cursor: pointer;
       }

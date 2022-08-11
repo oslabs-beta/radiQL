@@ -25,7 +25,7 @@ controller.getTableData = async (req: Request, res: Response, next: NextFunction
   try {
     let { dbURI } = req.body;
     // assumes logged in. 
-    if(dbURI.slice(0, 11) !== 'postgres://' && req.cookies.SSID) {
+    if((dbURI.slice(0, 11) !== 'postgres://' && dbURI.slice(0, 11) !== 'postgresql:') && req.cookies.SSID) {
       const userId = req.cookies.SSID;
       dbURI = await Uri.findOne({user_id: userId, uri_name: dbURI}); 
       dbURI = dbURI.uri; 

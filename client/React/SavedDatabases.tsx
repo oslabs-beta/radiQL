@@ -3,13 +3,13 @@ import axios from 'axios'
 
 
 
-const SavedDatabases = props => {
+const SavedDatabases = ({username, setSelectedDatabase})=> {
 
   const [savedUris , setSavedUris] = React.useState<usersUris | null>(null)
 
   //uris type 
   type Uris = {
-    uri: string;
+    uri_name: string;
     user_id: string
     }; 
   
@@ -18,24 +18,19 @@ const SavedDatabases = props => {
     data: Uris[];
   };
   
-
   //useEffect for getting user Uris
   React.useEffect(() => {
-    
+  
     //get URIS Function
     const GetUsersUris = async (): Promise<void | string>  => {
       try {
         // axios request to server  route '/uris' 
         //post body includes current users ID from cookie.SSID
-        const { data, status } = await axios.post<usersUris>(
-          //post endpoint
+        const { data, status } = await axios.get<usersUris>(
+          //endpoint
           '/uris',
-          //post body - backend is looking for 'userId'
-          { userId: document.cookie['SSID']},
           {
-            headers: {
-              Accept: 'application/json',
-            },
+            withCredentials: true,
           },
         );
         
@@ -47,24 +42,21 @@ const SavedDatabases = props => {
       }  catch (error) {
           console.log('unexpected error: ', error);
           return 'An unexpected error occurred';
-
-      }}
-
-    //if SSID cookie exists, run GetUsersUris
-    document.cookie['SSID'] && GetUsersUris()
+      }
+    }
+    GetUsersUris()
     
-  }, [savedUris]);
+  }, [username]);
 
   return (
     <div>
-      <label htmlFor='savedDatabases'>Saved Databases:</label>
-      <select name='savedDatabases' id='savedDatabases'>
+      <select name='savedDatabases' id='savedDatabases' onChange={(e)=> setSelectedDatabase(e.target.value)}>
         {/* for each saved uri make a option inside the select field */}
+        <option selected disabled>Saved Databases</option>
         {Array.isArray(savedUris) && savedUris.map((uri: Uris) => (
-          <option>{uri.uri}</option>
+        <option value={uri.uri_name}>{uri.uri_name}</option>
         ))}
       </select>
-      
     </div>
   )
 }

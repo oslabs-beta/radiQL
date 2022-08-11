@@ -79,10 +79,10 @@ const MainPage = ({username}) => {
           <h2 className={ instruction === 3 ? '' : 'gray' } >3. Paste code into your server to begin using GraphQL</h2>
         </section>
         <div id="uri-input-container" className='p-2'>
-          <input id='userURI' type="text" placeholder=' Your Database URI' />
-          {username && <SavedDatabases username={username} setSelectedDatabase={setSelectedDatabase}/>}
+          <input id='userURI' type="text" placeholder=' Your Database URI' value={selectedDatabase ? selectedDatabase : ''} />
           <motion.button whileHover={{scale: 1.1}} whileTap={{scale: 0.9}} id='convert-btn' onClick={() => handleConvertURI()} >Convert!</motion.button>
           {username ? <motion.button whileHover={{scale: 1.1}} whileTap={{scale: 0.9}} id='save-database-btn' onClick={() => setShowSaveModal(true)}>Save Database</motion.button> : <button style={{'backgroundColor': 'darkgrey', 'color': 'lightgrey', 'borderColor': 'darkgrey', 'cursor': 'default'}} disabled >Log In To Save Database</button> }
+          {username && <SavedDatabases username={username} setSelectedDatabase={setSelectedDatabase}/>}
         </div>
         <div className='stats left-2'>Stats here?</div>
       </div>

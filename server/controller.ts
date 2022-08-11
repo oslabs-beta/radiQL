@@ -23,7 +23,13 @@ mongoose.connect(process.env.DB_URI || 'mongodb+srv://thomasho:codesmith@cluster
  */
 controller.getTableData = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { dbURI } = req.body;
+    let { dbURI } = req.body;
+    // assumes logged in. 
+    if(dbURI.slice(0, 11) !== 'postgres://' && req.cookies.SSID) {
+      const userId = req.cookies.SSID;
+      dbURI = await Uri.findOne({user_id: userId, uri_name: dbURI}); 
+      dbURI = dbURI.uri; 
+    }
     res.locals.tableData = 'Hello';
     const db = new Pool ({
       connectionString: dbURI,

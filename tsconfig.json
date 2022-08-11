@@ -13,7 +13,8 @@
         "esModuleInterop": true,
     },
     "include": [
-        "./client/**/*"
+        "./client/**/*",
+        "./server/**/*"
     ],
     "exclude": ["./coverage", "./dist", "__tests__", "jest.config.js", "./node_modules"]
 }

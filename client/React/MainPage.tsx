@@ -14,14 +14,21 @@ import {usersUris} from './types'
 
 const MainPage = ({username}) => {
 
+  // State to switch between tabs on the CodeBody component
   const [currentTab, changeTab] = useState<number>(1);
+  // Code input for the Schema tab
   const [schemaBody, setschemaBody] = useState(dummydata.dummySchema);
+  // Code input for the Resolver tab
   const [resolverBody, setresolverBody] = useState(dummydata.dummyResolver);
+  // Current instruction step (either 1, 2 or 3)
   const [instruction, setInstruction] = useState<number>(1);
+
+  // Current value of the URI input field
   const [selectedDatabase, setSelectedDatabase] = useState<string>('');
-  //state that shows or hides the save new database name modal
+  // State that shows or hides the SaveDatabaseModal component
   const [showSaveModal, setShowSaveModal] =  React.useState<boolean>(false);
-  const [savedUris , setSavedUris] = React.useState<usersUris | null>(null);
+  // Saved databases that are displayed when logged in
+  const [savedUris, setSavedUris] = React.useState<usersUris | null>(null);
 
 
   //send uri request

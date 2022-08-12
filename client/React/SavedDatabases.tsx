@@ -4,7 +4,7 @@ import {Uris} from './types'
 
 const SavedDatabases = ({savedUris, GetUsersUris, username, setSelectedDatabase})=> {
   
-  //useEffect for getting user Uris
+  // Call GetUsersUris whenever the username changes
   React.useEffect(() => {
     GetUsersUris()
   }, [username]);

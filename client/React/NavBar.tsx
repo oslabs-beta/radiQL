@@ -11,6 +11,7 @@ const NavBar = ({ username, setUsername }) => {
 
   return (
     <div className="navbar">
+      {/* Logo animation to wiggle 8 degrees every 15 seconds */}
       <motion.div
       className="box"
       animate={{

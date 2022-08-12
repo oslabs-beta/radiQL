@@ -152,4 +152,18 @@ body {
     width: 300px;
     height: 100px;
   }
+
+  #disabled-save {
+    background-color: darkgrey !important;
+    color: lightgrey !important;
+    border-color: darkgrey !important;
+    cursor: default !important;
+  }
+}
+
+#saved-db-container {
+  margin: 2px;
+  padding: 5px;
+  border: 1px solid gray;
+  border-radius: 5px;
 }

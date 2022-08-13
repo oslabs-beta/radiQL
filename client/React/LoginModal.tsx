@@ -74,14 +74,41 @@ const LoginModal = ({ setShowLogin, username, setUsername }) => {
       username === '' ? 
       <div id="input-modal-container">
           {/* Username and password input fields */}
-        <input type="text" id="login-username" className='login-input'  placeholder="Username" required/>
-        <input type="password" id="login-password" className='login-input' placeholder="Password" required />
+        <input 
+          type="text" 
+          id="login-username" 
+          className='login-input'  
+          placeholder="Username" 
+          required
+        />
+        <input 
+          type="password" 
+          id="login-password" 
+          className='login-input' 
+          placeholder="Password" 
+          required 
+        />
           {/* If user needs to register display confirm password field */}
-        {!notRegistering && <input type="password" id="register-confirm-password" className='login-input' placeholder="Confirm Password" required/>}
+        {!notRegistering && 
+          <input 
+            type="password" 
+            id="register-confirm-password" 
+            className='login-input' 
+            placeholder="Confirm Password" 
+            required
+          />
+        }
           {/* If user is registering btn says register and use register onclick functiion; 
           if user is logging in, btn says log in use login onclick function  */}
-        <motion.button whileHover={{scale: 1.1}} whileTap={{scale: 0.9}} id="login-btn" 
-          onClick={notRegistering ? () => handleLogin() : () => {console.log(document.cookie); handleRegister()}}>
+        <motion.button 
+          whileHover={{scale: 1.1}} 
+          whileTap={{scale: 0.9}} 
+          id="login-btn" 
+          onClick={notRegistering ? () => handleLogin() : () => {
+            console.log(document.cookie); 
+            handleRegister()}
+          }
+        >
           {notRegistering ? 'Login': 'Create Account'}
         </motion.button>
           {/* Button to switch between registration and login */}

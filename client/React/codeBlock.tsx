@@ -1,14 +1,13 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { FaPlusSquare, FaMinusSquare } from 'react-icons/fa';
-import { CopyBlock, hybrid, dracula, anOldHope, androidstudio, atomOneDark, atomOneLight, codepen, googlecode, monoBlue, nord, rainbow, shadesOfPurple, tomorrowNightBlue, zenburn } from "react-code-blocks";
+import { CopyBlock, hybrid } from "react-code-blocks";
 import genBoilerPlate from './BoilerPlateCode.jsx';
 
 // const finalCode = genBoilerPLate(serverOption, dummyFetchedCode);
 
 const CodeBlock = ({schemaBody, resolverBody, setInstruction, currentTab, changeTab}) => {
-  const [lineNumbers, toggleLineNumbers] = useState(false);
-  const [theme, setTheme] = useState(hybrid);
+
   const [boilerPlateCode, setBoilerPlateCode] = useState('useBoilerPlateCode');
 
   useEffect(() => {
@@ -25,11 +24,6 @@ const CodeBlock = ({schemaBody, resolverBody, setInstruction, currentTab, change
       setInstruction(3);
     })
   }, [])
-
-  // useEffect(() => {
-  //   console.log('theme changed');
-  //   console.log(theme);
-  // }, [theme])
   
   const zoomOut = () => {
     const txt = document.getElementById('codeOutput');
@@ -52,25 +46,6 @@ const CodeBlock = ({schemaBody, resolverBody, setInstruction, currentTab, change
     // code menus and code generation
     <div className="codeDiv">
       <div id="code-header">
-        {/* <form>
-          <label>Pick a theme: </label>
-          <select onChange={(e) => {setTheme(eval(e.target.value))}} title="theThemes" name="themes" id="themes" className="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Default select example">
-            <option value="anOldHope">anOldHope</option>
-            <option value="androidstudio">androidstudio</option>
-            <option value="atomOneDark">atomOneDark</option>
-            <option value="atomOneLight">atomOneLight</option>
-            <option value="codepen">codepen</option>
-            <option defaultValue="dracula">dracula</option>
-            <option value="googlecode">googlecode</option>
-            <option value="hybrid">hybrid</option>
-            <option value="monoBlue">monoBlue</option>
-            <option value="nord">nord</option>
-            <option value="rainbow">rainbow</option>
-            <option value="shadesOfPurple">shadesOfPurple</option>
-            <option value="tomorrowNightBlue">tomorrowNightBlue</option>
-            <option value="zenburn">zenburn</option>
-          </select>
-        </form> */}
           {/* select for boilerplate code */}
         <section id="tabs">
           <button className={ currentTab === 1 ? '' : 'not-active' } onClick={() => changeTab(1)}>Schema</button>
@@ -99,8 +74,7 @@ const CodeBlock = ({schemaBody, resolverBody, setInstruction, currentTab, change
           <CopyBlock id="copyblockid"
             language={'javascript'}
             text={ currentTab === 1 ? schemaBody : resolverBody }
-            showLineNumbers={lineNumbers}
-            theme={theme}
+            theme={hybrid}
             wrapLines={true}
           />
       </div>

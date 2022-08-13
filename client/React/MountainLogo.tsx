@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 const MountainLogo = props => {
-
+  // Mountian logo for loading screen 
   return (
     <div id="animate-container">
       <svg id="mountain" viewBox="0 0 120 89">

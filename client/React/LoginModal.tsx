@@ -12,6 +12,7 @@ const LoginModal = ({ setShowLogin, username, setUsername }) => {
 
   const [notRegistering, setNotRegistering] = useState<boolean>(true);
   const [passwordMatch, setPasswordMatch] = useState<boolean>(true);
+  const [userNotFound, setUserNotFound] = useState<boolean>(false);
 
   // Handle register Click function
   const handleRegister = async () => {
@@ -35,6 +36,13 @@ const LoginModal = ({ setShowLogin, username, setUsername }) => {
       console.log('axios register post error', error);
     }
   }
+  //ERROR: Username Not Found on Login
+  useEffect(()=> {
+    userNotFound && setTimeout(()=> {
+      setUserNotFound(false);
+    }, 3000)
+  })
+
 
   // Handle Login click function
   const handleLogin = async () => {
@@ -51,6 +59,7 @@ const LoginModal = ({ setShowLogin, username, setUsername }) => {
       setUsername(response.data);
     } catch (error) {
       console.log('axios login post error', error);
+      setUserNotFound(true)
     }
   }
   
@@ -100,7 +109,7 @@ const LoginModal = ({ setShowLogin, username, setUsername }) => {
         }
           {/* If user is registering btn says register and use register onclick functiion; 
           if user is logging in, btn says log in use login onclick function  */}
-        <motion.button 
+        {userNotFound ? <p className='text-red-500'>'Invalid username/password'</p> : <motion.button 
           whileHover={{scale: 1.1}} 
           whileTap={{scale: 0.9}} 
           id="login-btn" 
@@ -110,7 +119,7 @@ const LoginModal = ({ setShowLogin, username, setUsername }) => {
           }
         >
           {notRegistering ? 'Login': 'Create Account'}
-        </motion.button>
+        </motion.button>}
           {/* Button to switch between registration and login */}
         {notRegistering ? <a id="register" onClick={() => setNotRegistering(false)} href='#'>Register?</a> 
           : passwordMatch ? <a id="login?" onClick={() => setNotRegistering(true)} href='#'>Login?</a> 

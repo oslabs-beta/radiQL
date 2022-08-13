@@ -8,7 +8,7 @@ import genBoilerPlate from './BoilerPlateCode.jsx';
 
 const CodeBlock = ({schemaBody, resolverBody, setInstruction, currentTab, changeTab}) => {
 
-  const [boilerPlateCode, setBoilerPlateCode] = useState('useBoilerPlateCode');
+  const [boilerPlateCode, setBoilerPlateCode] = useState('BoilerPlateCode');
 
   useEffect(() => {
     const clipboardIcon = (document.querySelector('.icon') as HTMLInputElement);
@@ -51,6 +51,7 @@ const CodeBlock = ({schemaBody, resolverBody, setInstruction, currentTab, change
           <button className={ currentTab === 1 ? '' : 'not-active' } onClick={() => changeTab(1)}>Schema</button>
           <button className={ currentTab === 2 ? '' : 'not-active' } onClick={() => changeTab(2)}>Resolver</button>
           <button className={ currentTab === 3 ? '' : 'not-active' } onClick={() => changeTab(3)}>Diagram</button>
+          <button className={ currentTab === 4 ? '' : 'not-active' } onClick={() => changeTab(4)}>Boilerplate</button>
         </section>
         <form className="mx-10">
           <select title='boilerplatecode' className="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Default select example">
@@ -69,14 +70,25 @@ const CodeBlock = ({schemaBody, resolverBody, setInstruction, currentTab, change
           <FaPlusSquare style={{'color':'white'}} onClick={() => zoomIn()}/>
         </div>
       </div>
-       {/* codeBlock */}
         <div id="codeOutput">
+        { // If current tab is === 3:
+        currentTab === 3 ? 
+          // Render the D3 diagram element,
+          <div id="diagram" style={{'color':'white'}}>Diagram</div> 
+          : // Otherwise:
+          // Render the Codeblock element.
           <CopyBlock id="copyblockid"
             language={'javascript'}
-            text={ currentTab === 1 ? schemaBody : resolverBody }
+            text={ 
+              currentTab === 1 ? schemaBody : 
+              currentTab === 2 ? resolverBody :
+              currentTab === 4 ? boilerPlateCode :
+              `Tabs Error: tab ${currentTab} not found`
+              }
             theme={hybrid}
             wrapLines={true}
           />
+        }
       </div>
     </div>
   );

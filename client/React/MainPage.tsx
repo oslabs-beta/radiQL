@@ -40,12 +40,13 @@ const MainPage = ({username}) => {
       const response = await axios.post('/submitURI', {dbURI: dbURI});
 
       if (response.data.schema) {
-        const stepOne = (document.getElementById('1') as HTMLInputElement);
-        const stepTwo = (document.getElementById('2') as HTMLInputElement);
-        stepOne.classList.remove('current-step');
-        stepTwo.classList.add('current-step');
-        setInstruction(2);
-
+        if (instruction === 1) {
+          const stepOne = (document.getElementById('1') as HTMLInputElement);
+          const stepTwo = (document.getElementById('2') as HTMLInputElement);
+          stepOne.classList.remove('current-step');
+          stepTwo.classList.add('current-step');
+          setInstruction(2);
+        }
         setschemaBody(response.data.schema);
         setresolverBody(response.data.resolver);
       }

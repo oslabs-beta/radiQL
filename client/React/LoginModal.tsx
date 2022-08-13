@@ -12,6 +12,13 @@ const LoginModal = ({ setShowLogin, username, setUsername }) => {
 
   const [notRegistering, setNotRegistering] = useState<boolean>(true);
   const [passwordMatch, setPasswordMatch] = useState<boolean>(true);
+  const [invalidRegisterName, setInvalidRegisterName] = useState<boolean>(false);
+
+  //ERROR: INVALID REGISTER NAME
+  useEffect(() => {
+    //if username is already taken, show 'error message' instead of 'create account button' for 3 seconds
+    invalidRegisterName && setTimeout(() => setInvalidRegisterName(false),3000)
+  }, [invalidRegisterName])
 
   // Handle register Click function
   const handleRegister = async () => {
@@ -25,7 +32,7 @@ const LoginModal = ({ setShowLogin, username, setUsername }) => {
     }
     try{
       // Send username/password values to server, wait for response
-      const response = await axios.post('/register', {
+      const response: boolean = await axios.post('/register', {
         username: username,
         password: password
       })
@@ -33,6 +40,7 @@ const LoginModal = ({ setShowLogin, username, setUsername }) => {
       console.log(response);
     } catch (error) {
       console.log('axios register post error', error);
+      setInvalidRegisterName(true)
     }
   }
 
@@ -100,7 +108,7 @@ const LoginModal = ({ setShowLogin, username, setUsername }) => {
         }
           {/* If user is registering btn says register and use register onclick functiion; 
           if user is logging in, btn says log in use login onclick function  */}
-        <motion.button 
+        {!invalidRegisterName ? <motion.button 
           whileHover={{scale: 1.1}} 
           whileTap={{scale: 0.9}} 
           id="login-btn" 
@@ -110,7 +118,7 @@ const LoginModal = ({ setShowLogin, username, setUsername }) => {
           }
         >
           {notRegistering ? 'Login': 'Create Account'}
-        </motion.button>
+        </motion.button> : <p className='text-red-500'>Username is already taken!</p>}
           {/* Button to switch between registration and login */}
         {notRegistering ? <a id="register" onClick={() => setNotRegistering(false)} href='#'>Register?</a> 
           : passwordMatch ? <a id="login?" onClick={() => setNotRegistering(true)} href='#'>Login?</a> 

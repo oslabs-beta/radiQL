@@ -44,7 +44,7 @@ export function schemaMaker(allColumns: Array<Array<column>>): {schema: string, 
 
     baseTableNames.push(arr[0].table_name); 
     let typeDef: string | {schema: string, resolver: string} = `type ${toPascalCase(pluralize.singular(arr[0].table_name))} {\n`;
-
+    // [{}, {}, {}]
     for(const colObj of arr) {
       if(colObj.constraint_type === 'PRIMARY KEY') {
         typeDef += `\t${colObj.column_name}: ID`;
@@ -135,6 +135,7 @@ function attachQueryMutation(typeDefs: string, baseTableNames: Array<string>, ba
   return {schema: (typeQuery + typeMutation + typeDefs).slice(0, -1), resolver: (resolverQuery + resolverMutation + resolverTypeDefs)}; // this is now typeDefs
 }
 
+ 
 /**
  * 
  * @param baseTables array of array of columns representing all base table fields
@@ -202,6 +203,8 @@ function attachResolverMutation(baseTables: Array<Array<column>>): string {
   let resolverMutation: string = `Mutation: {\n\n`;
   for (const table of baseTables) {
     const singularName = toPascalCase(pluralize.singular(table[0].table_name));
+
+
 
     // add mutation resolver
     resolverMutation += `\tadd${singularName}: (root, args) => {\n`;
@@ -277,6 +280,7 @@ function addColumnRelations(btName: string, baseTables: Array<column>): string {
 
   return tempString;
 }
+
 
 // helper method for attachResolverTypeDefs
 function addForeignTables(btName: string, baseTables: Array<column>): string {

@@ -15,15 +15,13 @@ import AWS from 'aws-sdk';
 import { nanoid } from 'nanoid';
 
 AWS.config.update({
-  accessKeyId: 'AKIA3DTGRBLV62KVJAPZ',
-  secretAccessKey: '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',
-  region: 'us-east-1',
+  accessKeyId: process.env.AKI,
+  secretAccessKey: process.env.SAK,
+  region: process.env.REG,
 })
 export const client = new AWS.DynamoDB.DocumentClient();
-const USERS_TABLE_NAME = 'users'
-const URIS_TABLE_NAME = 'uris'
-
-// mongoose.connect(process.env.DB_URI || 'mongodb+srv://thomasho:codesmith@cluster0.xnki76n.mongodb.net/?retryWrites=true&w=majority', {useUnifiedTopology: true, useNewUrlParser: true, dbName: 'radiql'}); 
+const USERS_TABLE_NAME = 'users'; 
+const URIS_TABLE_NAME = 'uris'; 
 
 /**
  * 
@@ -157,7 +155,6 @@ controller.register = async (req: Request, res: Response, next: NextFunction) =>
     const newUser = await client.get({
       TableName: USERS_TABLE_NAME, Key: {"username": username}
     }).promise();
-    console.log(newUser.Item)
     res.locals.user = newUser.Item
     // error handle for non-unique username
     return next();
@@ -189,8 +186,7 @@ controller.login = async (req: Request, res: Response, next: NextFunction) => {
     let verifiedUser: any = await client.get({
       TableName: USERS_TABLE_NAME, Key: {"username": username}
     }).promise();
-    verifiedUser = verifiedUser.Item
-    console.log(verifiedUser);
+    verifiedUser = verifiedUser.Item;
     if (!verifiedUser) {
       console.log('Wrong username/password');  
       res.redirect(400, '/');
@@ -254,13 +250,9 @@ controller.setUserCookie = async (req: Request, res: Response, next: NextFunctio
  */
 controller.saveURI = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    // console.log(req.body.name); 
     const { dbURI, name } = req.body;
     const userId = req.cookies.SSID; 
     if(userId) {
-      // const exists = await Uri.findOne({uri: dbURI, user_id: userId, uri_name: name});
-      // if (!exists) await Uri.create({uri: dbURI, user_id: userId, uri_name: name}); 
-      // else Uri.findOneAndUpdate({user_id: userId, uri_name: name}, {uri: dbURI}, {upsert: true}); 
       await client.put({TableName: URIS_TABLE_NAME, Item: { uri: dbURI, user_id: userId, uri_name: name }}).promise();
     }
     return next(); 
@@ -372,7 +364,6 @@ controller.defaultBoilerplate = async (req: Request, res: Response, next: NextFu
  */
 controller.apolloBoilerplate = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    console.log(res.locals.dbURI);
     const { schema, resolver } = res.locals.output; 
     const { dbURI } = res.locals; 
     const boilerplate: string = await apolloBoilerplate(schema, resolver, dbURI); 

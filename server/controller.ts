@@ -4,12 +4,24 @@ import { allTables, columnQueryString} from './queries';
 import { schemaMaker } from './schemaMaker'; 
 import bcrypt from 'bcrypt';
 import { User, Uri } from './models';
-require('dotenv').config(); 
+import dotenv from 'dotenv';
+dotenv.config();
 import {Request, Response, NextFunction} from "express"; 
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
 import { defaultBoilerplate, apolloBoilerplate } from './boilerplates';
+// import dynamoose from 'dynamoose';
+// import { User, Uri } from './dynamoModels';
+import AWS from 'aws-sdk';
+import { nanoid } from 'nanoid';
 
-mongoose.connect(process.env.DB_URI || 'mongodb+srv://thomasho:codesmith@cluster0.xnki76n.mongodb.net/?retryWrites=true&w=majority', {useUnifiedTopology: true, useNewUrlParser: true, dbName: 'radiql'}); 
+AWS.config.update({
+  accessKeyId: process.env.AKI,
+  secretAccessKey: process.env.SAK,
+  region: process.env.REG,
+})
+export const client = new AWS.DynamoDB.DocumentClient();
+const USERS_TABLE_NAME = 'users'; 
+const URIS_TABLE_NAME = 'uris'; 
 
 /**
  * 
@@ -27,8 +39,8 @@ controller.getTableData = async (req: Request, res: Response, next: NextFunction
     // assumes logged in. 
     if((dbURI.slice(0, 11) !== 'postgres://' && dbURI.slice(0, 11) !== 'postgresql:') && req.cookies.SSID) {
       const userId = req.cookies.SSID;
-      dbURI = await Uri.findOne({user_id: userId, uri_name: dbURI}); 
-      dbURI = dbURI.uri; 
+      dbURI = await client.get({TableName: URIS_TABLE_NAME, Key: {user_id: userId}}).promise(); 
+      dbURI = dbURI.Item.uri; 
     }
     res.locals.tableData = 'Hello';
     const db = new Pool ({
@@ -69,7 +81,7 @@ controller.getAllColumns = async(req: Request, res: Response, next: NextFunction
     for (const table of tableData) { // table is object {table_name: 'name'}; 
       result.push((await db.query(columnQueryString, [table.table_name])).rows);
     }
-
+    // [[][{}, {}, {}], [{}, {}, {}], [], []]
     res.locals.allColumns = result; // result is array of array (tables) of objects (columns) 
     next(); 
   }
@@ -130,8 +142,20 @@ controller.register = async (req: Request, res: Response, next: NextFunction) =>
   try {
     const { username, password } = req.body;
     const hashedPw = await bcrypt.hash(password, 10);
-    const newUser = await User.create({username: username, password: hashedPw});
-    res.locals.user = newUser;
+    // const newUser = await User.create({username: username, password: hashedPw});
+    await client.put({
+      TableName: USERS_TABLE_NAME,
+      Item: {
+          "_id": nanoid(),
+          "username": username,
+          "password": hashedPw,
+      },
+      ConditionExpression: `attribute_not_exists(username)`
+    }).promise();
+    const newUser = await client.get({
+      TableName: USERS_TABLE_NAME, Key: {"username": username}
+    }).promise();
+    res.locals.user = newUser.Item
     // error handle for non-unique username
     return next();
   } catch (err) {
@@ -159,7 +183,10 @@ controller.login = async (req: Request, res: Response, next: NextFunction) => {
     if (username === undefined || password === undefined) {
       // display incorrect or smth like that
     }
-    const verifiedUser = await User.findOne({username});
+    let verifiedUser: any = await client.get({
+      TableName: USERS_TABLE_NAME, Key: {"username": username}
+    }).promise();
+    verifiedUser = verifiedUser.Item;
     if (!verifiedUser) {
       console.log('Wrong username/password');  
       res.redirect(400, '/');
@@ -223,13 +250,10 @@ controller.setUserCookie = async (req: Request, res: Response, next: NextFunctio
  */
 controller.saveURI = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    console.log(req.body.name); 
     const { dbURI, name } = req.body;
     const userId = req.cookies.SSID; 
     if(userId) {
-      const exists = await Uri.findOne({uri: dbURI, user_id: userId, uri_name: name});
-      if (!exists) await Uri.create({uri: dbURI, user_id: userId, uri_name: name}); 
-      else Uri.findOneAndUpdate({user_id: userId, uri_name: name}, {uri: dbURI}, {upsert: true}); 
+      await client.put({TableName: URIS_TABLE_NAME, Item: { uri: dbURI, user_id: userId, uri_name: name }}).promise();
     }
     return next(); 
   }
@@ -256,8 +280,9 @@ controller.getUris = async (req: Request, res: Response, next: NextFunction) => 
   try {
     const userId = req.cookies.SSID;
     if(userId) {
-      const result: any = await Uri.find({user_id: userId});
-      res.locals.uris = result;
+      // const result: any = await Uri.find({user_id: userId});
+      const result: any = await client.query({TableName: URIS_TABLE_NAME, KeyConditionExpression: "user_id = :u", ExpressionAttributeValues: {":u": userId}}).promise();
+      res.locals.uris = result.Items;
     }
     return next(); 
   }
@@ -283,8 +308,11 @@ controller.getUris = async (req: Request, res: Response, next: NextFunction) => 
 controller.isLoggedIn = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const userId = req.cookies.SSID;
-    if (userId) {
-      const result: any = await User.findOne({ _id: userId });
+    const username = req.cookies.username
+    if(userId) {
+      // const result: any = await User.findOne({ _id: userId });
+      let result: any = await client.get({TableName: USERS_TABLE_NAME, Key: {username: username}}).promise();
+      result = result.Item;
       res.locals.username = result.username;
     }
     return next();
@@ -336,7 +364,6 @@ controller.defaultBoilerplate = async (req: Request, res: Response, next: NextFu
  */
 controller.apolloBoilerplate = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    console.log(res.locals.dbURI);
     const { schema, resolver } = res.locals.output; 
     const { dbURI } = res.locals; 
     const boilerplate: string = await apolloBoilerplate(schema, resolver, dbURI); 

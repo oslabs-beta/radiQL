@@ -41,8 +41,8 @@ controller.getTableData = async (req: Request, res: Response, next: NextFunction
     // assumes logged in. 
     if((dbURI.slice(0, 11) !== 'postgres://' && dbURI.slice(0, 11) !== 'postgresql:') && req.cookies.SSID) {
       const userId = req.cookies.SSID;
-      dbURI = await Uri.findOne({user_id: userId, uri_name: dbURI}); 
-      dbURI = dbURI.uri; 
+      dbURI = await client.get({TableName: URIS_TABLE_NAME, Key: {user_id: userId}}).promise(); 
+      dbURI = dbURI.Item.uri; 
     }
     res.locals.tableData = 'Hello';
     const db = new Pool ({

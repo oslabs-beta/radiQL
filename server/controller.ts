@@ -23,7 +23,6 @@ export const client = new AWS.DynamoDB.DocumentClient();
 const USERS_TABLE_NAME = 'users'; 
 const URIS_TABLE_NAME = 'uris'; 
 
-
 /**
  * 
  * @param {*} req 
@@ -156,8 +155,6 @@ controller.register = async (req: Request, res: Response, next: NextFunction) =>
     const newUser = await client.get({
       TableName: USERS_TABLE_NAME, Key: {"username": username}
     }).promise();
-
-    console.log(newUser.Item)
     res.locals.user = newUser.Item
     // error handle for non-unique username
     return next();
@@ -189,9 +186,7 @@ controller.login = async (req: Request, res: Response, next: NextFunction) => {
     let verifiedUser: any = await client.get({
       TableName: USERS_TABLE_NAME, Key: {"username": username}
     }).promise();
-
-    verifiedUser = verifiedUser.Item
-    console.log(verifiedUser);
+    verifiedUser = verifiedUser.Item;
     if (!verifiedUser) {
       console.log('Wrong username/password');  
       res.redirect(400, '/');
@@ -255,7 +250,6 @@ controller.setUserCookie = async (req: Request, res: Response, next: NextFunctio
  */
 controller.saveURI = async (req: Request, res: Response, next: NextFunction) => {
   try {
-
     const { dbURI, name } = req.body;
     const userId = req.cookies.SSID; 
     if(userId) {

@@ -1,4 +1,6 @@
 
+const boilerPlateInstructions = `This tab will show the boilerplate output for the last submitted URI.`
+
 // auto generated server options for graphQL setup boilerplate code
 
 const genBoilerPLate = (server) => {
@@ -178,4 +180,4 @@ const genBoilerPLate = (server) => {
   }
 }
 
-// export default genBoilerPLate;
+export default boilerPlateInstructions;

@@ -130,7 +130,7 @@ const MainPage = ({username}) => {
           }
           {username && <SavedDatabases savedUris={savedUris} GetUsersUris={GetUsersUris} username={username} setSelectedDatabase={setSelectedDatabase}/>}
         </div>
-        <div className='stats left-2'>Stats here?</div>
+        <div className='stats left-2'>Last URI Submitted: {lastURI}</div>
       </div> 
       <CodeBlock 
         schemaBody={schemaBody} 

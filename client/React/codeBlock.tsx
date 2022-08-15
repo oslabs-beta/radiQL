@@ -3,16 +3,17 @@ import { useState, useEffect } from "react";
 import { FaPlusSquare, FaMinusSquare } from 'react-icons/fa';
 import { CopyBlock, hybrid } from "react-code-blocks";
 import axios from "axios";
-// import genBoilerPlate from './BoilerPlateCode.jsx';
+import boilerPlateInstructions from './BoilerPlateCode.jsx';
 
 // const finalCode = genBoilerPLate(serverOption, dummyFetchedCode);
 
 const CodeBlock = ({schemaBody, resolverBody, setInstruction, currentTab, changeTab, lastURI}) => {
 
-  const [boilerPlateCode, setBoilerPlateCode] = useState<string>('BoilerPlateCode');
+  const [boilerPlateCode, setBoilerPlateCode] = useState<string>(boilerPlateInstructions);
   const [boilerPlateSelection, setBoilerSelection] = useState<string>('No boilerplate code');
-
+  
   useEffect(() => {
+    console.log(boilerPlateInstructions, boilerPlateCode);
     const clipboardIcon = (document.querySelector('.icon') as HTMLInputElement);
     console.log(clipboardIcon);
     clipboardIcon.addEventListener('click', () => {
@@ -30,7 +31,7 @@ const CodeBlock = ({schemaBody, resolverBody, setInstruction, currentTab, change
   // When boilerPlateSelection is changed,
   useEffect(() => {
     if (boilerPlateSelection === 'No boilerplate code') {
-      setBoilerPlateCode('');
+      setBoilerPlateCode(boilerPlateInstructions);
       return;
     }
 
@@ -59,7 +60,7 @@ const CodeBlock = ({schemaBody, resolverBody, setInstruction, currentTab, change
   useEffect(() => {
     const bpSelect = document.getElementById('boiler-plate-select') as HTMLSelectElement | null;
     if (bpSelect) bpSelect.value = 'No boilerplate code';
-    setBoilerPlateCode('')
+    setBoilerPlateCode(boilerPlateInstructions)
   }, [lastURI])
   
   const zoomOut = () => {
@@ -90,7 +91,7 @@ const CodeBlock = ({schemaBody, resolverBody, setInstruction, currentTab, change
           <button className={ currentTab === 3 ? '' : 'not-active' } onClick={() => changeTab(3)}>Diagram</button>
           <button className={ currentTab === 4 ? '' : 'not-active' } onClick={() => changeTab(4)}>Boilerplate</button>
         </section>
-        <form className="mx-10">
+        <form className="mx-10 min-w-130">
           <select id="boiler-plate-select" title='boilerplatecode' className="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Default select example" 
           // Set BoilerplateSelection equal to this selector's value to run new axios call
           onChange={(e) => setBoilerSelection(e.target.value)}>

@@ -72,7 +72,7 @@ router.get('/uris', controller.getUris, (req: Request, res: Response) => {
 /**
  * Returns default express/node server with graphql implemented. 
  */
-router.get('/defaultbp', 
+router.post('/defaultbp', 
   controller.getTableData, controller.getAllColumns, controller.makeSchemas, 
   controller.defaultBoilerplate, 
   (req: Request, res: Response) => {
@@ -82,7 +82,7 @@ router.get('/defaultbp',
 /**
  * Returns apollo-express server with graphql implemented
  */
-router.get('/apollobp', 
+router.post('/apollobp', 
   controller.getTableData, controller.getAllColumns, controller.makeSchemas,
   controller.apolloBoilerplate, 
   (req: Request, res: Response) => {

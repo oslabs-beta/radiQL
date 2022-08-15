@@ -178,4 +178,4 @@ const genBoilerPLate = (server) => {
   }
 }
 
-export default genBoilerPLate;
+// export default genBoilerPLate;

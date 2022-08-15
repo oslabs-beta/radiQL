@@ -6,7 +6,7 @@ import {FaClipboardList, FaArrowRight, FaCheck} from 'react-icons/fa';
 import SavedDatabases from './SavedDatabases';
 import dummydata from '../dummyCode';
 // Components: 
-import CodeBlock from './codeBlock';
+import CodeBlock from './CodeBlock';
 import MountainLogo from './MountainLogo'
 import SaveDatabaseModal from './SaveDatabaseModal';
 
@@ -29,6 +29,8 @@ const MainPage = ({username}) => {
   const [showSaveModal, setShowSaveModal] =  React.useState<boolean>(false);
   // Saved databases that are displayed when logged in
   const [savedUris, setSavedUris] = React.useState<usersUris | null>(null);
+  // Save the last sent URI
+  const [lastURI, setLastURI] = React.useState<string | null>(null);
 
 
   //send uri request
@@ -40,6 +42,7 @@ const MainPage = ({username}) => {
       const response = await axios.post('/submitURI', {dbURI: dbURI});
 
       if (response.data.schema) {
+        setLastURI(dbURI);
         if (instruction === 1) {
           const stepOne = (document.getElementById('1') as HTMLInputElement);
           const stepTwo = (document.getElementById('2') as HTMLInputElement);
@@ -65,8 +68,8 @@ const MainPage = ({username}) => {
       const { data, status } = await axios.get<usersUris>(
         '/uris', {withCredentials: true},
       );
-      console.log(JSON.stringify(data));
-      console.log('response status is: ', status);
+      // console.log(JSON.stringify(data));
+      // console.log('response status is: ', status);
       // Set saved uris state to the response of the axios request
       setSavedUris(data);
     }  catch (error) {
@@ -135,6 +138,7 @@ const MainPage = ({username}) => {
         setInstruction={setInstruction} 
         currentTab={currentTab} 
         changeTab={changeTab} 
+        lastURI={lastURI}
       />
       <div id='blur-container' className='hidden'>
           < MountainLogo />

@@ -2,13 +2,15 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import { FaPlusSquare, FaMinusSquare } from 'react-icons/fa';
 import { CopyBlock, hybrid } from "react-code-blocks";
-import genBoilerPlate from './BoilerPlateCode.jsx';
+import axios from "axios";
+// import genBoilerPlate from './BoilerPlateCode.jsx';
 
 // const finalCode = genBoilerPLate(serverOption, dummyFetchedCode);
 
-const CodeBlock = ({schemaBody, resolverBody, setInstruction, currentTab, changeTab}) => {
+const CodeBlock = ({schemaBody, resolverBody, setInstruction, currentTab, changeTab, lastURI}) => {
 
-  const [boilerPlateCode, setBoilerPlateCode] = useState('BoilerPlateCode');
+  const [boilerPlateCode, setBoilerPlateCode] = useState<string>('BoilerPlateCode');
+  const [boilerPlateSelection, setBoilerSelection] = useState<string>('No boilerplate code');
 
   useEffect(() => {
     const clipboardIcon = (document.querySelector('.icon') as HTMLInputElement);
@@ -24,9 +26,44 @@ const CodeBlock = ({schemaBody, resolverBody, setInstruction, currentTab, change
       setInstruction(3);
     })
   }, [])
+
+  // When boilerPlateSelection is changed,
+  useEffect(() => {
+    if (boilerPlateSelection === 'No boilerplate code') {
+      setBoilerPlateCode('');
+      return;
+    }
+
+    if (lastURI === null) {
+      console.log('No URI submitted yet, please submit a URI to generate boilerplate code');
+      return;
+    }
+
+    // Get cached boilerPlateCode from localStorage if it exists
+    const code: string | null = localStorage.getItem(boilerPlateSelection + lastURI);
+    // If it is not null, use setboilerPlateCode on cached data
+    if (code !== null) {
+      console.log('boilerplate retrieved from localStorage');
+      setBoilerPlateCode(code);
+    } else {
+      console.log('boilerplate call to: ', boilerPlateSelection);
+      // Otherwise, send call to database for boilerplate code and save to cache
+      axios.post<string>(boilerPlateSelection, {dbURI: lastURI})
+      .then((res) => {
+        setBoilerPlateCode(res.data);
+        localStorage.setItem(boilerPlateSelection + lastURI, res.data);
+      }); 
+    }
+  }, [boilerPlateSelection])
+
+  useEffect(() => {
+    const bpSelect = document.getElementById('boiler-plate-select') as HTMLSelectElement | null;
+    if (bpSelect) bpSelect.value = 'No boilerplate code';
+    setBoilerPlateCode('')
+  }, [lastURI])
   
   const zoomOut = () => {
-    const txt = document.getElementById('codeOutput');
+    const txt= document.getElementById('codeOutput');
     //@ts-ignore
     const style = window.getComputedStyle(txt, null).getPropertyValue('font-size');
     const currentSize = parseFloat(style);
@@ -54,12 +91,13 @@ const CodeBlock = ({schemaBody, resolverBody, setInstruction, currentTab, change
           <button className={ currentTab === 4 ? '' : 'not-active' } onClick={() => changeTab(4)}>Boilerplate</button>
         </section>
         <form className="mx-10">
-          <select title='boilerplatecode' className="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Default select example">
+          <select id="boiler-plate-select" title='boilerplatecode' className="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Default select example" 
+          // Set BoilerplateSelection equal to this selector's value to run new axios call
+          onChange={(e) => setBoilerSelection(e.target.value)}>
             <option value="No boilerplate code">No boilerplate code</option>
-            <option value="GraphQL.js">GraphQL.js</option>
-            <option value="Apollo Server">Apollo Server</option>
-            <option value="graphql-yoga">graphql-yoga</option>
-            <option value="Express GraphQL">Express GraphQL</option>
+            <option value="/defaultbp">Express GraphQL</option>
+            <option value="/apollobp">Apollo Server</option>
+            <option value="GraphQL Yoga">GraphQL Yoga</option>
             <option value="GraphQL Helix">GraphQL Helix</option>
             <option value="Mercurious">Mercurious</option>
           </select>
@@ -74,7 +112,7 @@ const CodeBlock = ({schemaBody, resolverBody, setInstruction, currentTab, change
         { // If current tab is === 3:
         currentTab === 3 ? 
           // Render the D3 diagram element,
-          <div id="diagram" style={{'color':'white'}}>Diagram</div> 
+          <div id="diagram">Diagram</div> 
           : // Otherwise:
           // Render the Codeblock element.
           <CopyBlock id="copyblockid"

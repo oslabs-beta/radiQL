@@ -2,6 +2,8 @@ import cookieParser from 'cookie-parser';
 import request from 'supertest'; 
 import { app } from '../server/server'; 
 
+app.use(cookieParser());
+
 describe("Test server.ts", (): void => {
   beforeAll(done => {
     done()
@@ -55,5 +57,29 @@ describe("Test server.ts", (): void => {
     .set('Content-type', 'application/json')
     .send({ username: "test666", wrongfield: "wrong field"});
     expect(res.status).toEqual(501);
+  });
+  test("Should save cookies on successful login", (done) => {
+    request(app).post("/login")
+    .set('Content-type', 'application/json')
+    .send({ username: "test666", password: "test"})
+    .expect('set-cookie', 'SSID=62f128c8b24acd504f96a974; Path=/,username=test666; Path=/', done); 
+  });
+  test("Should respond to request for URIs", async () => {
+    const res: request.Response = await request(app).get('/uris'); 
+    expect(res.status).toEqual(200); 
+  });
+  test("Should allow logout", async () => {
+    const res: request.Response = await request(app).get("/logout"); 
+    expect(res.status).toEqual(204); 
+  });
+  test("Boilerplate route functions", async () => {
+    const res: request.Response = await request(app).get("/apollobp")
+    .set('Content-type', 'application/json')
+    .send({ dbURI: "postgres://mbvnsdqx:Saf3Rk2qSOmYrab1SzA35utIB5s0jxCQ@heffalump.db.elephantsql.com/mbvnsdqx"});
+    expect(res.status).toEqual(200); 
+    const res2: request.Response = await request(app).get("/defaultbp")
+    .set('Content-type', 'application/json')
+    .send({ dbURI: "postgres://mbvnsdqx:Saf3Rk2qSOmYrab1SzA35utIB5s0jxCQ@heffalump.db.elephantsql.com/mbvnsdqx"});
+    expect(res.status).toEqual(200); 
   });
 });

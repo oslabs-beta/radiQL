@@ -1,6 +1,8 @@
 language: node_js
 node_js:
   - 17
+env:
+  - DB_URI: 'mongodb+srv://thomasho:codesmith@cluster0.xnki76n.mongodb.net/?retryWrites=true&w=majority'
 install:
   - npm install
 script:

@@ -3,6 +3,13 @@ import request from 'supertest';
 import { app } from '../server/server'; 
 
 describe("Test server.ts", (): void => {
+  beforeAll(done => {
+    done()
+  })
+  
+  afterAll(done => {
+    done()
+  })
   test("Catch nonexistent route with 404", async () => {
     const res = await request(app).get("/404");
     expect(res.status).toEqual(404);

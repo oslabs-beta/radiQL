@@ -2,7 +2,7 @@ language: node_js
 node_js:
   - 17
 env:
-  - process.env.DB_URI: 'mongodb+srv://thomasho:codesmith@cluster0.xnki76n.mongodb.net/?retryWrites=true&w=majority'
+  - DB_URI='mongodb+srv://thomasho:codesmith@cluster0.xnki76n.mongodb.net/?retryWrites=true&w=majority' PORT=3000
 install:
   - npm install
 script:

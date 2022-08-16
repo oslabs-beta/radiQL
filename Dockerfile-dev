@@ -5,6 +5,6 @@ COPY package*.json ./
 RUN npm install
 COPY . .
 EXPOSE 3000
-RUN npm run build-prod
+EXPOSE 8080
 
-CMD ["npm", "run", "start"]
+CMD ["npm", "run", "dev"]

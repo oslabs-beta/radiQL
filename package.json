@@ -20,7 +20,8 @@
     "heroku-postbuild": "npm run install-client && npm run build-prod",
     "build": "webpack --config ./webpack.config.js",
     "start-full": "cross-env NODE_ENV=production ts-node server/server.ts",
-    "dev:hot": "NODE_ENV=development nodemon ./server/server.ts & webpack-dev-server --open --hot"
+    "dev:hot": "NODE_ENV=development nodemon ./server/server.ts & webpack-dev-server --open --hot", 
+    "start-dock": "NODE_ENV=production webpack & NODE_ENV=production ts-node server/server.ts"
   },
   "dependencies": {
     "aws-sdk": "^2.1193.0",

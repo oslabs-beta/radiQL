@@ -1,0 +1,13 @@
+version: "3.0"
+services:
+  dev: 
+    image: rjiang12/radiql-prod
+    container_name: radiql-prod
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/usr/src/app
+      - node_modules:/usr/src/app/node_modules
+    command: npm run start-dock
+volumes:
+  node_modules:

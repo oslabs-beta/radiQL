@@ -1,7 +1,7 @@
 FROM node:16.13
-WORKDIR /user/src/app
-COPY package*.json ./
-RUN npm install
+WORKDIR /usr/src/app
 COPY . .
+RUN npm install
+RUN npm run build
 EXPOSE 3000
-CMD ["npm", "run", "start"]
+CMD ["npm", "run", "start-full"]

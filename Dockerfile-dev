@@ -1,0 +1,7 @@
+FROM node:16.13
+RUN npm i webpack -g
+WORKDIR /user/src/app
+COPY package*.json ./ 
+COPY . .
+RUN npm i 
+EXPOSE 3000 

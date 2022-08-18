@@ -6,7 +6,7 @@ import {FaClipboardList, FaArrowRight, FaCheck} from 'react-icons/fa';
 import SavedDatabases from './SavedDatabases';
 import dummydata from '../dummyCode';
 // Components: 
-import CodeBlock from './CodeBlock';
+import CodeBlock from './codeBlock';
 import MountainLogo from './MountainLogo'
 import SaveDatabaseModal from './SaveDatabaseModal';
 

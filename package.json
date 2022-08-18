@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "scripts": {
-    "start": "cross-env NODE_ENV=production ts-node server/server.ts",
+    "start": "npm run build-prod && cross-env NODE_ENV=production ts-node server/server.ts",
     "dev": "concurrently \"cross-env NODE_ENV=development webpack serve\" \"cross-env NODE_ENV=development nodemon server/server.ts\"",
     "clean": "rm dist/bundle.js",
     "build-prod": "webpack",

@@ -4,6 +4,7 @@ import { FaPlusSquare, FaMinusSquare } from 'react-icons/fa';
 import { CopyBlock, hybrid } from "react-code-blocks";
 import axios from "axios";
 import boilerPlateInstructions from './BoilerPlateCode.jsx';
+import ReactFlowDiagram from './ReactFlowDiagram.jsx'
 
 // const finalCode = genBoilerPLate(serverOption, dummyFetchedCode);
 
@@ -113,7 +114,7 @@ const CodeBlock = ({schemaBody, resolverBody, setInstruction, currentTab, change
         { // If current tab is === 3:
         currentTab === 3 ? 
           // Render the D3 diagram element,
-          <div id="diagram">Diagram</div> 
+          <ReactFlowDiagram /> 
           : // Otherwise:
           // Render the Codeblock element.
           <CopyBlock id="copyblockid"

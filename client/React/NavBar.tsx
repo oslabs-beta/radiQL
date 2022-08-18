@@ -15,7 +15,7 @@ const NavBar = ({ username, setUsername }) => {
       <motion.div
       className="box"
       animate={{
-        scale: [1, 1, 1],
+        // scale: [1, 1, 1],
         rotate: [0, 8, 0 -8, 0],
       }}
       transition={{

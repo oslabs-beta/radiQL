@@ -66,7 +66,12 @@ const LoginModal = ({ setShowLogin, username, setUsername }) => {
   }
 
   return (
-    <motion.div drag initial={{ opacity: 0, scale: 0.75, top: 0, right: 0, }} animate={{ opacity: 1, scale: 1, top: 50, right: 30, }} exit={{ top:-150, right:-100, opacity: 0, scale: 0 }} className="login-modal-container">
+    <motion.div 
+      drag 
+      initial={{ opacity: 0, scale: 0.75, top: 0, right: 0, }} 
+      animate={{ opacity: 1, scale: 1, top: 50, right: 30, }} 
+      exit={{ top:-150, right:-100, opacity: 0, scale: 0 }} 
+      className="login-modal-container">
       <FaTimes id='close-icon' onClick={()=> setShowLogin()}/>
       <img id="login-logo" src={logo} />
 

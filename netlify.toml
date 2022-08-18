@@ -1,0 +1,7 @@
+[[redirects]]
+  from = "/*"
+  to = "/"
+  status = 200
+[[redirects]]
+  from = "https://teal-sundae-474a53.netlify.app/"
+  to = "localhost:3000/

@@ -9,5 +9,6 @@ import "./styles/loginModal.scss";
 import "./styles/mainPage.scss";
 import "./styles/mountainLogo.scss";
 import "./styles/navBar.scss";
+import "./styles/saveDatabaseModal.scss";
 
 ReactDOM.render(<HashRouter> <App/> </HashRouter>, document.querySelector('#root'));

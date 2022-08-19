@@ -18,8 +18,14 @@ const config = {
     },
     proxy: {
       '/submitURI': 'http://localhost:3000',
+      '/saveURI': 'http://localhost:3000',
       '/register': 'http://localhost:3000',
       '/login': 'http://localhost:3000',
+      '/uris': 'http://localhost:3000',
+      '/getUsername': 'http://localhost:3000',
+      '/logout': 'http://localhost:3000',
+      '/defaultbp': 'http://localhost:3000',
+      '/apollobp': 'http://localhost:3000',
     },
   },
   module: {
@@ -43,9 +49,9 @@ const config = {
           {
             loader: 'file-loader',
             options: {
-              name: "[name].[ext]",
-              outputPath: "assets/"
-          }
+              name: '[name].[ext]',
+              outputPath: 'assets/',
+            },
           },
         ],
       },

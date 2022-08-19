@@ -5,7 +5,8 @@
  * @param dbURI pg URI string
  * @returns boilerplate code as a string
  */
- export function defaultBoilerplate(schema: string, resolver: string, dbURI: string): string {
+
+export function defaultBoilerplate(schema: string, resolver: string, dbURI: string): string {
   const requires = `const express = require('express');\nconst { graphql, buildSchema} = require('graphql');\nconst graphqlHTTP = require('express-graphql');\nconst bodyParser = require('body-parser');\nconst Pool = require('pg');\n\n`;
   const app = `const port = 3000;\nconst app = express();\napp.use(bodyParser.text({ type: 'application/graphql' }));\n\n`;
   const pool = `const db = new Pool ({\n\tconnectionString: '${dbURI}',\n});\n\n`;

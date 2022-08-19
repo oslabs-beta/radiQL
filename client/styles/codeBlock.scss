@@ -1,19 +1,4 @@
-$base-color: #295bff;
-
-$white: mix(white, $base-color, 95%);
-$black: mix(black, $base-color, 90%);
-$gray: mix(#636363, $base-color, 80%);
-$base-light-10: lighten($base-color, 10%);
-$base-light-20: lighten($base-color, 20%);
-$base-dark-30: darken($base-color, 30%);
-$base-dark-20: darken($base-color, 20%);
-$green-gradient: linear-gradient(
-  315deg,
-  hsla(164, 38%, 18%, 1) 0%,
-  hsla(158, 77%, 77%, 1) 100%
-);
-
-$codeGray: rgb(29,31,33);
+@import 'variables';
 
 .codeDiv {
   height: 100%;
@@ -26,7 +11,7 @@ $codeGray: rgb(29,31,33);
   border-radius: 6px;
 
   #code-header {
-    background-color: rgb(0, 71, 134); //#1D1F21
+    background-color: $blue; //#1D1F21
     border-radius: 6px 6px 0px 0px;
     display: flex;
     flex-direction: row;
@@ -37,15 +22,15 @@ $codeGray: rgb(29,31,33);
     // Button tabs container
     #tabs {
       display: flex;
-      height: 53%;
-      margin: 0px 20px;
+      height: 70%;
+      margin: 0px 14px;
 
       // Default for when button is active:
       button {
         width: 130px;
         border-radius: 8px 8px 0 0;
-        padding: 7px 10px 10px 10px;
-        margin: 0px 2px;
+        padding: 5px 10px 10px 10px;
+        margin: 0px 4px;
         background-color: $codeGray;
       }
       // When button is not active:
@@ -59,6 +44,7 @@ $codeGray: rgb(29,31,33);
     }
 
     form {
+      margin-top: 5px;
       padding: 5px;
     }
 
@@ -87,9 +73,13 @@ $codeGray: rgb(29,31,33);
     justify-content: flex-end;
     align-items: flex-end;
     z-index: 100;
+    position: absolute;
+    right: 5px;
+    top: 90px;
     
     svg {
-  
+      width: 15px;
+      margin: 2px;
       &:hover {
         cursor: pointer;
       }

@@ -1,9 +1,3 @@
-// const express = require('express');
-// const path = require('path');
-// const bodyParser = require('body-parser');
-// const cookieParser = require('cookie-parser')
-// const port = 3000; 
-// const router = require('./router'); 
 import express, {Request, Response, NextFunction} from 'express';
 import path from 'path';
 import bodyParser from 'body-parser';
@@ -24,10 +18,10 @@ if (process.env.NODE_ENV === 'production')
   app.use(express.static(path.resolve(__dirname, '../dist')));
 else app.use(express.static(path.resolve(__dirname, '../client')));
 
-
+// all routes go through the router
 app.use('/', router); 
 
-
+// error handler
 app.use((err, req: Request, res: Response, next: NextFunction) => {
 const defaultErr = {
   log: 'Express error handler caught unknown middleware error',

@@ -1,17 +1,19 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import { FaPlusSquare, FaMinusSquare } from 'react-icons/fa';
-import { CopyBlock, hybrid, dracula, anOldHope, androidstudio, atomOneDark, atomOneLight, codepen, googlecode, monoBlue, nord, rainbow, shadesOfPurple, tomorrowNightBlue, zenburn } from "react-code-blocks";
-import genBoilerPlate from './BoilerPlateCode.jsx';
+import { CopyBlock, hybrid } from "react-code-blocks";
+import axios from "axios";
+import boilerPlateInstructions from './BoilerPlateCode.jsx';
 
 // const finalCode = genBoilerPLate(serverOption, dummyFetchedCode);
 
-const CodeBlock = ({schemaBody, resolverBody, setInstruction, currentTab, changeTab}) => {
-  const [lineNumbers, toggleLineNumbers] = useState(false);
-  const [theme, setTheme] = useState(hybrid);
-  const [boilerPlateCode, setBoilerPlateCode] = useState('useBoilerPlateCode');
+const CodeBlock = ({schemaBody, resolverBody, setInstruction, currentTab, changeTab, lastURI}) => {
 
+  const [boilerPlateCode, setBoilerPlateCode] = useState<string>(boilerPlateInstructions);
+  const [boilerPlateSelection, setBoilerSelection] = useState<string>('No boilerplate code');
+  
   useEffect(() => {
+    console.log(boilerPlateInstructions, boilerPlateCode);
     const clipboardIcon = (document.querySelector('.icon') as HTMLInputElement);
     console.log(clipboardIcon);
     clipboardIcon.addEventListener('click', () => {
@@ -26,13 +28,43 @@ const CodeBlock = ({schemaBody, resolverBody, setInstruction, currentTab, change
     })
   }, [])
 
-  // useEffect(() => {
-  //   console.log('theme changed');
-  //   console.log(theme);
-  // }, [theme])
+  // When boilerPlateSelection is changed,
+  useEffect(() => {
+    if (boilerPlateSelection === 'No boilerplate code') {
+      setBoilerPlateCode(boilerPlateInstructions);
+      return;
+    }
+
+    if (lastURI === null) {
+      console.log('No URI submitted yet, please submit a URI to generate boilerplate code');
+      return;
+    }
+
+    // Get cached boilerPlateCode from localStorage if it exists
+    const code: string | null = localStorage.getItem(boilerPlateSelection + lastURI);
+    // If it is not null, use setboilerPlateCode on cached data
+    if (code !== null) {
+      console.log('boilerplate retrieved from localStorage');
+      setBoilerPlateCode(code);
+    } else {
+      console.log('boilerplate call to: ', boilerPlateSelection);
+      // Otherwise, send call to database for boilerplate code and save to cache
+      axios.post<string>(boilerPlateSelection, {dbURI: lastURI})
+      .then((res) => {
+        setBoilerPlateCode(res.data);
+        localStorage.setItem(boilerPlateSelection + lastURI, res.data);
+      }); 
+    }
+  }, [boilerPlateSelection])
+
+  useEffect(() => {
+    const bpSelect = document.getElementById('boiler-plate-select') as HTMLSelectElement | null;
+    if (bpSelect) bpSelect.value = 'No boilerplate code';
+    setBoilerPlateCode(boilerPlateInstructions)
+  }, [lastURI])
   
   const zoomOut = () => {
-    const txt = document.getElementById('codeOutput');
+    const txt= document.getElementById('codeOutput');
     //@ts-ignore
     const style = window.getComputedStyle(txt, null).getPropertyValue('font-size');
     const currentSize = parseFloat(style);
@@ -52,39 +84,21 @@ const CodeBlock = ({schemaBody, resolverBody, setInstruction, currentTab, change
     // code menus and code generation
     <div className="codeDiv">
       <div id="code-header">
-        {/* <form>
-          <label>Pick a theme: </label>
-          <select onChange={(e) => {setTheme(eval(e.target.value))}} title="theThemes" name="themes" id="themes" className="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Default select example">
-            <option value="anOldHope">anOldHope</option>
-            <option value="androidstudio">androidstudio</option>
-            <option value="atomOneDark">atomOneDark</option>
-            <option value="atomOneLight">atomOneLight</option>
-            <option value="codepen">codepen</option>
-            <option defaultValue="dracula">dracula</option>
-            <option value="googlecode">googlecode</option>
-            <option value="hybrid">hybrid</option>
-            <option value="monoBlue">monoBlue</option>
-            <option value="nord">nord</option>
-            <option value="rainbow">rainbow</option>
-            <option value="shadesOfPurple">shadesOfPurple</option>
-            <option value="tomorrowNightBlue">tomorrowNightBlue</option>
-            <option value="zenburn">zenburn</option>
-          </select>
-        </form> */}
           {/* select for boilerplate code */}
         <section id="tabs">
           <button className={ currentTab === 1 ? '' : 'not-active' } onClick={() => changeTab(1)}>Schema</button>
           <button className={ currentTab === 2 ? '' : 'not-active' } onClick={() => changeTab(2)}>Resolver</button>
           <button className={ currentTab === 3 ? '' : 'not-active' } onClick={() => changeTab(3)}>Diagram</button>
+          <button className={ currentTab === 4 ? '' : 'not-active' } onClick={() => changeTab(4)}>Boilerplate</button>
         </section>
-        <form className="mx-10">
-          <label>Include boilerplate code</label>
-          <select title='boilerplatecode' className="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Default select example">
+        <form className="mx-10 min-w-130">
+          <select id="boiler-plate-select" title='boilerplatecode' className="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Default select example" 
+          // Set BoilerplateSelection equal to this selector's value to run new axios call
+          onChange={(e) => setBoilerSelection(e.target.value)}>
             <option value="No boilerplate code">No boilerplate code</option>
-            <option value="GraphQL.js">GraphQL.js</option>
-            <option value="Apollo Server">Apollo Server</option>
-            <option value="graphql-yoga">graphql-yoga</option>
-            <option value="Express GraphQL">Express GraphQL</option>
+            <option value="/defaultbp">Express GraphQL</option>
+            <option value="/apollobp">Apollo Server</option>
+            <option value="GraphQL Yoga">GraphQL Yoga</option>
             <option value="GraphQL Helix">GraphQL Helix</option>
             <option value="Mercurious">Mercurious</option>
           </select>
@@ -95,15 +109,25 @@ const CodeBlock = ({schemaBody, resolverBody, setInstruction, currentTab, change
           <FaPlusSquare style={{'color':'white'}} onClick={() => zoomIn()}/>
         </div>
       </div>
-       {/* codeBlock */}
         <div id="codeOutput">
+        { // If current tab is === 3:
+        currentTab === 3 ? 
+          // Render the D3 diagram element,
+          <div id="diagram">Diagram</div> 
+          : // Otherwise:
+          // Render the Codeblock element.
           <CopyBlock id="copyblockid"
             language={'javascript'}
-            text={ currentTab === 1 ? schemaBody : resolverBody }
-            showLineNumbers={lineNumbers}
-            theme={theme}
+            text={ 
+              currentTab === 1 ? schemaBody : 
+              currentTab === 2 ? resolverBody :
+              currentTab === 4 ? boilerPlateCode :
+              `Tabs Error: tab ${currentTab} not found`
+              }
+            theme={hybrid}
             wrapLines={true}
           />
+        }
       </div>
     </div>
   );

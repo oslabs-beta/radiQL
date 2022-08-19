@@ -18,7 +18,7 @@ const APP = `http://localhost:${process.env.PORT || 3000}/`;
  * For a more in-depth look at the underlying design of async/await, see
  * https://ponyfoo.com/articles/understanding-javascript-async-await
  */
-describe('Cookies tests', () => {
+xdescribe('Cookies tests', () => {
   let browser;
   let page;
 

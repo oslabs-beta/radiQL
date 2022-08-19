@@ -73,11 +73,11 @@ describe("Test server.ts", (): void => {
     expect(res.status).toEqual(204); 
   });
   test("Boilerplate route functions", async () => {
-    const res: request.Response = await request(app).get("/apollobp")
+    const res: request.Response = await request(app).post("/apollobp")
     .set('Content-type', 'application/json')
     .send({ dbURI: "postgres://mbvnsdqx:Saf3Rk2qSOmYrab1SzA35utIB5s0jxCQ@heffalump.db.elephantsql.com/mbvnsdqx"});
     expect(res.status).toEqual(200); 
-    const res2: request.Response = await request(app).get("/defaultbp")
+    const res2: request.Response = await request(app).post("/defaultbp")
     .set('Content-type', 'application/json')
     .send({ dbURI: "postgres://mbvnsdqx:Saf3Rk2qSOmYrab1SzA35utIB5s0jxCQ@heffalump.db.elephantsql.com/mbvnsdqx"});
     expect(res.status).toEqual(200); 

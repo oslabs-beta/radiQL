@@ -16,6 +16,9 @@ const config = {
       publicPath: '/',
       directory: path.join(__dirname, 'dist'),
     },
+    performance: {
+      hints: process.env.NODE_ENV === 'production' ? "warning" : false
+    },
     proxy: {
       '/submitURI': 'http://localhost:3000',
       '/saveURI': 'http://localhost:3000',

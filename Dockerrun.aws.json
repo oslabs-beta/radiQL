@@ -1,0 +1,12 @@
+{
+  "AWSEBDockerrunVersion": "1",
+  "Image": {
+    "Name": "rjiang12/radiql-prod"
+  },
+  "Ports": [
+    {
+      "ContainerPort": "3000",
+      "HostPort": "3000"
+    }
+  ]
+} 

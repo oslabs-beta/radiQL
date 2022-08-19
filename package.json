@@ -15,7 +15,7 @@
     "clean": "rm dist/bundle.js",
     "build-prod": "webpack",
     "kill": "npx kill-port 3000 8080",
-    "test": "jest",
+    "test": "jest --coverage --forceExit",
     "install-client": "npm install",
     "heroku-postbuild": "npm run install-client && npm run build-prod"
   },

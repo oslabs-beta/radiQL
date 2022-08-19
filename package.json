@@ -15,7 +15,7 @@
     "clean": "rm dist/bundle.js",
     "build-prod": "webpack",
     "kill": "npx kill-port 3000 8080",
-    "test": "jest --coverage --forceExit && npm run test:cypress",
+    "test": "jest --coverage --forceExit && npm run kill && npm run test:cypress && npm run kill",
     "install-client": "npm install",
     "heroku-postbuild": "npm run install-client && npm run build-prod",
     "cypress:open": "npm run dev & cypress open", 

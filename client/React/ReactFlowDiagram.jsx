@@ -1,5 +1,7 @@
 import React, { useCallback, useState } from 'react'
 import ReactFlow, { MiniMap, Controls, Background, BackgroundVariant, applyEdgeChanges, applyNodeChanges, NodeChange, EdgeChange } from 'react-flow-renderer';
+import FlowNode from './FlowNodes'
+
 const ReactFlowDiagram = () => {
 
   const initialNodes = [
@@ -50,19 +52,19 @@ const ReactFlowDiagram = () => {
 
   return (
     <ReactFlow 
-      nodes={initialNodes} 
+      nodes={nodes} 
       onNodesChange={onNodesChange}
       onEdgesChange={onEdgesChange} 
-      edges={initialEdges} 
+      edges={edges} 
       fitView
-      >
+    >
       <Background
-          variant={BackgroundVariant.Dots}
-          className="dots"
-          color="gray"
-          gap={20}
-          size={1}
-          />
+        variant={BackgroundVariant.Dots}
+        className="dots"
+        color="gray"
+        gap={20}
+        size={1}
+      />
     </ReactFlow>
   )
 }

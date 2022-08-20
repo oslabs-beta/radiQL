@@ -38,11 +38,9 @@ const MainPage = ({username}) => {
     const blurBox = (document.getElementById('blur-container'));
     const dbURI = (document.getElementById('userURI') as HTMLInputElement).value;
     try{
+      // Blur the interaction area
       blurBox?.classList.remove('hidden');
-
-      console.log('Sending URI')
       const response = await axios.post('/submitURI', {dbURI: dbURI});
-      console.log('URI Response')
 
       if (response.data.schema) {
         setLastURI(dbURI);
@@ -55,7 +53,6 @@ const MainPage = ({username}) => {
         }
         setschemaBody(response.data.schema);
         setresolverBody(response.data.resolver);
-        console.log(response.data.tableData);
       } else {
         console.log('ERORR: Bad response from server');
         console.log(response);
@@ -63,9 +60,8 @@ const MainPage = ({username}) => {
     } catch(err){
       console.log('dbURI', err);
     }
-    // Unblur
+    // Unblur the interaction area
     setTimeout(() => {blurBox?.classList.add('hidden')}, 500);
-    // blurBox?.classList.add('hidden');
   }
 
   // Get URIS Function: Axios request to server  route '/uris' 

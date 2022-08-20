@@ -65,7 +65,7 @@ const CodeBlock = ({schemaBody, resolverBody, setInstruction, currentTab, change
   }, [lastURI])
   
   const zoomOut = () => {
-    const txt= document.getElementById('codeOutput');
+    const txt= document.getElementById('code-output');
     //@ts-ignore
     const style = window.getComputedStyle(txt, null).getPropertyValue('font-size');
     const currentSize = parseFloat(style);
@@ -73,7 +73,7 @@ const CodeBlock = ({schemaBody, resolverBody, setInstruction, currentTab, change
     txt.style.fontSize = (currentSize - 5) + 'px';
   }
   const zoomIn = () => {
-    const txt = document.getElementById('codeOutput');
+    const txt = document.getElementById('code-output');
     //@ts-ignore
     const style = window.getComputedStyle(txt, null).getPropertyValue('font-size');
     const currentSize = parseFloat(style);
@@ -110,7 +110,7 @@ const CodeBlock = ({schemaBody, resolverBody, setInstruction, currentTab, change
           <FaPlusSquare style={{'color':'white'}} onClick={() => zoomIn()}/>
         </div>
       </div>
-        <div id="codeOutput">
+        <div id="code-output">
         { // If current tab is === 3:
         currentTab === 3 ? 
           // Render the D3 diagram element,

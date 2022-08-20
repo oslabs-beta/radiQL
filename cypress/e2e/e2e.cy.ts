@@ -1,5 +1,5 @@
-
-describe('empty spec', () => {
+/// <reference types="cypress" />
+describe('e2e tests', () => {
   it('can login and logout', () => {
     //login
     cy.visit('http://localhost:8080/');
@@ -17,4 +17,12 @@ describe('empty spec', () => {
     cy.contains('Logout').click({force: true});
     cy.contains('Login');
   });
-})
+  it('can generate schemas and resolvers from postgres URI', () => {
+    const testURI = "postgres://mbvnsdqx:Saf3Rk2qSOmYrab1SzA35utIB5s0jxCQ@heffalump.db.elephantsql.com/mbvnsdqx"
+    cy.get('#userURI').click();
+    cy.get('#userURI').type(testURI);
+    cy.get('#convert-btn').click();
+    cy.get('#userURI').click().type('{selectall}').type('{backspace}');
+    cy.contains(testURI);
+  });
+});

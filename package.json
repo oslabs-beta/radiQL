@@ -10,14 +10,15 @@
   "author": "",
   "license": "ISC",
   "scripts": {
-    "start": "tsc && cross-env NODE_ENV=production node comp/server/server.js",
+    "start": "cross-env NODE_ENV=production ts-node server/server.ts",
     "dev": "concurrently \"cross-env NODE_ENV=development webpack serve\" \"cross-env NODE_ENV=development nodemon server/server.ts\"",
-    "build": "webpack",
+    "clean": "rm dist/bundle.js",
+    "build-prod": "webpack",
     "kill": "npx kill-port 3000 8080",
     "test": "jest --coverage --forceExit && npm run kill && npm run test:cypress && npm run kill",
     "install-client": "npm install",
-    "heroku-postbuild": "npm run install-client && npm run build",
-    "cypress:open": "npm run dev & cypress open",
+    "heroku-postbuild": "npm run install-client && npm run build-prod",
+    "cypress:open": "npm run dev & cypress open", 
     "test:cypress": "npm run dev & cypress run"
   },
   "dependencies": {
@@ -60,7 +61,6 @@
     "@types/supertest": "^2.0.12",
     "babel-jest": "^28.1.3",
     "babel-loader": "^8.2.5",
-    "clean-webpack-plugin": "^0.1.18",
     "concurrently": "^7.3.0",
     "cross-env": "^7.0.3",
     "css-loader": "^6.7.1",

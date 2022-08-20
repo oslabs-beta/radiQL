@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "outDir": "comp",
+        "outDir": "./dist/",
         "sourceMap": true,
         "strict": true,
         "noImplicitReturns": true,
@@ -12,5 +12,8 @@
         "jsx": "react",
         "esModuleInterop": true,
     },
-    "exclude": ["./coverage", "./dist", "./__tests__", "jest.config.js", "node_modules", "./cypress", "jest*", "cypress*", "tailwind*", "webpack*"]
+    "include": [
+        "./client/**/*"
+    ],
+    "exclude": ["./coverage", "./dist", "__tests__", "jest.config.js", "./node_modules"]
 }

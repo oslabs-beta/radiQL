@@ -8,7 +8,7 @@ import ReactFlowDiagram from './ReactFlowDiagram.jsx'
 
 // const finalCode = genBoilerPLate(serverOption, dummyFetchedCode);
 
-const CodeBlock = ({schemaBody, resolverBody, setInstruction, currentTab, changeTab, lastURI}) => {
+const CodeBlock = ({schemaBody, resolverBody, setInstruction, instruction, currentTab, changeTab, lastURI}) => {
 
   const [boilerPlateCode, setBoilerPlateCode] = useState<string>(boilerPlateInstructions);
   const [boilerPlateSelection, setBoilerSelection] = useState<string>('No boilerplate code');
@@ -18,14 +18,16 @@ const CodeBlock = ({schemaBody, resolverBody, setInstruction, currentTab, change
     const clipboardIcon = (document.querySelector('.icon') as HTMLInputElement);
     console.log(clipboardIcon);
     clipboardIcon.addEventListener('click', () => {
-      const stepThree = (document.getElementById('3') as HTMLInputElement);
-      const stepTwo= (document.getElementById('2') as HTMLInputElement);
-      const stepOne= (document.getElementById('1') as HTMLInputElement);
-      stepThree.classList.add('current-step');
-      stepTwo.classList.remove('current-step');
-      stepOne.classList.remove('current-step');
-      console.log('clipboard clicked');
-      setInstruction(3);
+      if (instruction === 2) {
+        const stepThree = (document.getElementById('3') as HTMLInputElement);
+        const stepTwo= (document.getElementById('2') as HTMLInputElement);
+        const stepOne= (document.getElementById('1') as HTMLInputElement);
+        stepThree.classList.add('current-step');
+        stepTwo.classList.remove('current-step');
+        stepOne.classList.remove('current-step');
+        console.log('clipboard clicked');
+        setInstruction(3);
+      }
     })
   }, [])
 

@@ -139,6 +139,7 @@ const MainPage = ({username}) => {
         schemaBody={schemaBody} 
         resolverBody={resolverBody} 
         setInstruction={setInstruction} 
+        instruction={instruction}
         currentTab={currentTab} 
         changeTab={changeTab} 
         lastURI={lastURI}

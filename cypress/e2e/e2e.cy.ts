@@ -14,7 +14,7 @@ describe('empty spec', () => {
     //logout
     cy.contains('My Account').click();
     cy.contains('Logged into account: test666');
-    cy.contains('Logout').click();
+    cy.contains('Logout').click({force: true});
     cy.contains('Login');
   });
 })

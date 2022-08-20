@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const config = {
   entry: './client/index.tsx',
@@ -9,6 +10,7 @@ const config = {
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/',
     filename: 'bundle.js',
+    clean: true
   },
   devServer: {
     hot: true,
@@ -67,6 +69,7 @@ const config = {
       template: './client/index.html',
       filename: 'index.html',
     }),
+    new CleanWebpackPlugin(['dist'])
   ],
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],

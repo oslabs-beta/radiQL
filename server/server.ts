@@ -14,8 +14,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-if (process.env.NODE_ENV === 'production')
-  app.use(express.static(path.resolve(__dirname, '../dist')));
+if (process.env.NODE_ENV === 'production') {
+  console.log('Node Environment: Production')
+  app.use(express.static(path.resolve(__dirname, '../../dist')));
+  /*app.get('/', (req: Request, res: Response) => {
+    return res.sendFile(path.resolve(__dirname, '../dist/index.html'));
+  });*/
+}
 else app.use(express.static(path.resolve(__dirname, '../client')));
 
 // all routes go through the router

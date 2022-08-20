@@ -8,7 +8,7 @@ import ReactFlowDiagram from './ReactFlowDiagram.jsx'
 
 // const finalCode = genBoilerPLate(serverOption, dummyFetchedCode);
 
-const CodeBlock = ({schemaBody, resolverBody, setInstruction, instruction, currentTab, changeTab, lastURI}) => {
+const CodeBlock = ({schemaBody, resolverBody, setInstruction, instruction, currentTab, changeTab, lastURI, diagramData}) => {
 
   const [boilerPlateCode, setBoilerPlateCode] = useState<string>(boilerPlateInstructions);
   const [boilerPlateSelection, setBoilerSelection] = useState<string>('No boilerplate code');
@@ -116,7 +116,7 @@ const CodeBlock = ({schemaBody, resolverBody, setInstruction, instruction, curre
         { // If current tab is === 3:
         currentTab === 3 ? 
           // Render the D3 diagram element,
-          <ReactFlowDiagram /> 
+          <ReactFlowDiagram diagramData={diagramData} /> 
           : // Otherwise:
           // Render the Codeblock element.
           <CopyBlock id="copyblockid"

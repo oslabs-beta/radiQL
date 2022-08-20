@@ -32,6 +32,9 @@ const MainPage = ({username}) => {
   // Save the last sent URI
   const [lastURI, setLastURI] = React.useState<string | null>(null);
 
+  // 
+  const [diagramData, setDiagramData] = React.useState<Array<Array<object>> | null>(null);
+
 
   //send uri request
   const handleConvertURI = async() => {
@@ -53,6 +56,8 @@ const MainPage = ({username}) => {
         }
         setschemaBody(response.data.schema);
         setresolverBody(response.data.resolver);
+        // console.log(response.data.tableData);
+        setDiagramData(response.data.tableData);
       } else {
         console.log('ERORR: Bad response from server');
         console.log(response);
@@ -143,6 +148,7 @@ const MainPage = ({username}) => {
         currentTab={currentTab} 
         changeTab={changeTab} 
         lastURI={lastURI}
+        diagramData={diagramData}
       />
       <div id='blur-container' className='hidden'>
           < MountainLogo />

@@ -12,5 +12,5 @@
         "jsx": "react",
         "esModuleInterop": true,
     },
-    "exclude": ["./coverage", "./dist", "./__tests__", "jest.config.js", "node_modules", "./cypress", "jest*", "cypress*", "tailwind*", "webpack*"]
+    "exclude": ["./coverage", "./dist", "./__tests__", "jest.config.js", "node_modules", "./cypress", "jest*", "cypress*", "tailwind*", "webpack*", "./comp"]
 }

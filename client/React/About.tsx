@@ -111,7 +111,7 @@ const About = props => {
                 <a className='link' href="https://github.com/rjiang12">
                   < FaGithub /> 
                 </a>
-                <a className='link' href="www.linkedin.com/in/royjiang2025/">
+                <a className='link' href="https://www.linkedin.com/in/royjiang2025/">
                   < FaLinkedin />
                 </a>
               </p>

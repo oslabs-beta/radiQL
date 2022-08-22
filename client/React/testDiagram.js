@@ -3,10 +3,15 @@ import React from 'react'
 const data = [
     [
       {
-          "column_name": "_id",
-          "constraint_type": "PRIMARY KEY",
-          "foreign_table": null,
-          "foreign_column": null
+        column_name: 'vessel_id',
+        table_name: 'starship_specs',
+        data_type: 'bigint',
+        character_maximum_length: null,
+        is_nullable: 'NO',
+        constraint_name: 'starship_specs_fk0',
+        constraint_type: 'FOREIGN KEY',
+        foreign_table: 'vessels',
+        foreign_column: '_id'
       },
       {
           "column_name": "name",

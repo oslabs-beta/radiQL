@@ -1,9 +1,9 @@
 import React from "react";
 import { Handle, Position } from 'react-flow-renderer';
 
-const handleStyle = { left: 10 };
+const handleStyle = { };
 
-const FlowNode = ({data}) => {
+const FlowNode = ({ data, isConnectable }) => {
 
   const colArray = data.columns.map(column => (
     <label>
@@ -11,15 +11,22 @@ const FlowNode = ({data}) => {
     </label>
   ))
 
-  console.log(colArray);
+  const Handles = [];
 
+  for (const fk of data.foreignKeys) {
+
+    // <Handle type="source" position='right' isConnectable={true}/>
+  }
+  
+  
   return (
     <div className="table-node">
-      {/* <Handle type="target" position="left" /> */}
+      <Handle type="target" position='left' isConnectable={true}/>
       <div>
         {colArray}
       </div>
-      {/* <Handle type="source" position={Position.Bottom} /> */}
+      <Handle type="source" position='right' isConnectable={true}/>
+      {/* {Handles} */}
     </div>
   );
 }

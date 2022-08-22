@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState, useRef } from 'react'
-import ReactFlow, { MiniMap, Controls, Background, BackgroundVariant, applyEdgeChanges, applyNodeChanges, NodeChange, EdgeChange } from 'react-flow-renderer';
+import ReactFlow, { addEdge, MiniMap, Controls, Background, BackgroundVariant, applyEdgeChanges, applyNodeChanges, NodeChange, EdgeChange } from 'react-flow-renderer';
 import FlowNode from './FlowNodes.jsx'
 
 const nodeTypes = {
@@ -36,24 +36,42 @@ const ReactFlowDiagram = ({diagramData}) => {
   ];
 
   useEffect(() => {
-    // Do not run function on initial load:
-    if (diagramData) {
+    // Do not run function if diagramData is null:
+    if (!diagramData) {
       console.log('Default Diagram');
     } else {
-      console.log('Rendering Diagram from diagramData');
+      // [[{}, {}, {}, {}, {}], [{}, {}, {}, {}]]
+      const allNodes = [];
       // Will make this a for loop to look through every diagramData array:
-      //const node1 = diagramData[0];
-      // Then transform the current diagramData array into an array of column names like this:
-      const columns = ['_id', 'name', 'manufacturer', 'model'];
-      
-      setNodes([
-        {
-        id: '5',
-        type: 'flowNode',
-        data: { columns: columns },
-        position: { x: 200, y: 225 },
-        }
-      ])
+      // i = current table index
+      for (let i = 0; i < diagramData.length; i++) {
+        // Then transform the current diagramData array into an array of column names like this:
+        const foreignKeys = {};
+        const columns = []
+        // j = current column index
+        for (let j = 0; j < diagramData[i].length; j++) {
+          const colObj = diagramData[i][j];
+          if (colObj.column_name === '_id') {
+            columns.push(colObj.table_name);
+          } else {
+            if (colObj.foreign_table !== null) foreignKeys[colObj.foreign_table] = j;
+            columns.push(colObj.column_name);
+          }
+        };
+
+        console.log(foreignKeys);
+
+        allNodes.push(
+          {
+          id: i.toString(),
+          type: 'flowNode',
+          data: { columns: columns, foreignKeys: foreignKeys },
+          position: { x: i*100, y: i*100 },
+          }
+        );
+      }
+      setNodes(allNodes);
+      setEdges([]);
     }
   }, [diagramData])
 
@@ -75,6 +93,10 @@ const ReactFlowDiagram = ({diagramData}) => {
     (changes) => setEdges((eds) => applyEdgeChanges(changes, eds)),
     [setEdges]
   );
+  const onConnect = useCallback(
+    (connection) => setEdges((eds) => addEdge(connection, eds)),
+    [setEdges]
+  );
 
   return (
     <ReactFlow 
@@ -83,14 +105,15 @@ const ReactFlowDiagram = ({diagramData}) => {
       onNodesChange={onNodesChange}
       onEdgesChange={onEdgesChange} 
       nodeTypes={nodeTypes}
+      onConnect={onConnect}
       fitView
     >
       <Background
         variant={BackgroundVariant.Dots}
         className="dots"
         color="gray"
-        gap={20}
-        size={1}
+        gap={100}
+        size={3}
       />
     </ReactFlow>
   )

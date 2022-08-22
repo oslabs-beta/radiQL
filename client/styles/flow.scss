@@ -4,14 +4,27 @@
   height: auto;
   border: 1px solid black;
   padding: 5px;
-  // border-radius: 5px;
-  background: rgb(240, 240, 240);
-  
+  border-radius: 10px;
+  background: rgb(100, 100, 180);
+
   label {
     display: block;
-    color: rgb(71, 71, 71);
+    // color: rgb(71, 71, 71);
+    color: black;
     font-size: 12px;
     border: 1px solid black;
     padding: 3px;
+    background-color: rgb(240, 240, 240);
   }
+} 
+
+#title {
+  color: black;
+  font-size: large;
+
+  text-align: center;
+}
+
+.react-flow__renderer {
+  background-color: $codeGray;
 }

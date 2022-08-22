@@ -1,5 +1,94 @@
 import React from 'react'
   
+/*{
+    "planets": {
+        "outbound": [],
+        "inbound": [
+            "planets_in_films",
+            "species",
+            "people"
+        ]
+    },
+    "species_in_films": {
+        "outbound": [
+            "films",
+            "species"
+        ],
+        "inbound": []
+    },
+    "films": {
+        "outbound": [],
+        "inbound": [
+            "species_in_films",
+            "people_in_films",
+            "vessels_in_films",
+            "planets_in_films"
+        ]
+    },
+    "species": {
+        "outbound": [
+            "planets"
+        ],
+        "inbound": [
+            "species_in_films",
+            "people"
+        ]
+    },
+    "people_in_films": {
+        "outbound": [
+            "people",
+            "films"
+        ],
+        "inbound": []
+    },
+    "people": {
+        "outbound": [
+            "species",
+            "planets"
+        ],
+        "inbound": [
+            "people_in_films",
+            "pilots"
+        ]
+    },
+    "vessels_in_films": {
+        "outbound": [
+            "vessels",
+            "films"
+        ],
+        "inbound": []
+    },
+    "vessels": {
+        "outbound": [],
+        "inbound": [
+            "vessels_in_films",
+            "pilots",
+            "starship_specs"
+        ]
+    },
+    "planets_in_films": {
+        "outbound": [
+            "films",
+            "planets"
+        ],
+        "inbound": []
+    },
+    "pilots": {
+        "outbound": [
+            "people",
+            "vessels"
+        ],
+        "inbound": []
+    },
+    "starship_specs": {
+        "outbound": [
+            "vessels"
+        ],
+        "inbound": []
+    }
+}*/
+
+
 const data = [
     [
       {

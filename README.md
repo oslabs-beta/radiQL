@@ -29,7 +29,7 @@ You might've noticed at some point that there's a grayed-out button beneath the 
 4. For those who may be a tad worried about security with saving your database, worry not. It's tucked away safely in a DynamoDB NoSQL database, not some random JSON document on someone's laptop.
 
 ### Stack:
-TypeScript, React (Hooks, Router, Flow, CodeBlock), SCSS, TailwindCSS, Framer-motion, Express.js, Node.js, Bcrypt, Axios, DynamoDB, Dynamoose, Jest, SuperTest, Cypress, Travis CI, Webpack, Heroku
+[TypeScript](https://www.typescriptlang.org), [React](https://reactjs.org/) ([Hooks](https://reactjs.org/docs/hooks-intro.html), [Router](https://reactrouter.com/), [Flow](https://reactflow.dev/), [CodeBlock](https://www.npmjs.com/package/react-code-blocks)), [SCSS](https://sass-lang.com/), [TailwindCSS](https://tailwindcss.com), [Framer-Motion](https://www.framer.com/motion/), [Express.js](https://expressjs.com/), [Node.js](https://nodejs.org/en/), [Bcrypt](https://www.npmjs.com/package/bcrypt), [Axios](https://axios-http.com/), [DynamoDB](https://aws.amazon.com/dynamodb/), [Jest](https://jestjs.io/), [SuperTest](https://www.npmjs.com/package/supertest), [Cypress](https://www.cypress.io/), [Travis CI](https://www.travis-ci.com/), [Webpack](https://webpack.js.org/), [Heroku](https://www.heroku.com/)
 
 ### Contributing:
 We recognize that radiQL is a work in progress, and so we welcome your contributions to this open-source project! Any and all contributions are greatly appreciated!

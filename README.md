@@ -12,7 +12,7 @@
 Welcome to [**radiQL**](https://radiql.herokuapp.com/), the one-stop solution for setting up GraphQL on a PostgreSQL database. 
 
 
-### At a Glance:
+### At A Glance:
 Give us your PostgreSQL URI, and we'll generate an appropriate schema and resolver. But that's not all: we'll also visualize your ER diagram **AND** we can generate boilerplate server code with your schema and resolver (GraphQL-Express and ApolloServer) so you can get started ASAP. 
 
 ### Getting Started:

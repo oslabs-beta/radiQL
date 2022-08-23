@@ -1,5 +1,11 @@
 <p align="center"><img src="https://github.com/oslabs-beta/radiQL/blob/dev/public/images/rad2.png"></img></p>
 
+<div align="center">
+    
+![StarShield](https://img.shields.io/github/stars/oslabs-beta/radiql?color=6b81cb&label=Stars&style=flat-square)
+![ForksShield](https://img.shields.io/github/forks/oslabs-beta/radiql?color=6b81cb&label=Forks&style=flat-square)
+    
+</div>
 ---
 
 Welcome to **radiQL**, the one-stop solution for setting up GraphQL on a PostgreSQL database. 

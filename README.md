@@ -2,7 +2,7 @@
 
 <div align="center">
     
-![StarShield](https://img.shields.io/github/stars/oslabs-beta/radiql?color=6b81cb&label=Stars&style=flat-square)
+![StarShield](https://img.shields.io/github/stars/oslabs-beta/radiql?color=210d41&label=Stars&style=flat-square)
 ![ForksShield](https://img.shields.io/github/forks/oslabs-beta/radiql?color=6b81cb&label=Forks&style=flat-square)
     
 </div>

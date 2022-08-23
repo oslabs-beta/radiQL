@@ -1,8 +1,8 @@
-import express, {Request, Response, NextFunction} from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import path from 'path';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
-import router from './router'
+import router from './router';
 import dotenv from 'dotenv';
 dotenv.config();
 const port = process.env.PORT || 3000;

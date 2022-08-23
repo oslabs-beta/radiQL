@@ -56,14 +56,7 @@ You might've noticed at some point that there's a grayed-out button beneath the 
 ##
 ### Contributing:
 
-We recognize that radiQL is a work in progress, and so we welcome your contributions to this open-source project! Any and all contributions are greatly appreciated!
-
-1. Fork the repo
-2. Create your feature branch (`git checkout -b feature/newFeature`) and create your amazing new feature
-3. Commit your changes (`git commit -m 'Added a new feature that does x'`)
-4. Push to the branch (`git push origin feature/newFeature`)
-5. Open a Pull Request
-6. We'll review your pull request ASAP!
+Please visit our [contribution documentations](https://github.com/oslabs-beta/radiQL/blob/dev/CONTRIBUTING.md) for more information on how you can contribute to radiQL! We are an open source project under tech accelerator OSLabs so we are thankful for your support! 
 
 ##
 ### Creators:
@@ -77,7 +70,7 @@ Jordan Williams | [Github](https://github.com/JordanOBL)
 ##
 ### License:
 
-This project is distributed under the MIT License- please see [here](https://github.com/oslabs-beta/radiQL/blob/dev/LICENSE) for more details.
+This project is distributed under the MIT License- please see our [LICENSE.md](https://github.com/oslabs-beta/radiQL/blob/dev/LICENSE) for more details.
 
 [stars]: https://img.shields.io/github/stars/oslabs-beta/radiql?color=210d41&label=Stars&style=flat-square
 [stars-url]: https://github.com/oslabs-beta/radiQL/stargazers

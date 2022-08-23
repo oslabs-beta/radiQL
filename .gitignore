@@ -9,3 +9,4 @@ coverage
 cypress/screenshots
 cypress/videos
 cypress/fixtures
+.eslintignore

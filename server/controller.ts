@@ -3,7 +3,6 @@ const controller: any = {};
 import { allTables, columnQueryString} from './queries'; 
 import { schemaMaker } from './schemaMaker'; 
 import bcrypt from 'bcrypt';
-import { User, Uri } from './models';
 import dotenv from 'dotenv';
 dotenv.config();
 import {Request, Response, NextFunction} from "express"; 

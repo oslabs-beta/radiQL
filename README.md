@@ -47,6 +47,9 @@ Roy Jiang | [Github](https://github.com/rjiang12) | [LinkedIn](https://www.linke
 Zach Robertson | [Github](https://github.com/Zachrobdev) | [LinkedIn](https://www.linkedin.com/in/zach-robertson-profile/) \
 Jordan Williams | [Github](https://github.com/JordanOBL)
 
+### License: 
+This project is distributed under the MIT License
+
 
 [stars]: https://img.shields.io/github/stars/oslabs-beta/radiql?color=210d41&label=Stars&style=flat-square
 [stars-url]: https://github.com/oslabs-beta/radiQL/stargazers

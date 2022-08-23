@@ -52,3 +52,5 @@ Jordan Williams | [Github](https://github.com/JordanOBL)
 [stars-url]: https://github.com/oslabs-beta/radiQL/stargazers
 [forks]: https://img.shields.io/github/forks/oslabs-beta/radiql?color=6b81cb&label=Forks&style=flat-square
 [forks-url]: https://github.com/oslabs-beta/radiQL/network/members
+[contributors]: https://img.shields.io/github/contributors/oslabs-beta/radiql?color=%23808080&label=Contributors&style=flat-square
+[contributors-url]: https://github.com/oslabs-beta/radiQL/graphs/contributors

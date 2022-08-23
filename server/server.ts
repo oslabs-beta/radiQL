@@ -22,7 +22,7 @@ else app.use(express.static(path.resolve(__dirname, '../client')));
 app.use('/', router); 
 
 // error handler
-app.use((err, req: Request, res: Response, next: NextFunction) => {
+app.use((err: {log: string, status: number, message: { err: string }}, req: Request, res: Response, next: NextFunction) => {
 const defaultErr = {
   log: 'Express error handler caught unknown middleware error',
   status: 500,

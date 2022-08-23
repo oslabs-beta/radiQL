@@ -3,22 +3,21 @@ const controller: any = {};
 import { allTables, columnQueryString} from './queries'; 
 import { schemaMaker } from './schemaMaker'; 
 import bcrypt from 'bcrypt';
-import { User, Uri } from './models';
 import dotenv from 'dotenv';
 dotenv.config();
 import {Request, Response, NextFunction} from "express"; 
-// const mongoose = require('mongoose');
 import { defaultBoilerplate, apolloBoilerplate } from './boilerplates';
-// import dynamoose from 'dynamoose';
-// import { User, Uri } from './dynamoModels';
 import AWS from 'aws-sdk';
 import { nanoid } from 'nanoid';
 
+
+// Configurates the AWS class used by all service objects
 AWS.config.update({
   accessKeyId: process.env.AKI,
   secretAccessKey: process.env.SAK,
   region: process.env.REG,
 })
+// Simplifies working with items in AWS DynamoDB through the Document Client
 export const client = new AWS.DynamoDB.DocumentClient();
 const USERS_TABLE_NAME = 'users'; 
 const URIS_TABLE_NAME = 'uris'; 
@@ -78,11 +77,10 @@ controller.getAllColumns = async(req: Request, res: Response, next: NextFunction
       connectionString: dbURI,
     })
     const result: Array<Array<object>> = []; 
-    for (const table of tableData) { // table is object {table_name: 'name'}; 
+    for (const table of tableData) {
       result.push((await db.query(columnQueryString, [table.table_name])).rows);
     }
-    // [[][{}, {}, {}], [{}, {}, {}], [], []]
-    res.locals.allColumns = result; // result is array of array (tables) of objects (columns) 
+    res.locals.allColumns = result;
     next(); 
   }
 
@@ -109,7 +107,6 @@ controller.getAllColumns = async(req: Request, res: Response, next: NextFunction
 controller.makeSchemas = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { allColumns } = res.locals; 
-    
     const result: {schema: string, resolver: string} = schemaMaker(allColumns);
     const schemaOutput: string = `const typeDefs = \`\n\n${result.schema}\``;
     const resolverOutput: string = `const resolvers ={\n\t${result.resolver}}`; 
@@ -142,7 +139,6 @@ controller.register = async (req: Request, res: Response, next: NextFunction) =>
   try {
     const { username, password } = req.body;
     const hashedPw = await bcrypt.hash(password, 10);
-    // const newUser = await User.create({username: username, password: hashedPw});
     await client.put({
       TableName: USERS_TABLE_NAME,
       Item: {
@@ -156,7 +152,6 @@ controller.register = async (req: Request, res: Response, next: NextFunction) =>
       TableName: USERS_TABLE_NAME, Key: {"username": username}
     }).promise();
     res.locals.user = newUser.Item
-    // error handle for non-unique username
     return next();
   } catch (err) {
     console.log(err)
@@ -181,7 +176,6 @@ controller.login = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { username, password } = req.body;
     if (username === undefined || password === undefined) {
-      // display incorrect or smth like that
     }
     let verifiedUser: any = await client.get({
       TableName: USERS_TABLE_NAME, Key: {"username": username}
@@ -280,7 +274,6 @@ controller.getUris = async (req: Request, res: Response, next: NextFunction) => 
   try {
     const userId = req.cookies.SSID;
     if(userId) {
-      // const result: any = await Uri.find({user_id: userId});
       const result: any = await client.query({TableName: URIS_TABLE_NAME, KeyConditionExpression: "user_id = :u", ExpressionAttributeValues: {":u": userId}}).promise();
       res.locals.uris = result.Items;
     }

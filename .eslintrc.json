@@ -1,0 +1,32 @@
+{
+  "root": true,
+  "ignorePatterns": ["**/test", "**/__tests__"],
+  "env": {
+    "node": true,
+    "browser": true,
+    "es2021": true
+  },
+  "plugins": ["react", "@typescript-eslint"],
+  "extends": ["eslint:recommended", "plugin:react/recommended", "plugin:@typescript-eslint/eslint-recommended", "plugin:@typescript-eslint/recommended", "airbnb", "airbnb/hooks", "plugin:import/typescript"],
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "rules": {
+    "indent": ["warn", 2],
+    "no-unused-vars": ["off", { "vars": "local" }],
+    "no-case-declarations": "off",
+    "prefer-const": "error",
+    "quotes": ["warn", "single"],
+    "react/prop-types": "off",
+    "semi": ["warn", "always"],
+    "linebreak-style": 0,
+    "padded-blocks": 0,
+    "no-trailing-spaces": 0
+  },
+  "settings": {
+    "react": { "version": "detect"}
+  }
+} 

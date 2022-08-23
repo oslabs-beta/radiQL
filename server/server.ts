@@ -1,8 +1,8 @@
-import express, {Request, Response, NextFunction} from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import path from 'path';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
-import router from './router'
+import router from './router';
 import dotenv from 'dotenv';
 dotenv.config();
 const port = process.env.PORT || 3000;
@@ -22,7 +22,7 @@ else app.use(express.static(path.resolve(__dirname, '../client')));
 app.use('/', router); 
 
 // error handler
-app.use((err, req: Request, res: Response, next: NextFunction) => {
+app.use((err: {log: string, status: number, message: { err: string }}, req: Request, res: Response, next: NextFunction) => {
 const defaultErr = {
   log: 'Express error handler caught unknown middleware error',
   status: 500,

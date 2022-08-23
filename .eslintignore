@@ -1,0 +1,6 @@
+node_modules
+dist
+cypress
+client
+server/schemaMaker.ts
+server/boilerplates.ts

@@ -3,7 +3,9 @@
 <div align="center">
     
 [![StarShield][stars]][stars-url]
+[![ContributorShield][contributors]][contributors-url]
 [![ForksShield][forks]][forks-url]
+
     
 </div>
 
@@ -12,7 +14,7 @@
 Welcome to [**radiQL**](https://radiql.herokuapp.com/), the one-stop solution for setting up GraphQL on a PostgreSQL database. 
 
 
-### At a glance:
+### At A Glance:
 Give us your PostgreSQL URI, and we'll generate an appropriate schema and resolver. But that's not all: we'll also visualize your ER diagram **AND** we can generate boilerplate server code with your schema and resolver (GraphQL-Express and ApolloServer) so you can get started ASAP. 
 
 ### Getting Started:
@@ -29,7 +31,22 @@ You might've noticed at some point that there's a grayed-out button beneath the 
 4. For those who may be a tad worried about security with saving your database, worry not. It's tucked away safely in a DynamoDB NoSQL database, not some random JSON document on someone's laptop.
 
 ### Stack:
-[TypeScript](https://www.typescriptlang.org), [React](https://reactjs.org/) ([Hooks](https://reactjs.org/docs/hooks-intro.html), [Router](https://reactrouter.com/), [Flow](https://reactflow.dev/), [CodeBlock](https://www.npmjs.com/package/react-code-blocks)), [SCSS](https://sass-lang.com/), [TailwindCSS](https://tailwindcss.com), [Framer-Motion](https://www.framer.com/motion/), [Express.js](https://expressjs.com/), [Node.js](https://nodejs.org/en/), [Bcrypt](https://www.npmjs.com/package/bcrypt), [Axios](https://axios-http.com/), [DynamoDB](https://aws.amazon.com/dynamodb/), [Jest](https://jestjs.io/), [SuperTest](https://www.npmjs.com/package/supertest), [Cypress](https://www.cypress.io/), [Travis CI](https://www.travis-ci.com/), [Webpack](https://webpack.js.org/), [Heroku](https://www.heroku.com/)
+- [TypeScript](https://www.typescriptlang.org)
+- [Node.js](https://nodejs.org/en/)
+- [Express.js](https://expressjs.com/)
+- [React](https://reactjs.org/) ([Hooks](https://reactjs.org/docs/hooks-intro.html), [Router](https://reactrouter.com/), [Flow](https://reactflow.dev/), [CodeBlock](https://www.npmjs.com/package/react-code-blocks))
+- [DynamoDB](https://aws.amazon.com/dynamodb/)
+- [SCSS](https://sass-lang.com/)
+- [TailwindCSS](https://tailwindcss.com)
+- [Framer-Motion](https://www.framer.com/motion/)
+- [Bcrypt](https://www.npmjs.com/package/bcrypt)
+- [Axios](https://axios-http.com/)
+- [Jest](https://jestjs.io/)
+- [SuperTest](https://www.npmjs.com/package/supertest)
+- [Cypress](https://www.cypress.io/)
+- [Travis CI](https://www.travis-ci.com/)
+- [Webpack](https://webpack.js.org/)
+- [Heroku](https://www.heroku.com/)
 
 ### Contributing:
 We recognize that radiQL is a work in progress, and so we welcome your contributions to this open-source project! Any and all contributions are greatly appreciated!
@@ -47,8 +64,13 @@ Roy Jiang | [Github](https://github.com/rjiang12) | [LinkedIn](https://www.linke
 Zach Robertson | [Github](https://github.com/Zachrobdev) | [LinkedIn](https://www.linkedin.com/in/zach-robertson-profile/) \
 Jordan Williams | [Github](https://github.com/JordanOBL)
 
+### License: 
+This project is distributed under the MIT License
+
 
 [stars]: https://img.shields.io/github/stars/oslabs-beta/radiql?color=210d41&label=Stars&style=flat-square
 [stars-url]: https://github.com/oslabs-beta/radiQL/stargazers
-[forks]: https://img.shields.io/github/forks/oslabs-beta/radiql?color=6b81cb&label=Forks&style=flat-square
+[forks]: https://img.shields.io/github/forks/oslabs-beta/radiql?color=210d41&label=Forks&style=flat-square
 [forks-url]: https://github.com/oslabs-beta/radiQL/network/members
+[contributors]: https://img.shields.io/github/contributors/oslabs-beta/radiql?color=6b81cb&label=Contributors&style=flat-square
+[contributors-url]: https://github.com/oslabs-beta/radiQL/graphs/contributors

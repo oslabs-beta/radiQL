@@ -2,8 +2,8 @@
 
 <div align="center">
     
-![StarShield](https://img.shields.io/github/stars/oslabs-beta/radiql?color=210d41&label=Stars&style=flat-square)
-![ForksShield](https://img.shields.io/github/forks/oslabs-beta/radiql?color=6b81cb&label=Forks&style=flat-square)
+[![StarShield][stars]][stars-url]
+[![ForksShield][forks]][forks-url]
     
 </div>
 
@@ -46,3 +46,9 @@ Thomas Ho | [Github](https://github.com/t1ho) | [LinkedIn](https://www.linkedin.
 Roy Jiang | [Github](https://github.com/rjiang12) | [LinkedIn](https://www.linkedin.com/in/royjiang2025/) \
 Zach Robertson | [Github](https://github.com/Zachrobdev) | [LinkedIn](https://www.linkedin.com/in/zach-robertson-profile/) \
 Jordan Williams | [Github](https://github.com/JordanOBL)
+
+
+[stars]: https://img.shields.io/github/stars/oslabs-beta/radiql?color=210d41&label=Stars&style=flat-square
+[stars-url]: https://github.com/oslabs-beta/radiQL/stargazers
+[forks]: https://img.shields.io/github/forks/oslabs-beta/radiql?color=6b81cb&label=Forks&style=flat-square
+[forks-url]: https://github.com/oslabs-beta/radiQL/network/members

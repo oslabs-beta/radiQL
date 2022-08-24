@@ -1,5 +1,5 @@
 import React from "react";
-import { Handle, Position } from 'react-flow-renderer';
+import { Handle } from 'react-flow-renderer';
 
 const FlowNode = ({ data }) => {
 

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from "framer-motion";
+import {  useState } from 'react';
+import { motion } from "framer-motion";
 import {FaClipboardList, FaArrowRight, FaCheck} from 'react-icons/fa';
 import SavedDatabases from './SavedDatabases';
 import dummydata from '../dummyCode';

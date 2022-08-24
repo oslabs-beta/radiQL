@@ -1,17 +1,17 @@
 /// <reference types="cypress" />
 describe('e2e tests', () => {
   it('can login and logout', () => {
-    //login
+    // login
     cy.visit('http://localhost:8080/');
     cy.wait(5000);
     cy.contains('Login').click();
     cy.contains('Login');
-    cy.contains('Register?'); 
+    cy.contains('Register Here'); 
     cy.get('#login-username').type('test666');
     cy.get('#login-password').type('test');
     cy.get('#login-btn').click();
 
-    //logout
+    // logout
     cy.contains('My Account').click();
     cy.contains('Logged into account: test666');
     cy.contains('Logout').click({force: true});

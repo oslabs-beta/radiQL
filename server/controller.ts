@@ -39,7 +39,7 @@ controller.getTableData = async (req: Request, res: Response, next: NextFunction
     // assumes logged in. 
     if((dbURI.slice(0, 11) !== 'postgres://' && dbURI.slice(0, 11) !== 'postgresql:') && req.cookies.SSID) {
       const userId = req.cookies.SSID;
-      dbURI = await client.get({TableName: URIS_TABLE_NAME, Key: {user_id: userId}}).promise(); 
+      dbURI = await client.get({TableName: URIS_TABLE_NAME, Key: {user_id: userId, uri_name: dbURI}}).promise(); 
       dbURI = dbURI.Item.uri; 
     }
     res.locals.tableData = 'Hello';
@@ -114,7 +114,7 @@ controller.makeSchemas = async (req: Request, res: Response, next: NextFunction)
     const schemaOutput: string = `const typeDefs = \`\n\n${result.schema}\``;
     const resolverOutput: string = `const resolvers ={\n\t${result.resolver}}`; 
     const output: {schema: string, resolver: string, tableData: any} = {schema: schemaOutput, resolver: resolverOutput, tableData: res.locals.allColumns};
-    console.log(res.locals.allColumns);
+    // console.log(res.locals.allColumns);
     res.locals.output = output; 
     return next();
   }

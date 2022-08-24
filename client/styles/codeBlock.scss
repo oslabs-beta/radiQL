@@ -53,19 +53,20 @@
     }
   }
   
-  #codeOutput {
+  #code-output {
     display: flex;
     flex-direction: column;
     font-size: 15px;
     background-color:white;
     flex-grow: 1;
     border-radius: 0px 0px 6px 6px ;
-    
-    div {
+
+    .dQHzGr {
       height: 100%;
       padding: 6px;
       border-radius: 0px;
     }
+
   }
   // Zoom in and zoom out buttons
   #zoom-controls-container {

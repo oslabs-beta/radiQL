@@ -6,6 +6,7 @@
   position: absolute;
   backdrop-filter: blur(3px);
   background-color: #7d8fde6f;
+  z-index: 10;
 }
 
 #animate-container {
@@ -15,9 +16,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 100;
+  z-index: 10;
   svg {
-    z-index: 100;
+    z-index: 10;
     position: absolute;
   }
 }

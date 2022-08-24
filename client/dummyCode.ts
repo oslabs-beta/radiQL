@@ -1,49 +1,24 @@
 
 // Dummy data for initial load
 
-const dummySchema: string = `class HelloMessage extends React.Component {
-  handlePress = () => {
-    alert('Hello')
-  }
-  render() {
-    return (
-      <div>
-        <p>Hello {this.props.name}</p>
-        <button onClick onClick onClick onClick onClick onClick onClick onClick onClick onClick onClick onClick onClick onClick onClick={this.handlePress}>Say Hello</button>
-      </div>
-    );
-  }
-}
-Schema
-Schema
-Schema
-Schema
-Schema
-Schema
-Schema
-Schema
-Schema
-Schema
-Schema
-Schema
-Schema
-Schema
+const dummySchema: string = `const ExampleSchemaSample = \`
 
-Schema
-Schema
-Schema
-Schema
-Schema
-Schema
-Schema
-Schema
-Schema
-Schema
-Schema
-ReactDOM.render(
-  <HelloMessage name="Taylor" />, 
-  mountNode 
-);`;
+type Query {
+	planets: [Planet!]!
+		planet(_id: ID!): Planet!
+	films: [Film!]!
+		film(_id: ID!): Film!
+	vessels: [Vessel!]!
+		vessel(_id: ID!): Vessel!
+	species: [Species!]!
+		species(_id: ID!): Species!
+	people: [Person!]!
+		person(_id: ID!): Person!
+	starship_specs: [StarshipSpec!]!
+		starship_spec(_id: ID!): StarshipSpec!
+}
+
+\``;
 
 const dummyResolver: string = `class HelloMessage extends React.Component {
   handlePress = () => {
@@ -58,14 +33,6 @@ const dummyResolver: string = `class HelloMessage extends React.Component {
     );
   }
 }
-,
-Resolver
-Resolver
-Resolver
-Resolver
-
-Resolver
-Resolver
 ReactDOM.render(
   <HelloMessage name="Taylor" />, 
   mountNode 

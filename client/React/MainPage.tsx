@@ -1,7 +1,7 @@
 import * as React from 'react';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from "framer-motion";
+import {  useState } from 'react';
+import { motion } from "framer-motion";
 import {FaClipboardList, FaArrowRight, FaCheck} from 'react-icons/fa';
 import SavedDatabases from './SavedDatabases';
 import dummydata from '../dummyCode';
@@ -32,12 +32,16 @@ const MainPage = ({username}) => {
   // Save the last sent URI
   const [lastURI, setLastURI] = React.useState<string | null>(null);
 
+  // 
+  const [diagramData, setDiagramData] = React.useState<Array<Array<object>> | null>(null);
+
 
   //send uri request
   const handleConvertURI = async() => {
     const blurBox = (document.getElementById('blur-container'));
     const dbURI = (document.getElementById('userURI') as HTMLInputElement).value;
     try{
+      // Blur the interaction area
       blurBox?.classList.remove('hidden');
       const response = await axios.post('/submitURI', {dbURI: dbURI});
 
@@ -52,13 +56,17 @@ const MainPage = ({username}) => {
         }
         setschemaBody(response.data.schema);
         setresolverBody(response.data.resolver);
+        // console.log(response.data.tableData);
+        setDiagramData(response.data.tableData);
+      } else {
+        console.log('ERORR: Bad response from server');
+        console.log(response);
       }
     } catch(err){
       console.log('dbURI', err);
     }
-    // Unblur
+    // Unblur the interaction area
     setTimeout(() => {blurBox?.classList.add('hidden')}, 500);
-    // blurBox?.classList.add('hidden');
   }
 
   // Get URIS Function: Axios request to server  route '/uris' 
@@ -136,9 +144,11 @@ const MainPage = ({username}) => {
         schemaBody={schemaBody} 
         resolverBody={resolverBody} 
         setInstruction={setInstruction} 
+        instruction={instruction}
         currentTab={currentTab} 
         changeTab={changeTab} 
         lastURI={lastURI}
+        diagramData={diagramData}
       />
       <div id='blur-container' className='hidden'>
           < MountainLogo />

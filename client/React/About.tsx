@@ -11,7 +11,8 @@ import roy from '../../public/images/profiles/roy.png';
 import zach from '../../public/images/profiles/zach.png';
 // @ts-ignore
 import thomas from '../../public/images/profiles/thomas.png';
-// import jordan from '../../public/images/profiles/jordan.png';
+// @ts-ignore
+import jordan from '../../public/images/profiles/jordan.png';
 import { motion } from 'framer-motion';
 import { FaGithub, FaLinkedin } from 'react-icons/fa'
 
@@ -132,7 +133,7 @@ const About = props => {
             </section>
           </span>
           <span className='about-box about-5'>
-            {/* <img src={jordan}/> */}
+            <img src={jordan}/>
             <section>
               <header className="name">Jordan Williams</header>
               <p>

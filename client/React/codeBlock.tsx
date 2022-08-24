@@ -4,10 +4,11 @@ import { FaPlusSquare, FaMinusSquare } from 'react-icons/fa';
 import { CopyBlock, hybrid } from "react-code-blocks";
 import axios from "axios";
 import boilerPlateInstructions from './BoilerPlateCode.jsx';
+import ReactFlowDiagram from './ReactFlowDiagram.jsx'
 
 // const finalCode = genBoilerPLate(serverOption, dummyFetchedCode);
 
-const CodeBlock = ({schemaBody, resolverBody, setInstruction, currentTab, changeTab, lastURI}) => {
+const CodeBlock = ({schemaBody, resolverBody, setInstruction, instruction, currentTab, changeTab, lastURI, diagramData}) => {
 
   const [boilerPlateCode, setBoilerPlateCode] = useState<string>(boilerPlateInstructions);
   const [boilerPlateSelection, setBoilerSelection] = useState<string>('No boilerplate code');
@@ -17,14 +18,16 @@ const CodeBlock = ({schemaBody, resolverBody, setInstruction, currentTab, change
     const clipboardIcon = (document.querySelector('.icon') as HTMLInputElement);
     console.log(clipboardIcon);
     clipboardIcon.addEventListener('click', () => {
-      const stepThree = (document.getElementById('3') as HTMLInputElement);
-      const stepTwo= (document.getElementById('2') as HTMLInputElement);
-      const stepOne= (document.getElementById('1') as HTMLInputElement);
-      stepThree.classList.add('current-step');
-      stepTwo.classList.remove('current-step');
-      stepOne.classList.remove('current-step');
-      console.log('clipboard clicked');
-      setInstruction(3);
+      if (instruction === 2) {
+        const stepThree = (document.getElementById('3') as HTMLInputElement);
+        const stepTwo= (document.getElementById('2') as HTMLInputElement);
+        const stepOne= (document.getElementById('1') as HTMLInputElement);
+        stepThree.classList.add('current-step');
+        stepTwo.classList.remove('current-step');
+        stepOne.classList.remove('current-step');
+        console.log('clipboard clicked');
+        setInstruction(3);
+      }
     })
   }, [])
 
@@ -64,7 +67,7 @@ const CodeBlock = ({schemaBody, resolverBody, setInstruction, currentTab, change
   }, [lastURI])
   
   const zoomOut = () => {
-    const txt= document.getElementById('codeOutput');
+    const txt= document.getElementById('code-output');
     //@ts-ignore
     const style = window.getComputedStyle(txt, null).getPropertyValue('font-size');
     const currentSize = parseFloat(style);
@@ -72,7 +75,7 @@ const CodeBlock = ({schemaBody, resolverBody, setInstruction, currentTab, change
     txt.style.fontSize = (currentSize - 5) + 'px';
   }
   const zoomIn = () => {
-    const txt = document.getElementById('codeOutput');
+    const txt = document.getElementById('code-output');
     //@ts-ignore
     const style = window.getComputedStyle(txt, null).getPropertyValue('font-size');
     const currentSize = parseFloat(style);
@@ -109,11 +112,11 @@ const CodeBlock = ({schemaBody, resolverBody, setInstruction, currentTab, change
           <FaPlusSquare style={{'color':'white'}} onClick={() => zoomIn()}/>
         </div>
       </div>
-        <div id="codeOutput">
+        <div id="code-output">
         { // If current tab is === 3:
         currentTab === 3 ? 
           // Render the D3 diagram element,
-          <div id="diagram">Diagram</div> 
+          <ReactFlowDiagram diagramData={diagramData} /> 
           : // Otherwise:
           // Render the Codeblock element.
           <CopyBlock id="copyblockid"

@@ -10,5 +10,6 @@ import "./styles/mainPage.scss";
 import "./styles/mountainLogo.scss";
 import "./styles/navBar.scss";
 import "./styles/saveDatabaseModal.scss";
+import "./styles/flow.scss";
 
 ReactDOM.render(<HashRouter> <App/> </HashRouter>, document.querySelector('#root'));

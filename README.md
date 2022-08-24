@@ -1,4 +1,4 @@
-<p align="center" id="top"><img src="https://github.com/oslabs-beta/radiQL/blob/dev/public/images/rad2.png"></img></p>
+<p align="center" id="top"><img src="https://github.com/oslabs-beta/radiQL/blob/dev/public/images/readme-logo.png"></img></p>
 
 <div align="center">
     

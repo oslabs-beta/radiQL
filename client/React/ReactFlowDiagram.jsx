@@ -108,6 +108,7 @@ const ReactFlowDiagram = ({diagramData}) => {
           }
         }
       
+        // Add our evaluated data to the allNodes array
         allNodes.push(
           {
           id: curTable,
@@ -117,7 +118,7 @@ const ReactFlowDiagram = ({diagramData}) => {
           }
         );
       }
-
+      // Generate coordinates for first column:
       console.log(connections);
       const numTables = diagramData.length;
       let leftY = 50;
@@ -129,29 +130,50 @@ const ReactFlowDiagram = ({diagramData}) => {
           leftY += 200;
         }
       }
+      // Result for x: [0, 0, 0 ,0]
+      // Result for y: [50, 250, 450, 650]
+      
+      // Generating coordinates for remaining columns in below function
       // From the remaining tables we should get the tables with inbound connections that are only connected to the leftmost column
-      const leftCount = ((leftY - 50) / 200);
-      const rightCount = numTables - leftCount; //5
-      let curX = 300, curY = 200;
-      const coords = [];
-      for (let i = 0; i < rightCount; i++) {
-        coords.push({ x: curX, y: curY });
-        curX += 300;
-        curY -= 300;
+      const createCoordsArray = (count) => {
+        // Create the x and y coordinate arrays
+        let curX = 300, curY = -200;
+        const xArr = [], yArr = [];
+        for (let i = 0; i < count; i++) {
+          xArr.push(curX);
+          yArr.push(curY);
+          curX += 300;
+          curY += 300;
+        }
+        // Result for x: [300, 600, 900, 1200]
+        // Result for y: [-200, 100, 400, 700]
+
+        // Pair up x and y arrays together
+        const tempCoords = [];
+        let countUp = 0;
+        let countDown = 0;
+        for (let i = 0; i < xArr.length; i++) {
+          let yIndex = 0;
+          if (countUp === countDown) yIndex = countUp++;
+          else yIndex = yArr.length - ++countDown;
+          tempCoords.push({ x: xArr[i], y: yArr[yIndex] });
+        }
+        // Wanted Result for tempCoords: 
+        // [{ x: 300, y: -200 }, { x: 600, y: 700}, { x: 900, y: 100}, { x: 1200, y: 400}]
+        return tempCoords;
       }
+
+      const leftCount = ((leftY - 50) / 200);
+      const rightCount = numTables - leftCount;
+      const coords = createCoordsArray(rightCount);
       
       console.log(coords);
       let coordsIndex = 0;
-      let coordsIndexRev = 0;
       for (let i = 0; i < allNodes.length; i++) {
         if ( allNodes[i].position.x === 0 && allNodes[i].position.y === 0 ) {
-          if ( coordsIndex === coordsIndexRev ) {
-            allNodes[i].position.x = coords[coordsIndex].x;
-            allNodes[i].position.y = coords[coordsIndex++].y;
-          } else {
-            allNodes[i].position.x = coords[coords.length - coordsIndexRev - 1].x;
-            allNodes[i].position.y = coords[coords.length - coordsIndexRev++ - 1].y;
-          }
+          console.log('coordsIndex: ' + coordsIndex)
+          allNodes[i].position.x = coords[coordsIndex].x;
+          allNodes[i].position.y = coords[coordsIndex++].y;
         }
       }
 

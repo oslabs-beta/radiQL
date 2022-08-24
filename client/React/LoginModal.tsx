@@ -126,8 +126,8 @@ const LoginModal = ({ setShowLogin, username, setUsername }) => {
           {notRegistering ? 'Login': 'Create Account'}
         </motion.button>}
           {/* Button to switch between registration and login */}
-        {notRegistering ? <a id="register" onClick={() => setNotRegistering(false)} href='#'>Register?</a> 
-          : passwordMatch ? <a id="login?" onClick={() => setNotRegistering(true)} href='#'>Login?</a> 
+        {notRegistering ? <a id="register" onClick={() => setNotRegistering(false)} href='#'>Register Here</a> 
+          : passwordMatch ? <a id="login?" onClick={() => setNotRegistering(true)} href='#'>Back to Login</a> 
           : <p className="login-error-message">Passwords do not match!</p> }
         {/* If passwords dont match upon registration, show error displaying that passwords do not match  */}
         {/* {!passwordMatch && <p className="login-error-message">Passwords do not match!</p>} */}

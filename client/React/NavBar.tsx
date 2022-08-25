@@ -33,7 +33,7 @@ const NavBar = ({ username, setUsername }) => {
 
       <div className="links">
         <Link className="nav-link" to="/About">About Us</Link>
-        <a className="nav-link" href="https://medium.com/">Medium Article</a>
+        <a className="nav-link" href="https://medium.com/@rjiang12/radiql-the-one-step-solution-for-setting-up-graphql-on-a-postgres-database-3b622ba2e6ec?source=friends_link&sk=a04812c61899882b620e2ebd9a691d64">Medium Article</a>
         <a className="nav-link" href="https://github.com/oslabs-beta/radiQL">Github</a>
         <a id="login" onClick={()=> setShowLogin(!showLogin)} className="nav-link">
           { username === '' ? 'Login' : 'My Account'}

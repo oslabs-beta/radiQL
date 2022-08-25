@@ -23,14 +23,19 @@ Give us your PostgreSQL URI, and we'll generate an appropriate schema and resolv
 1. Head on over to [radiQL](https://radiql.herokuapp.com/)
 2. Grab your PostgreSQL database URI (we don't hold onto this unless you want us to… keep reading below to find out more about that) and drop it into the input box and click convert.
 3. Go through the tabs, copying what you need with the useful little copy button.
+<p align="center" id="top"><img src="https://github.com/oslabs-beta/radiQL/blob/dev/public/images/1-1.gif"></img></p>
 4. If you'd like, you can select one of the boilerplates from the boilerplate dropdown and head on over to the boilerplate tab. It may take a little while for the boilerplate to generate, so hold tight. Once it does, you can copy that with our little copy button too. Currently, we support GraphQL-Express and ApolloServer. More to come!
+<p align="center" id="top"><img src="https://github.com/oslabs-beta/radiQL/blob/dev/public/images/1-2.gif"></img></p>
 5. And, if you'd like to check out your ER diagram visualization, head over to the diagram tab.
+<p align="center" id="top"><img src="https://github.com/oslabs-beta/radiQL/blob/dev/public/images/1-3.gif"></img></p>
 
 You might've noticed at some point that there's a grayed-out button beneath the convert button that says "log in to save database." Maybe we should do that.
 
 1. Click the login button in the top right corner and register if you haven't already. Then we log in.
 2. Like before, we grab our PostgreSQL database URI and drop it into the input box. Here, you can click "save database" and name this saved database for quick access during future visits.
+<p align="center" id="top"><img src="https://github.com/oslabs-beta/radiQL/blob/dev/public/images/2-1.gif"></img></p>
 3. Now every time you visit, you can log in, select this database from the drop-down, and convert. Any updates in that database will be reflected. All other functionality of radiQL remains the same.
+<p align="center" id="top"><img src="https://github.com/oslabs-beta/radiQL/blob/dev/public/images/2-2.gif"></img></p>
 4. For those who may be a tad worried about security with saving your database, worry not. It's tucked away safely in a DynamoDB NoSQL database, not some random JSON document on someone's laptop.
 
 ##

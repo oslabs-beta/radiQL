@@ -18,7 +18,7 @@ export default function CustomEdge({
         id={id}
         style={style}
         className="react-flow__edge-path animated"
-        d={`M${sourceX},${sourceY} C  ${targetX} ${sourceY} ${targetX-10} ${sourceY} ${targetX-10},${targetY}`}
+        d={`M${sourceX},${sourceY} C  ${targetX} ${sourceY} ${targetX} ${sourceY} ${targetX},${targetY}`}
         markerEnd={markerEnd}
       />
     </>

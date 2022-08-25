@@ -4,6 +4,8 @@ import logo from '../../public/images/rad2.png';
 // @ts-ignore
 import about1 from '../../public/images/about1.png';
 // @ts-ignore
+import snow from '../../public/images/Snow_texture.jpeg';
+// @ts-ignore
 import alex from '../../public/images/profiles/alex.jpeg';
 // @ts-ignore
 import roy from '../../public/images/profiles/roy.png';

@@ -10,12 +10,22 @@
   .app-description {
     // box-shadow: 6px 5px 2px 1px rgb(0, 0, 0);
     border-radius: 20px;
-    background-color: white;
     padding: 20px;
     width: fit-content;
     color: $gray;
     font-size: 18px;
-    margin: 30px;
+    margin: 0px 30px 30px 30px;
+    // background:
+    // radial-gradient(circle at 100% 50%, transparent 20%, rgba(255,255,255,.3) 21%, rgba(255,255,255,.3) 34%, transparent 35%, transparent),
+    // radial-gradient(circle at 0% 50%, transparent 20%, rgba(255,255,255,.3) 21%, rgba(255,255,255,.3) 34%, transparent 35%, transparent) 0 -50px;
+    background-color: white;
+    // background-size:75px 100px;
+
+    #about-logo {
+      margin-bottom: 10px;
+      border-radius: 170px;
+    }
+
     img {
       display: block;
       margin: auto;

@@ -134,11 +134,12 @@ controller.makeSchemas = async (req: Request, res: Response, next: NextFunction)
  * @param next 
  * 
  * receives username and password strings in req.body and creates a new User object
- * in MongoDB database. Stores the created user in res.locals.user. 
+ * in dynamodb database. Stores the created user in res.locals.user. 
  */
 controller.register = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { username, password } = req.body;
+    console.log("🚀 ~ file: controller.ts:142 ~ controller.register= ~ req.body:", req.body)
     const hashedPw = await bcrypt.hash(password, 10);
     await client.put({
       TableName: USERS_TABLE_NAME,
@@ -246,7 +247,7 @@ controller.setUserCookie = async (req: Request, res: Response, next: NextFunctio
 controller.saveURI = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { dbURI, name } = req.body;
-    const userId = req.cookies.SSID; 
+    const userId = await req.cookies.SSID; 
     if(userId) {
       await client.put({TableName: URIS_TABLE_NAME, Item: { uri: dbURI, user_id: userId, uri_name: name }}).promise();
     }
@@ -273,20 +274,22 @@ controller.saveURI = async (req: Request, res: Response, next: NextFunction) => 
  */
 controller.getUris = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const userId = req.cookies.SSID;
+    const userId = await req.cookies.SSID;
+    console.log(userId)
     if(userId) {
       const result: any = await client.query({TableName: URIS_TABLE_NAME, KeyConditionExpression: "user_id = :u", ExpressionAttributeValues: {":u": userId}}).promise();
       res.locals.uris = result.Items;
+      console.log("🚀 ~ file: controller.ts:281 ~ controller.getUris= ~ result.Items:", result.Items)
     }
     return next(); 
   }
   catch (err) {
-    next ({
-      log: 'Error at middleware controller.getUris',
-      status: 501,
-      message: {
-        err: 'Error has occured while getting URIs',
-      },
+    next({
+        log: 'Error at middleware controller.getUris',
+        status: 501,
+        message: {
+            err: err,
+        },
     });
   }
 }

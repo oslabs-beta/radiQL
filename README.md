@@ -12,8 +12,6 @@
 
 Welcome to [**radiQL**](https://radiql.herokuapp.com/), the one-stop solution for setting up GraphQL on a PostgreSQL database.
 
-Check out our Medium article [here](https://medium.com/@rjiang12/radiql-the-one-step-solution-for-setting-up-graphql-on-a-postgres-database-3b622ba2e6ec). 
-
 ##
 ### At A Glance:
 
